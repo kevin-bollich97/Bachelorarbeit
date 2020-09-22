@@ -1,5 +1,7 @@
-\documentclass[12pt,a4paper,headsepline]{scrreprt}
+%Ändern wieder in scrreprt
+\documentclass[12pt,a4paper,headsepline]{scrartcl}
 
+\input{variablen.tex}
 \input{settings.tex}
 \addbibresource{Projektarbeit.bib}
 
@@ -10,8 +12,8 @@
 
 % Inhaltsverzeichnis
 \pagenumbering{Roman} % Römische Seitenzahlen
-\tableofcontents
-\listoffigures
+%\tableofcontents
+%\listoffigures
 
 \newpage %Seitenumbruch
 
@@ -20,16 +22,11 @@
 \onehalfspacing % 1.5 Zeilenabstand für den Text
 
 % Einbinden von Kapiteln
-\input{sections/1_Einfuehrung}
-\input{sections/2_AllgemeinLogging.tex}
-\input{sections/3_StandCFTPortale.tex}
-\input{sections/4_Richtlinien.tex}
-\input{sections/5_Herausforderungen.tex}
-\input{sections/6_FazitAusblick}
+\input{sections/Expose.tex}
 
 \newpage
 
-\singlespacing % Normaler Abstand für den Anhang
+\singlespacing % Normaler Abstand für den Anhang & Literatur
 
 \printbibliography
 
@@ -38,14 +35,10 @@
 %           Anhang                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\chapter{Anhang}
-\input{Anlage/DatenschutzerklärungMitgliederportal.tex}
-\newpage
-\input{Anlage/Eidestaatliche.tex}
+%\chapter{Anhang}
+%\input{Anlage/Eidestaatliche.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           \Anhang                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 \end{document} 
