@@ -1,0 +1,214 @@
+\chapter{Aktueller Stand im CFT Portale}
+\label{situationCFT}
+
+Zum Aufgabenbereich des CFT Portale gehören die Entwicklung neuer Anwendungen, als auch die Weiterentwicklung bestehender Anwendungen.
+Nicht nur die Entwicklung, sondern auch die Administration der Software wird vom Team selber durchgeführt. 
+Daher besitzt das Team eine Reihe unterschiedlichster Tools, um die vielfältigen Aufgaben lösen zu können. \\
+
+Das Team wird bei der Entwicklung regelmäßig von externen Mitarbeitern begleitet. 
+Dies sorgt für eine hohe Anzahl an Entwicklern, die an einer Software arbeiten. 
+Die daraus entstandene Flut an unterschiedlichsten Programmierstilen, hat das Software-Angebot unübersichtlich und unstrukturiert werden lassen. \\
+
+Das Team hat sich in den letzten zwei Jahren stark gewandelt. 
+Durch den Einfluss und das Engagement von neuen und bestehenden Mitarbeitern hat sich der Entwicklungsprozess verbessert.
+Die Wichtigkeit von Code-Qualität und standardisierten Abläufen ist stark gestiegen. \\
+
+Um den aktuellen Stand vorzustellen, werden alle wichtigen Aspekte in der Entwicklung vorgestellt und die einzelnen Probleme in Bezug auf das Logging erläutert. 
+Dabei wird ein Blick auf den Technologie-Stack geworfen, sowie auf den Entwicklungsprozess und die vorhandenen Software-Architekturen.
+
+\section{Technologie-Stack}
+
+Das CFT Portale nutzt einige Tools, die für diesen Zweck näher erläutert werden müssen. 
+So kann besser verstanden werden, welche Möglichkeiten bestehen, um ein effektives Logging zu erreichen und welche Hürden unterschiedliche Technologien mit sich bringen können. 
+
+    \subsection{Angular}
+
+    Angular ist ein Open-Source-Framework, das von Google entwickelt wurde, um die Entwicklung von Single-Page Web-Applikationen zu ermöglichen.
+    Dabei nutzt das Framework die Programmiersprache TypeScript. 
+    TypeScript übernimmt bei Angular die Rolle, die in herkömmlichen Web-Anwendungen durch JavaScript besetzt wird. 
+    Die Darstellung der einzelnen Komponenten wird mit HTML und CSS durchgeführt. \cite{googleAngularIntroductionAngular} 
+
+    \subsection{Microsoft .NET Framework}
+
+    Das CFT Portale nutzt in ihren Applikationen das .NET Framework.
+    Das .NET Framework besteht aus Entwicklungswerkzeugen, Schnittstellen und auch Klassenbibliotheken. 
+    Im gegensatz zum .NET Framework ist das .NET Core nicht nur für Windows sondern auch für Linux und macOS verfügbar.
+    Das .NET Core wird im Team noch nicht genutzt. 
+    Mit der Version 5 von .NET wird sich das jedoch ändern, weil es dann möglich sein wird, mit .NET Core Provider-hosted Add-ins zu erstellen. \cite{groteMicrosoftNETFramework}
+    Das Team verwendet derzeit die Version 4.8.
+    Die genutzte Programmiersprache ist hier C\#.
+
+    \subsection{SharePoint}
+    SharePoint ist eine Plattform für Unternehmen, um Websiten zu erstellen, Daten zu speichern, Daten zu strukturieren und auf Daten zugreifen zu können.
+    Der Zugriff kann über alle Geräte erfolgen, die über einen Webbrowser verfügen. \\
+    In SharePoint können SharePoint-Teamwebsiten erstellt werden. 
+    Diese Teamwebsiten können genutzt werden, um Dokumente und andere Daten zu Speichern. 
+    Außerdem kann das Team gemeinsam an einem Dokument arbeiten.
+    So wird das Kollaborative Arbeiten im Team ermöglicht. \cite{microsoftWasIstSharePoint} \\
+
+    Das CFT Portale stellt den Mitgliedern und den Mitarbeitern der KVWL eine Plattform zur Verfügung, die unterschiedliche Anwendungen beinhaltet. 
+    Dafür nutzt das Team den SharePoint. 
+    Der SharePoint ist dabei der Einstiegspunkt für die Mitarbeiter und die Mitglieder.  
+    Das Team bietet zwei Plattformen, einmal das Intranet für die Mitarbeiter und noch das Mitgliederportal für die Mitglieder. 
+    Im Intranet der KVWL werden Dateien, News und auch ein Projekt-Center angeboten. 
+    Das Projekt-Center ermöglicht das gemeinsame Arbeiten an Dokumenten und eine Art Wiki für die Projekte.
+    Im Mitgliederportal werden nur die provider-hosted Add ins zur Verfügung gestellt.
+    Die Kollaborations-Funktion des SharePoint kommt hier nicht zum Einsatz.
+    
+
+    \subsection{Dynatrace application performance management}
+
+    Dynatrace application performance management (APM) ist für die Überwachung der IT-Infrastruktur verantwortlich. 
+    Dabei misst sie mithilfe einer KI den Ablauf von Hardware und Software und kann somit Fehler erkennen und anzeigen. 
+    Alle gesammelten Informationen werden in Diagrammen dargestellt. \cite{dynatraceApplicationPerformanceManagement} \\
+
+    Das CFT Portale, nutzt Dynatrace um ihre Software Monitoren zu können.  
+    Mithilfe der Diagramme kann das CFT schnellstmöglich erkennen, wenn ein System ausgefallen ist oder irgendwelche Zugriffe nicht mehr möglich sind. 
+    
+
+\section{Software-Architektur}
+% Hier erlkären, kein eigenes Kapitel \subsubsection{Dev-Ops}
+
+Die vom Team erstellte Software, basiert auf der Client-Server Architektur. 
+Das heißt, die Aufgaben, die von der Software bearbeitet werden müssen, werden auf Clients und Server verteilt. 
+Der Client ist dabei für die Darstellung, die Validierung und den Input der Daten  zuständig. 
+Der Server kümmert sich um das Versorgen der Clients mit den benötigten Daten, die Speicherung von neuen Daten in der Datenbank und enthält Business-Logik. 
+Außerdem kümmert sich der Server um alle Berechnungen die durchgeführt werden müssen. 
+
+    \subsection{Client-Server Architektur}
+
+    Die Client-Server Architektur beschreibt ein Modell der Kommunikation in Software-Anwendungen. 
+    Dabei stellt der Client Anfragen an den Server, die Anfragen werden dann vom Server ausgewertet und liefern die gewünschten Daten. 
+    Ein Server ist für mehrere Clients verantwortlich. \\
+    Im Falle des CFT Portale, spiegelt der Client das Frontend der Anwendung wider. 
+    Die Rolle des Servers übernimmt dabei das Backend. \cite{it-administrator.deClientServerArchitekturItadministrator}
+
+    \subsection{Frontend/Client} 
+    Der Client wird im CFT Portale mit dem Angular Framework erstellt. 
+    Bei der Vielzahl an Anwendungen bestehen jedoch unterschiedliche Versionen von Angular. 
+    Ältere Software, die noch nicht aktualisiert wurde, besteht noch aus dem Angular JS Framework. 
+    Das Angular JS Framework wurde von dem aktuellen Angular 2+ ersetzt. 
+    Dabei handelt es sich um die Änderung, dass der JavaScript (JS) -Teil von TypeScript (TS) abgelöst wurde. \cite{googleAngularIntroductionAngular} \\
+
+    Das Frontend ist für die Darstellung und das Senden von Abfragen an den Server verantwortlich. 
+    Um zwischen dem Client und dem Server eine Kommunikation zu ermöglichen, werden REST-Schnittstellen bereitgestellt. \\
+    Derzeit werden die vom Client erzeugten Logs nicht an den Server gesendet. 
+    Das bedeutet, dass alle im Client erzeugten Logs nur in der Konsole des Browsers zu sehen sind. 
+    Eine Log-Analyse für den Client ist nicht möglich. 
+
+    \subsection{Backend/Server}
+
+    Das Backend wird in der Programmiersprache C\# entwickelt. 
+    Dies ermöglicht die Nutzung von SharePoint-Komponenten.
+    Das Team nutzt, wie im letzten Kapitel beschrieben, nicht viele Komponenten des SharePoint.
+    Im Mitgliederportal werden nur die Listen vom SharePoint genutzt.
+    Im Intranet hingegen werden mehrere Komponenten verwendet. 
+    Dazu gehören zum Beispiel Kalender, Bilderbibliotheken und Dokumentenbibliotheken. \\
+    
+    Im Backend werden alle logischen und berechnenden Aufgaben bearbeitet.
+    Dazu gehörten zum Beispiel das Verwalten von benutzerspezifischen Daten. 
+    Das Backend muss über mehrere Anfragen an andere Schnittstellen Daten sammeln, die dann in ein Objekt für das Frontend passend zusammen gestellt werden. 
+    Dies muss geschehen, weil die vom Backend erhaltenen Daten, sehr viel mehr Informationen beinhalten, als notwendig. 
+    Der Vorteil dieser Art von Transfer besteht in der Einsparung von Netzwerkkapazitäten. 
+    Nicht alle Mitglieder der KVWL besitzen eine starke Netzwerkbandbreite, daher wird versucht den Datentransfer niedrig zu halten. \\
+
+    Das Logging im Backend erfolgt derzeit ohne Struktur. 
+    Einige Entwickler haben angefangen, das Logging-Framework Log4Net zu nutzen. 
+    Der Einsatz erfolgt jedoch ohne Absprache und nur nach eigenen Bedarf der Entwickler. 
+    Also können die erstellten Logfiles nur für die Entwicklung genutzt werden. 
+    Der Nutzen in der Produktion ist noch nicht auf gewünschten Stand.
+    
+    \subsection{Provider-hosted Add-in}
+
+    Die erstellte Web-Anwendung wird als \textit{Provider-hosted Add-in} betrieben. 
+    Ein Provider-hosted Add-in ist eine Anwendung die zwar auf einer SharePoint Farm registriert ist, jedoch nicht an die von Microsoft vorhanden Werkzeuge gebunden ist. 
+    Die erstellten Anwendungen können auf einer eigenen Umgebung komplett losgelöst vom SharePoint genutzt werden.  
+    Der SharePoint ist für die Darstellung der entwickelten Anwendungen da. 
+    Sie haben alle die Masterpage des SharePoint. 
+    So haben alle erstellten Anwendungen die gleiche GUI. \cite{microsoftErsteSchritteBeim} \\
+
+    SharePoint besitzt einen eigenen Logging-Mechanismus.
+    Durch die Nutzung von Provider-hosted Add-ins ist werden die Logs nicht durch den SharePoint erstellt und konfiguriert.
+    Daher müssen die einzelnen Provider-hosted Add-ins selber Logs erstellen. 
+
+    \subsection{Redundante Serververteilung}
+    \label{redundanteSerververteilung}
+
+    Damit der Betrieb bei hohen Lasten weiterhin gewährleistet werden kann, werden im CFT Portale alle Anwendungen redundant auf zwei Servern deployed. 
+    So können Nutzer bei hoher Last auf den zweiten Server geleitet werden.
+    Dies ermöglicht, dass bei den Abrechnungsperioden alle Anwendungen weiterhin erreichbar bleiben. 
+    Außerdem sind die Anwendungen durch die redundante Verteilung Ausfallsicher. \\
+
+    Die Verteilung der Anwendungen bringt für das Logging ein Problem mit sich. 
+    Denn Nutzer können dadurch auf den beiden Servern innerhalb eines Prozesses verteilt unterwegs sein.
+    So entstehen zwei Logfiles auf unterschiedlichen Servern. 
+    Dadurch steigt die Komplexität bei der Fehler Identifikation. 
+    Das Reproduzieren von Beginn des Prozesses an bis zum auftreteten des Fehlers ist deshalb schwierig.
+
+\section{Entwicklungsprozess}
+
+Das CFT Portale nutzt das Vorgehensmodell Scrum. 
+Das Team hat ein Product Backlog indem alle Anforderungen festgehalten werden. 
+Dieses Backlog wird regelmäßig mit neuen Anforderungen (Tickets) befüllt. 
+Die Tickets werden in regelmäßigen Sprints abgearbeitet. 
+Jedoch werden dabei nicht alle Tickets aus dem Product Backlog abgearbeitet, sondern nur die Tickets aus dem Sprint Backlog. 
+Das Sprint Backlog wird im Sprint Planning Meeting erstellt. 
+Dabei werden die Tickets aus dem Product Backlog in das Sprint Backlog geschoben.
+Welche Tickets im nächsten Sprint bearbeitet werden sollen, entscheidet der Product Owner.
+Das Ziel in jedem Sprint ist es, alle Tickets aus dem Sprint Backlog zu erledigen.
+Wie viele Tickets das Entwickler Team schaffen kann, entscheidet das Team selber. 
+Ein Sprint dauert im CFT Portale zwei Wochen. 
+Nach dem Sprint folgt ein Sprint Review und eine Sprint Retrospektive. \\ 
+
+Das Scrum Board besteht aus vier Spalten: \textit{Aufgaben}, \text{Wird Ausgeführt}, \textit{Test} und \textit{Fertig}.\\
+Der Prozess im Team sieht vor, dass ein Entwickler sich ein Ticket aus der Spalte \textit{Aufgaben} zieht und dann das Ticket in \textit{Wird Ausgeführt} schiebt. 
+Dann wird ein \textit{feature} oder \textit{bug} Branch eröffnet. 
+In dem Branch wird dann das Ticket erledigt. \\
+Das Team nutzt SonarQube, der den Quellcode überprüft.
+Wenn der neu erstellte Code keine Testabdeckung von mindestens 60\% hat, neue Bugs enthält oder neue code smells eingefügt hat, dann wird der geschriebene Code nicht akzeptiert. 
+Nachdem der geschrieben Code den Vorgaben entspricht, stellt der Entwickler einen Pull-Request und schiebt das Ticket in die \textit{Test} Spalte. 
+Nach erstellen des Pull-Requests muss ein weiterer Entwickler den Code überprüfen und lokal ausführen. 
+Wenn alle Tests erfolgreich waren, wird der geschriebene Code mit dem Dev Branch gemerged und das Ticket landet in der \textit{Fertig} Spalte. 
+
+
+\section{Software-Angebot}
+Im CFT Portale werden die unterschiedlichsten Anwendungen betreut. 
+Dabei gibt es zwei Produkte, unter denen viele weitere Anwendungen stehen. 
+Die Produkte sind: das \textit{Mitgliederportal} und das \textit{Intranet}.
+Das Mitgliederportal ist für die Mitglieder der KVWL und das Intranet für die Mitarbeiter der KVWL.
+Die Mitglieder der KVWL sind niedergelassene Ärzte und Psychotherapeuten in Nordrhein-Westfalen.
+
+    \subsection{Mitgliederportal}
+
+    Im Mitgliederportal der KVWL werden Services für die Mitglieder der KVWL angeboten. 
+    Im Portal können die Mitglieder ihre persönlichen Daten prüfen und gegebenenfalls ändern. 
+    Außerdem können dort z.B. Quartalsabrechnungen erstellt und abgeschickt werden, sowie Anträge, die den Mitgliedern zum Beispiel Geld zurückerstatten.
+    Die Quartalsabrechnungen sind die Leistungen, die die Mitglieder in einem Quartal erbracht haben. \\
+
+    Das Mitgliederportal besteht ausschließlich aus Provider-hosted Add-ins. 
+    Es werden acht Anwendungen im Mitgliederportal zur Verfügung gestellt.
+    Jede dieser Anwendungen läuft unabhängig vom SharePoint auf eigenen Servern. 
+    In den Listen vom SharePoint sind die Daten der einzelnen Anwendungen hinterlegt.
+    So können auf der Startseite vom Mitgliederportal Kacheln angezeigt werden, die zu den einzelnen Anwendungen weiterleiten.
+
+    \subsection{Intranet} 
+    Das Intranet der KVWL bietet den Mitarbeitern unterschiedliche Funktionen an. 
+    Darunter befinden sich eine News-Plattform, Speisepläne, Stellenausschreibungen, ein Telefonbuch und auch eine Sammlung von wichtigen Dokumenten. 
+    Außerdem findet man auch Links zu Plattformen, wie die der Zeiterfassung und der Raumplanung. 
+    Generell ist das Intranet eine Ansammlung von Informationen und Anwendungen, die jeder Mitarbeiter im Laufe des Tages gebrauchen kann. \\
+
+    Die Entwicklung des Intranets besteht nicht wie im Mitgliederportal nur aus Provider-hosted Add-ins, sondern auch aus sogenannten SharePoint Driven Apps.
+    Dabei werden nur Frontend Applikationen entwickelt, die in kompilierter Form in den SharePoint eingebunden werden. 
+    Diese Apps sind leichtgewichtiger und ermöglichen eine schnelle und unkomplizierte Entwicklung. \cite{packof7SharePointDrivenApplication}
+
+
+
+\section{Überblick}
+
+Dieses Kapitel beschreibt die aktuelle Situation des CFT Portale. 
+Zu Beginn wurden die genutzten Technologien vorgestellt. 
+Dazu gehören Angular, \textit{.NET}, SharePoint und Dynatrace.
+Im Anschluss darauf wurde die Software-Architektur genauer untersucht. 
+Dabei ist aufgefallen, dass eine Anwendung aus einem Front- und Backend besteht. 
+Die Anwendungen werden dann als Provider-hosted Add-ins deployed und im SharePoint zur Verfügung gestellt. 
+Zum Schluss wurden noch die beiden wichtigen Anwendungen des Teams vorgestellt.

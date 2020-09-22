@@ -1,0 +1,51 @@
+\documentclass[12pt,a4paper,headsepline]{scrreprt}
+
+\input{settings.tex}
+\addbibresource{Projektarbeit.bib}
+
+\begin{document}
+\thispagestyle{empty} % Die Titelseite soll keine Seitenzahl bekommen
+
+\input{titlepage.tex}
+
+% Inhaltsverzeichnis
+\pagenumbering{Roman} % Römische Seitenzahlen
+\tableofcontents
+\listoffigures
+
+\newpage %Seitenumbruch
+
+\pagenumbering{arabic} % Arabische Seitenzahlen
+
+\onehalfspacing % 1.5 Zeilenabstand für den Text
+
+% Einbinden von Kapiteln
+\input{sections/1_Einfuehrung}
+\input{sections/2_AllgemeinLogging.tex}
+\input{sections/3_StandCFTPortale.tex}
+\input{sections/4_Richtlinien.tex}
+\input{sections/5_Herausforderungen.tex}
+\input{sections/6_FazitAusblick}
+
+\newpage
+
+\singlespacing % Normaler Abstand für den Anhang
+
+\printbibliography
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Anhang                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\chapter{Anhang}
+\input{Anlage/DatenschutzerklärungMitgliederportal.tex}
+\newpage
+\input{Anlage/Eidestaatliche.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           \Anhang                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{document} 

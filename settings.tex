@@ -1,0 +1,102 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Packages               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace} % 1.5 Zeilenabstand
+\usepackage[utf8]{inputenc} % Ermöglicht die Eingabe von deutschen Sonderzeichen im Quelltext
+\usepackage[T1]{fontenc} % Europäische Kodierung der Ausgabeschrift
+\usepackage{lmodern} % Lädt die Schriftart Latin Modern, die universell skalierbar ist
+\usepackage[ngerman]{babel} % Silbentrennung nach neuer deutscher Rechtschreibung
+\usepackage{amsmath} % Mathematik-Paket der American Mathematical Society
+\usepackage{graphicx} % Erlaubt das Einfügen von Bildern per \includegraphics{}
+\usepackage[style=alphabetic, backend=biber]{biblatex} %Verwendung von Biblatex zur Verwaltung der Literatur
+\usepackage{csquotes} 
+\usepackage[
+  colorlinks,        % Links ohne Umrandungen in zu wählender Farbe
+  linkcolor=black,   % Farbe interner Verweise
+  filecolor=black,   % Farbe externer Verweise
+  citecolor=black    % Farbe von Zitaten
+]{hyperref}
+\usepackage{float}
+%\usepackage{fancyhdr} % neue Kopfzeilen mit fancypaket
+\usepackage{geometry} % Packet für Seitenrandabständex und Einstellung für Seitenränder
+\usepackage{listings} % Um Programmiercode anzuzeigen
+\usepackage{xcolor}
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           /Packages              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Seitenränder definieren
+\geometry{left=3.5cm, right=2.5cm, headsep=1.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Kopfzeile              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+  automark,
+  autooneside=false,% <- needed if you want to use \leftmark and \rightmark in a onesided document
+  headsepline
+]{scrlayer-scrpage}
+\clearpairofpagestyles
+\ihead{\leftmark}
+\ohead{\pagemark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           /Kopfzeile             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        Quellcode einbinden       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\lstlistingname}{Quellcode}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{\lstlistingname Verzeichnis}% List of Listings -> List of Algorithms
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    language=[Sharp]C,
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    morekeywords={  abstract, event, new, struct,
+                      as, explicit, null, switch,
+                      base, extern, object, this,
+                      bool, false, operator, throw,
+                      break, finally, out, true,
+                      byte, fixed, override, try,
+                      case, float, params, typeof,
+                      catch, for, private, uint,
+                      char, foreach, protected, ulong,
+                      checked, goto, public, unchecked,
+                      class, if, readonly, unsafe,
+                      const, implicit, ref, ushort,
+                      continue, in, return, using,
+                      decimal, int, sbyte, virtual,
+                      default, interface, sealed, volatile,
+                      delegate, internal, short, void,
+                      do, is, sizeof, while,
+                      double, lock, stackalloc,
+                      else, long, static,
+                      enum, namespace, string, GeneticAlgorithmHarmonizer, var, final, String, LOG},
+}
+\lstset{style=mystyle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       /Quellcode einbinden       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

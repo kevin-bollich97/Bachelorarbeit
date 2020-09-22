@@ -1,0 +1,63 @@
+\chapter{Einführung}
+\label{einfuehrung}
+
+\section{Motivation}
+Das cross-funktionale Team Portale (CFT Portale) der Kassenärztlichen Vereinigung 
+Westfalen-Lippe verwaltet eine hohe Anzahl an Applikationen, 
+bei denen regelmäßig neue Funktionen hinzukommen.
+Während der Laufzeit können Fehler auftreten, deren Herkunft nicht immer eindeutig ist. 
+Damit effizient nachvollzogen werden kann, wie der Fehler entstanden ist, sollten bestimmte Informationen 
+während der Laufzeit geloggt werden. \\ 
+Die derzeitige Logging-Situation im CFT Portale ist chaotisch und unstrukturiert.
+Im Team existieren keine Richtlinien zum Logging.
+Dies bewirkt, dass jeder Entwickler seine eigenen Vorstellungen zum Logging umsetzt. \\
+Durch den Mangel an Struktur koexistieren unterschiedliche Logging-Tools, die in der Software des Teams vorhanden sind. 
+Jedoch ist nicht nur die Tool-Auswahl ein Problem für die Entwickler, sondern auch die in den Logdateien enthaltenen Informationen. 
+Jeder Entwickler entscheidet selbst welche Informationen relevant sind. 
+Mit klaren Richtlinien kann dem Team Struktur gegeben werden. 
+Durch diese Struktur, können die Entwickler fehlerhaftes Verhalten einer Software effizienter Suchen und Eingrenzen.
+
+\section{Ziel}
+Ziel dieser Projektarbeit ist es, Logging-Richtlinien für das CFT Portale zu entwickeln, die die Arbeit der Entwickler erleichtern. 
+Um für das CFT Portale passende Logging-Richtlinien zu erstellen, sollen die Applikationen zuerst analysiert werden. \\
+Mithilfe der Logging-Richtlinien können sich die Entwickler an eine Vorgabe halten und dabei die Log-Ausgaben der Anwendungen so gestalten, dass ein einheitlicher Aufbau entsteht und alle für das Bugtracking relevanten Informationen vorliegen. 
+So soll der Wartungsaufwand im CFT Portale gesenkt werden. \\
+Ein weiteres Ziel dieser Projektarbeit soll es sein, dass dem Team negativ Beispiele genannt werden. 
+Mit negativ Beispielen sind in dieser Arbeit Anti-Pattern und Logging code smells gemeint. 
+Diese sollen zum Ende der Projektarbeit vorgestellt werden. 
+Durch die Beispiele ist es den Entwicklern des CFT Portale möglich, die gezeigten Fehler zu vermeiden. \\
+
+%\section{Problemstellung}
+%Ab hier alles Problemstellung
+Das CFT Portale erweitert sein Softwareangebot stetig weiter. 
+Durch die stetige Weiterentwicklung treten Bugs auf, deren Herkunft unbekannt sein kann.
+Das Bugfixing ohne eine verständliche und einheitliche Logging-Architektur ist für die Entwickler eine Herausforderung. \\
+Die Entwickler müssen beim Auftreten eines Bugs, die Anwendung debuggen und eine aufwendige Fehler-Ursachen-Analyse durchführen. 
+Dieser Ansatz hilft nicht immer, denn es können Bugs auftreten, die nicht im direkten Bezug zur Software stehen. 
+Fehler können zum Beispiel durch fehlerhafte Hardware oder auf Grund von Netzwerkproblemen auftreten.
+Durch die in den Logdateien gespeicherten Informationen, können Entwickler nach Auftreten eines Bugs,
+die nötigen Informationen erhalten, um eine effiziente Fehleranalyse durchzuführen. \\
+
+
+Daraus leiten sich folgende Forschungsfragen ab:
+\begin{itemize}
+	\item Welche Informationen sollten geloggt werden? 
+	\item Wo sollten Logfiles gespeichert werden? 
+	\item Wie lange sollten Logdateien gespeichert werden? 
+	\item Welche Logging-Frameworks können die Anforderungen des CFT Portale erfüllen? 
+	\item Wie lässt sich die Effizienz beim Bugtracking verbessern?
+	\item Wie sollte nicht geloggt werden? 
+\end{itemize}
+
+\section{Vorgehensweise}
+
+Zu Beginn der Projektarbeit werden allgemeine Informationen zum Logging erläutert, um eine Grundlage für die Inhalte in dieser Arbeit zu schaffen. \\
+Anschließend soll die derzeitige Situation im CFT Portale genauer beschrieben werden, damit die relevanten derzeitigen Probleme erkannt werden können.\\
+Nachdem die Probleme identifiziert wurden, kann nach Lösungen gesucht werden, die dem CFT Portale zukünftig als Richtlinien dienen sollen. \\
+Damit die Entwickler beim Logging keinen schlecht wartbaren Code produzieren, werden noch schlechte Verhaltensweisen beim Logging gezeigt. 
+Dazu gehören Anti-Pattern und Logging code smells. 
+Zum Schluss wird ein Fazit zum Verlauf der Projektarbeit gezogen, in dem die erlangten Kenntnisse und 
+die gefundenen Lösungen noch einmal vorstellt und bewertet werden. 
+Außerdem soll ein kurzer Ausblick gegeben werden. \\
+
+%\subsection{CFT Portale}
