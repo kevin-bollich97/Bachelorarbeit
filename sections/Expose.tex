@@ -1,7 +1,51 @@
 \section{Motivation}
 
+Das CFT Portale der Kassenärztlichen Vereinigung Westfalen-Lippe (KVWL) verwaltet eine hohe Anzahl an Applikationen, bei denen regelmäßig neue Funktionen hinzukommen. 
+Bei der stetigen Weiterentwicklung können während der Laufzeit Fehler auftreten, dessen Herkunft nicht immer eindeutig ist. 
+Damit die Herkunft solcher Fehler erkannt werden kann, sollten bestimmte Laufzeit-Informationen geloggt werden.
+Da derzeit keine klare Struktur im Logging erkennbar ist, ist das Bugtracking im CFT Portale sehr zeitaufwendig.
+Der Grund dafür liegt in hauptsächlich an der redundanten Serververteilung und dem unstrukturierten Logging. 
+
+
 \section{Problemstellung}
+
+Im CFT Portale müssen die Entwickler regelmäßig die Ursachen von aufgetretenen Fehlern analysieren. 
+Dabei sieht der Prozess folgendermaßen aus: Jede Anwendung ist auf zwei redundanten Servern installiert und schreibt auf der jeweiligen Maschine ihre Logs. 
+Damit die Entwickler herausfinden können, wo das entsprechende Log geschrieben wurde, muss auf beiden Maschinen manuell nach dem Fehler gesucht werden. 
+Da ein Fehler nicht immer sofort nach Auftreten gemeldet wird und die Software trotz des Fehlers weiter läuft, steigt die Menge an geschriebenen Logs. 
+Da den Fehler zu finden, ohne eine Möglichkeit die Logs zu filtern, ist sehr zeitaufwendig. \\
+Ein weiteres Problem sind die derzeitig geschriebenen Logs, denn die Informationen, die in den Logs vorhanden sind, helfen nicht in jedem Fall bei der Fehlersuche. \\
+
+Daraus leiten sich folgende Forschungsfragen ab: 
+\begin{itemize}
+    \item Mit welchem Log-Management-Tool ist ein an die Probleme des CFT Portale angepasstes zentralisiertes Logging möglich?
+    \item Wie kann ein zentralisiertes Log-Management-System eingerichtet werden? 
+    \item Wie können die Richtlinien aus der Projektarbeit in der Praxis umgesetzt werden? 
+\end{itemize}
+
 
 \section{Zielsetzung}
 
+Ziel dieser Bachelorarbeit ist es, die in der Projektarbeit definierten Logging-Richtlinien anhand der Software \glqq Reisekosten\grqq{} durchzuführen.  
+Außerdem soll eine Evaluierung von Log-Management Tools erfolgen, damit herausgefunden werden kann, ob der in der Projektarbeit erwähnte Elastic-Stack die beste Lösung für das CFT Portale ist, um ein zentralisiertes Logging einzurichten.  
+Wenn die Entscheidung über das Log-Management Tool gefunden wurde, soll ein zentralisiertes Logging mit dem Log-Management Tool umgesetzt werden. 
+
 \section{Vorgehensweise}
+Zu Beginn der Bachelorarbeit erfolgt eine Evaluation von Log-Management Tools.
+Mithilfe der Evaluation soll ein passendes Tool identifiziert werden, dass eine effiziente zentralisierte Lösung für das CFT Portale ermöglicht.
+Bevor dies geschieht, müssen noch die Anforderungen an das Tool aufgestellt werden. 
+Nachdem ein Tool identifiziert wurde, soll ein zentralisierter Logging-Server eingerichtet werden. 
+Dieser soll in Zukunft die erstellten Logs sammeln, anzeigen und analysieren.
+Anschließend sollen in der Applikationen \glqq Reisekosten\grqq{} alle in der Projektarbeit definierten Richtlinien umgesetzt werden. 
+Zum Schluss wird ein Fazit zum Verlauf der Bachelorarbeit gezogen. 
+Dabei werden die Ergebnisse der Arbeit noch einmal vorgestellt und bewertet. \\
+
+
+Vorläufige Gliederung:
+\begin{itemize}
+    \item Einführung
+    \item Evaluation von Log-Management Tools
+    \item Einrichten eines zentralisierten Logging-Server
+    \item Umsetzen der Richtlinien
+    \item Fazit
+\end{itemize}
