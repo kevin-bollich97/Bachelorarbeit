@@ -1,5 +1,5 @@
 %Ändern wieder in scrreprt
-\documentclass[12pt,a4paper,headsepline]{scrartcl}
+\documentclass[12pt,a4paper,headsepline]{scrreprt}
 
 \input{variablen.tex}
 \input{settings.tex}
@@ -12,8 +12,8 @@
 
 % Inhaltsverzeichnis
 \pagenumbering{Roman} % Römische Seitenzahlen
-%\tableofcontents
-%\listoffigures
+\tableofcontents
+\listoffigures
 
 \newpage %Seitenumbruch
 
@@ -22,7 +22,8 @@
 \onehalfspacing % 1.5 Zeilenabstand für den Text
 
 % Einbinden von Kapiteln
-\input{sections/Expose.tex}
+\input{sections/1_Einführung.tex}
+\input{sections/2_Evaluation.tex}
 
 \newpage
 
