@@ -9,25 +9,87 @@ Das CFT Portale wäre in der Lage weitere Kosten für ein Tool auf sich zu nehme
 Daher werden Open-Source und Lizenzpflichtige Tools in dieser Evaluation betrachtet.
 Sollten jedoch zwei Tools gleichermaßen die Anforderungen erfüllen und eines der Tools Open-Source sein, dann wird sich für das Open-Source Tool entschieden, um kosten zu sparen. \\
 Damit eine Evaluation erfolgen kann, müssen Anforderungen aufgestellt werden. 
-Diese Anforderungen sollen dabei helfen eine Entscheidung bezüglich der Tools treffen zu können. 
+Die Anforderungen sollen dabei helfen eine Entscheidung bezüglich der Tools treffen zu können. 
 Denn Tools die diese Anforderungen nicht erfüllen können, werden nicht weiter betrachtet.
-Im nächsten Teil diesen Kapitels werden diese Anforderungen definiert. 
+Im nächsten Abschnitt werden die Anforderungen definiert.
 
 \section{Anforderungen an die Log-Management Tools}
+In diesem Abschnitt werden Anforderungen für die zentralisierten Logging Tools definiert. 
+Die Anforderungen helfen bei der Entscheidung, ein passendes Tool für das CFT Portale auszuwählen. 
+Daher wurden in Absprache mit dem Team einige Anforderungen definiert, die das zukünftige Tool haben sollte. 
+Für das CFT Portale spielt Wartung eine wichtige Rolle, daher werden einige Anforderungen sich auf den Wartungsaufwand beziehen. \\
+
+Da das KV-Netz Sicherheitstechnisch stark abgeschirmt ist, kommt eine Cloud Lösung nicht in Frage. 
+Das bedeutet, dass das Tool eine Selbstorganisierte Lösung bieten muss. \\
+Durch die Menge an Anwendungen die das CFT Portale betreuen muss, ist es wichtig, dass das Tool die einzelnen Logs entweder von den unterschiedlichen Maschinen selbst einsammeln kann oder ein Senden von den Anwendungen heraus möglich ist. 
+Das installieren weiterer Log-Agenten die für das schicken der Logs zuständig wäre sollte vermieden werden. 
+Da sonst weiterer Wartungsaufwand entstehen würde. \\
+Da das CFT Portale sich um keine Datenbanken kümmert ist der aktuelle wissensstand des Teams eher allgemein vorhanden. 
+Denn das Team übernimmt in der Regel die Entwicklung von Provider-hosed Apps im SharePoint Umfeld. 
+Damit das Team also erfolgreich mit den Datenbanken arbeiten kann, müssen Schulungen absolviert werden. 
+Daher ist eine wichtige Anforderung die Speicherung der Logs. 
+Das ausgewählte Tool muss eine Möglichkeit anbieten die Logs zu speichern. \\
+Ein wichtiger Punkt ist die Analyse und Anzeige von Logs. 
+Damit ist eine Oberfläche gemeint, die intuitiv benutzt werden kann, um die Logs anzusehen und zu Analysieren. 
+Jedoch sollte in dem Tool auch die Möglichkeit bestehen, Logs zu Filtern und zu durchsuchen. \\
+Im CFT Portale sind Linux- und Windows Server im Betrieb. 
+Jedoch möchte das Team das Tool gerne auf einer Linux Maschine installieren. 
+Da dort das updaten von neuen Versionen einfacher funktioniert und der wissensstand des Teams da komplett gegeben ist. \\
+
+Das waren die Vorgaben die Vom CFT Portale für ein Tool definiert wurden. Hier nochmal eine kleine Aufzählung der einzelnen Anforderungen:
 
 \begin{itemize}
     \item Selbstorganisierte Lösung (Kein CLoud)
-    \item Tool soll Logs von unterschiedlichen Anwendungen einsammeln können 
-    \item Speichern von Logs 
-    \item Analyse(Anzeigen) von Logs an einer Stelle möglich 
+    \item Einsammeln von Logs aus unterschiedlichen Anwendungen 
+    \item Speicherung von Logs ohne externe Datenbank
+    \item Anzeige und Analyse von Logs 
     \item Filtern und Dursuchen von Logs 
-    \item Im Bestenfall auf Linux(Redhat) installierbar, Windows auch ok
+    \item Installation auf Linux Server 
 \end{itemize}
 
 \section{Log-Management Tools}
 
-// TODO: Kurz erläutern Elastic Stack und warum der nicht genauer erklärt wird.
+In der Projektarbeit wurde der Elastic Stack in seiner Funktionsweise und dessen Möglichkeiten  schon ausreichend vorgestellt. 
+Daher wird in diesem Kapitel hauptsächlich auf die neu zu evaluieren Tools eingegangen. 
+Alle Tools werden hier einmal vorgestellt mit all ihren Vor- und Nachteilen.
+
+
 \subsection{Graylog}
+Graylog ist ein Open-Source Log-Management Tool. 
+Dessen Motto ist:
+\begin{quote}
+    \glqq  less cost, more performance\grqq \cite{graylogIndustryLeadingLog}
+\end{quote}
+
+Das Tool setzt also auf Performance.
+Die Funktionalitäten des Tools beziehen sich auf das Sammeln, verbessern, Speichern und die Analyse der Logs. 
+In Graylog kann man eigene Dashboards erstellen und individuell anpassen was dort zu sehen ist. 
+Dabei kann mithilfe von Suchabfragen das Dashboard definiert werden. 
+Damit nicht jeder Mitarbeiten sich mit den Suchabfragen beschäftigen muss, können die Dashboards geteilt werden. 
+Graylog bietet jedoch auch vordefinierte Widgets an, die für die Anzeige genutzt werden können. \\
+Mithilfe von Graylog können unmengen an Daten gespeichert werden.
+Daher ist die Suche in Großen Datenmengen sehr wichtig. 
+In Graylog werden die Logs beim Speichern sofort indiziert, um eine schnelle Suche zu ermöglichen. 
+Die Daten werden beim Speichern geprüft ob sie eine gute struktur aufweisen. 
+Wenn nicht werden die Daten verbessert.
+Die Suche in den Daten von Graylog wird über verschiedene Threads aufgeteilt. 
+Die Architektur von Graylog ist so gebaut, dass multi-threaded Suchen ermöglicht werden. 
+Jede Suche nutzt mehrere Prozessoren. 
+Die Suche in Graylog erfolgt über einfache Boolean operationen und auswählen der benötigten Felder. 
+Damit ist das erlernen einer neuen Suchsprache nicht notwendig. \\
+
+
+
+
+
+
+
+
+Graylog wirbt mit folgenden Funktionen: Massive Skalierbarkeit, Performance, Anzeige und Analyse von Log, 
+
+Jedoch kann auch eine Enterprise Variante ausgewählt werden, die ein paar Funktionen mehr besitzt. 
+
+
 \subsection{Loggly}
 \subsection{Fluentd}
 \subsection{Splunk}
