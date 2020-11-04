@@ -61,22 +61,29 @@ Dessen Motto ist:
     \glqq  less cost, more performance\grqq \cite{graylogIndustryLeadingLog}
 \end{quote}
 
-Das Tool setzt also auf Performance.
+Das Tool setzt auf Performance.
 Die Funktionalitäten des Tools beziehen sich auf das Sammeln, verbessern, Speichern und die Analyse der Logs. 
-In Graylog kann man eigene Dashboards erstellen und individuell anpassen was dort zu sehen ist. 
-Dabei kann mithilfe von Suchabfragen das Dashboard definiert werden. 
+In Graylog kann man eigene Dashboards erstellen und individuell anpassen. 
+Dabei wird mithilfe von Suchabfragen das Dashboard definiert. 
 Damit nicht jeder Mitarbeiten sich mit den Suchabfragen beschäftigen muss, können die Dashboards geteilt werden. 
-Graylog bietet jedoch auch vordefinierte Widgets an, die für die Anzeige genutzt werden können. \\
-Mithilfe von Graylog können unmengen an Daten gespeichert werden.
+Graylog bietet jedoch auch vordefinierte Dashboards an, die genutzt werden können. \\
+Mithilfe von Graylog können unmengen an Logs gespeichert werden.
 Daher ist die Suche in Großen Datenmengen sehr wichtig. 
 In Graylog werden die Logs beim Speichern sofort indiziert, um eine schnelle Suche zu ermöglichen. 
 Die Daten werden beim Speichern geprüft ob sie eine gute struktur aufweisen. 
-Wenn nicht werden die Daten verbessert.
-Die Suche in den Daten von Graylog wird über verschiedene Threads aufgeteilt. 
-Die Architektur von Graylog ist so gebaut, dass multi-threaded Suchen ermöglicht werden. 
-Jede Suche nutzt mehrere Prozessoren. 
-Die Suche in Graylog erfolgt über einfache Boolean operationen und auswählen der benötigten Felder. 
-Damit ist das erlernen einer neuen Suchsprache nicht notwendig. \\
+Wenn die Struktur nicht gut ist, wird sie verbessert. 
+Die Architektur von Graylog ermöglicht eine multi-threaded Suche. 
+Jede Suche nutzt dabei mehrere Prozessoren um möglichst effizient zu sein. 
+Die Suche in Graylog ist dabei einfach aufgebaut. 
+Einfache Boolean Operationen werden für die Suche genutzt. 
+Die dazu benötigten Felder werden durch einfaches klicken ausgewählt.
+Damit muss keine neue Suchsprache erlernt werden und kann auch von nicht Fachpersonal genutzt werden. \cite{graylogIndustryLeadingLog}\\
+
+Graylog kann als Enterprise Variante gekauft werden. 
+Bei der Enterprise Variant wird Support angeboten, sowie Features die in der Open Source Variante nicht vorhanden sind. 
+Zu dem Support gehört Hilfe zu allen Graylog bezogenen Fragen, jedoch bietet Graylog zusätzlich Support für weitere Komponenten an, die zusätzlich installiert werden müssen. 
+Zu den zusätzlich zu installierenden Software Komponenten gehören: Elasticsearch, MongoDB und Oracle Java SE 8 (oder OpenJDK 8).
+
 
 
 
@@ -87,11 +94,12 @@ Damit ist das erlernen einer neuen Suchsprache nicht notwendig. \\
 
 Graylog wirbt mit folgenden Funktionen: Massive Skalierbarkeit, Performance, Anzeige und Analyse von Log, 
 
-Jedoch kann auch eine Enterprise Variante ausgewählt werden, die ein paar Funktionen mehr besitzt. 
 
 
 \subsection{Loggly}
-\subsection{Fluentd}
 \subsection{Splunk}
 \subsection{LogDNA}
+
+
+\subsection{Fluentd}
 
