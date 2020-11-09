@@ -14,6 +14,7 @@ Denn Tools die diese Anforderungen nicht erfüllen können, werden nicht weiter 
 Im nächsten Abschnitt werden die Anforderungen definiert.
 
 \section{Anforderungen an die Log-Management Tools}
+\label{kap:anforderungenTools}
 In diesem Abschnitt werden Anforderungen für die zentralisierten Logging Tools definiert. 
 Die Anforderungen helfen bei der Entscheidung, ein passendes Tool für das CFT Portale auszuwählen. 
 Daher wurden in Absprache mit dem Team einige Anforderungen definiert, die das zukünftige Tool haben sollte. 
@@ -52,7 +53,34 @@ Das waren die Vorgaben die Vom CFT Portale für ein Tool definiert wurden. Hier 
 In der Projektarbeit wurde der Elastic Stack in seiner Funktionsweise und dessen Möglichkeiten  schon ausreichend vorgestellt. 
 Daher wird in diesem Kapitel hauptsächlich auf die neu zu evaluieren Tools eingegangen. 
 Alle Tools werden hier einmal vorgestellt mit all ihren Vor- und Nachteilen.
+Eine Bewertung der Tools wird in Kapitel \ref{kap:bewertungTools} durchgeführt.
+Bevor die Tools evaluiert werden können, musste eine vorauswahl getroffen werden, um potenzielle Tools finden zu können. 
+Dafür wurden eine Vielzahl an Tools betrachtet und nach den Anforderungen in Kapitel \ref{kap:anforderungenTools} ausgewählt. 
+Dabei wurde darauf geachtet, dass mindestens vier von sechs der Anforderungen erfüllt sein müssen, um ein Tool mit in die Evaluation nehmen zu können. 
 
+\begin{table}[]
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+    \hline
+    \textbf{Tool}     & \textbf{Nicht Cloud} & \textbf{Sammeln von Logs} & \textbf{Speichern} & \textbf{Anzeige} & \textbf{Filtern} & \textbf{Linux} \\ \hline
+    Graylog           &                      &                           &                    &                  &                  &                \\ \hline
+    Nagios            &                      &                           &                    &                  &                  &                \\ \hline
+    LOGAlyze          &                      &                           &                    &                  &                  &                \\ \hline
+    Fluentd           &                      &                           &                    &                  &                  &                \\ \hline
+    Flume             &                      &                           &                    &                  &                  &                \\ \hline
+    Octopussy         &                      &                           &                    &                  &                  &                \\ \hline
+    Rsyslog           &                      &                           &                    &                  &                  &                \\ \hline
+    LogPacker         &                      &                           &                    &                  &                  &                \\ \hline
+    Logwatch          &                      &                           &                    &                  &                  &                \\ \hline
+    Syslog-ng         &                      &                           &                    &                  &                  &                \\ \hline
+    Inav              &                      &                           &                    &                  &                  &                \\ \hline
+    Loggly            &                      &                           &                    &                  &                  &                \\ \hline
+    EventLog Analyzer &                      &                           &                    &                  &                  &                \\ \hline
+    Sematext Logs     &                      &                           &                    &                  &                  &                \\ \hline
+    Splunk            &                      &                           &                    &                  &                  &                \\ \hline
+    XpoLog            &                      &                           &                    &                  &                  &                \\ \hline
+    Managelogs        &                      &                           &                    &                  &                  &                \\ \hline
+    \end{tabular}
+    \end{table}
 
 \subsection{Graylog}
 Graylog ist ein Open-Source Log-Management Tool. 
@@ -62,44 +90,67 @@ Dessen Motto ist:
 \end{quote}
 
 Das Tool setzt auf Performance.
-Die Funktionalitäten des Tools beziehen sich auf das Sammeln, verbessern, Speichern und die Analyse der Logs. 
+Die Funktionalitäten des Tools beziehen sich auf das Sammeln, verbessern, Speichern und der Analyse von Logs. 
 In Graylog kann man eigene Dashboards erstellen und individuell anpassen. 
-Dabei wird mithilfe von Suchabfragen das Dashboard definiert. 
-Damit nicht jeder Mitarbeiten sich mit den Suchabfragen beschäftigen muss, können die Dashboards geteilt werden. 
-Graylog bietet jedoch auch vordefinierte Dashboards an, die genutzt werden können. \\
+Das Dashboard wird mithilfe von Suchabfragen definiert.
+Damit nicht jeder Mitarbeiten sich mit den Suchabfragen beschäftigen muss, können die Dashboards untereinander geteilt werden. 
+Graylog bietet zusätzlich vordefinierte Dashboards an, die genutzt werden können. \\
 Mithilfe von Graylog können unmengen an Logs gespeichert werden.
-Daher ist die Suche in Großen Datenmengen sehr wichtig. 
-In Graylog werden die Logs beim Speichern sofort indiziert, um eine schnelle Suche zu ermöglichen. 
-Die Daten werden beim Speichern geprüft ob sie eine gute struktur aufweisen. 
-Wenn die Struktur nicht gut ist, wird sie verbessert. 
+Daher ist die Suche in Großen Datenmengen essenziell. 
+In Graylog werden die Logs beim Speichern indiziert, um eine effiziente Suche zu ermöglichen. 
+Die Daten werden beim Speichern geprüft. 
+Bei der Prüfung wird die Struktur genauer untersucht, um festzustellen, ob die Struktur in Ordnung ist.
+Wenn die Struktur nicht in Ordnung ist, wird sie verbessert. \\
 Die Architektur von Graylog ermöglicht eine multi-threaded Suche. 
-Jede Suche nutzt dabei mehrere Prozessoren um möglichst effizient zu sein. 
+Jede Suche nutzt dabei mehrere Prozessoren, um möglichst effizient zu sein. 
 Die Suche in Graylog ist dabei einfach aufgebaut. 
 Einfache Boolean Operationen werden für die Suche genutzt. 
 Die dazu benötigten Felder werden durch einfaches klicken ausgewählt.
-Damit muss keine neue Suchsprache erlernt werden und kann auch von nicht Fachpersonal genutzt werden. \cite{graylogIndustryLeadingLog}\\
+Damit muss keine neue Suchsprache erlernt werden und kann von nicht Fachpersonal genutzt werden. \cite{graylogIndustryLeadingLog} \\
 
-Graylog kann als Enterprise Variante gekauft werden. 
-Bei der Enterprise Variant wird Support angeboten, sowie Features die in der Open Source Variante nicht vorhanden sind. 
-Zu dem Support gehört Hilfe zu allen Graylog bezogenen Fragen, jedoch bietet Graylog zusätzlich Support für weitere Komponenten an, die zusätzlich installiert werden müssen. 
-Zu den zusätzlich zu installierenden Software Komponenten gehören: Elasticsearch, MongoDB und Oracle Java SE 8 (oder OpenJDK 8).
+Wenn mehr benötigt wird, als die Open Source Version anbietet, dann kann Graylog als Enterprise Variante gekauft werden. 
+Bei der Enterprise Variante werden Support und zusätzliche Funktionen angeboten.
+Der genaue Vergleich der beiden Varianten kann in Abbildung \ref{fig:vergleichGraylogOSvsE} im Anhang \ref{anhang:vergleichGraylogOSvsE} gesehen werden.
+Zu dem Support gehört Hilfe zu allen Graylog bezogenen Fragen, jedoch bietet Graylog zusätzlich Support für Elasticsearch, MongoDB und Oracle Java SE 8 (oder OpenJDK 8).
+Sie bieten diesen Support an, weil Graylog diese Produkte benötigt, um laufen zu können. 
+Das bedeutet, dass diese Produkte zusätzlich auf der zu installierenden Maschine installiert werden. 
+Zum Thema der zu installierenden Maschine ist wichtig zu beachten, dass Graylog nur auf Linux-basierten Betriebssystemen installiert werden kann. \\
+Die Graylog Enterprise variante kann bis zu 5 GB/Tag kostenlos erworben werden. 
+Für so kleine Datenmengen ist es daher Ratsam direkt auf die Enterprise Variante zu setzen. \cite{graylogGraylogOpenSource} \\
 
+Damit Graylog funktionieren kann muss weitere Software auf der Maschine installiert werden. 
+Das bewirkt, dass der Aufwand für das Updaten des Tools zu Problemen führen kann. 
+Beim Betrieb von Graylog muss darauf geachtet werden, dass die Versionen der Tools passen. 
+Das sorgt dafür, dass der Wartungsaufwand sehr Hoch ist. \\
+Abließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst werden: \\
 
-
-
-
-
-
-
-
-Graylog wirbt mit folgenden Funktionen: Massive Skalierbarkeit, Performance, Anzeige und Analyse von Log, 
-
+\begin{itemize}
+    \item Vorteile: 
+    \begin{itemize}
+        \item Open Source (Enterprise auch möglich)
+        \item Sehr performant durch multi-threaded Suche und indizierung
+        \item Speichern großer Datenmengen möglich
+    \end{itemize}
+     
+    \item Nachteile: 
+    \begin{itemize}
+        \item Notwendige Installation von weiterer Software
+        \item Durch extra Software Updates Problematisch
+        \item Installation nur auf Linux Maschinen
+    \end{itemize}
+\end{itemize}
 
 
 \subsection{Loggly}
+
+
+
+
 \subsection{Splunk}
 \subsection{LogDNA}
-
-
 \subsection{Fluentd}
 
+
+
+\section{Bewertung der Tools}
+\label{kap:bewertungTools}

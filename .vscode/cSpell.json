@@ -28,6 +28,7 @@
         "\\\\hyphenation{[A-Za-z0-9, -]+}"
     ],
     "words": [
+        "Graylog",
         "Logstash"
     ]
 }
