@@ -56,31 +56,8 @@ Alle Tools werden hier einmal vorgestellt mit all ihren Vor- und Nachteilen.
 Eine Bewertung der Tools wird in Kapitel \ref{kap:bewertungTools} durchgeführt.
 Bevor die Tools evaluiert werden können, musste eine vorauswahl getroffen werden, um potenzielle Tools finden zu können. 
 Dafür wurden eine Vielzahl an Tools betrachtet und nach den Anforderungen in Kapitel \ref{kap:anforderungenTools} ausgewählt. 
-Dabei wurde darauf geachtet, dass mindestens vier von sechs der Anforderungen erfüllt sein müssen, um ein Tool mit in die Evaluation nehmen zu können. 
 
-\begin{table}[]
-    \begin{tabular}{|l|l|l|l|l|l|l|}
-    \hline
-    \textbf{Tool}     & \textbf{Nicht Cloud} & \textbf{Sammeln von Logs} & \textbf{Speichern} & \textbf{Anzeige} & \textbf{Filtern} & \textbf{Linux} \\ \hline
-    Graylog           &                      &                           &                    &                  &                  &                \\ \hline
-    Nagios            &                      &                           &                    &                  &                  &                \\ \hline
-    LOGAlyze          &                      &                           &                    &                  &                  &                \\ \hline
-    Fluentd           &                      &                           &                    &                  &                  &                \\ \hline
-    Flume             &                      &                           &                    &                  &                  &                \\ \hline
-    Octopussy         &                      &                           &                    &                  &                  &                \\ \hline
-    Rsyslog           &                      &                           &                    &                  &                  &                \\ \hline
-    LogPacker         &                      &                           &                    &                  &                  &                \\ \hline
-    Logwatch          &                      &                           &                    &                  &                  &                \\ \hline
-    Syslog-ng         &                      &                           &                    &                  &                  &                \\ \hline
-    Inav              &                      &                           &                    &                  &                  &                \\ \hline
-    Loggly            &                      &                           &                    &                  &                  &                \\ \hline
-    EventLog Analyzer &                      &                           &                    &                  &                  &                \\ \hline
-    Sematext Logs     &                      &                           &                    &                  &                  &                \\ \hline
-    Splunk            &                      &                           &                    &                  &                  &                \\ \hline
-    XpoLog            &                      &                           &                    &                  &                  &                \\ \hline
-    Managelogs        &                      &                           &                    &                  &                  &                \\ \hline
-    \end{tabular}
-    \end{table}
+
 
 \subsection{Graylog}
 Graylog ist ein Open-Source Log-Management Tool. 
@@ -141,15 +118,47 @@ Abließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst
 \end{itemize}
 
 
+Sematext? 
 \subsection{Loggly}
-
-
-
-
 \subsection{Splunk}
 \subsection{LogDNA}
+
 \subsection{Fluentd}
 
+Fluentd ist ein Open Source data Collector, der es den Anwendern ermöglichen soll alles zu loggen. 
+Das heißt Fluentd sammelt Daten von einer Stelle und bringt sie in gewünschter Form in das Ziel. 
+Also ist Fluentd kein Tool um zentralisiertes Logging zu ermöglichen, sondern nur ein Tool das beim zentralisierten Logging behilflich ist. 
+Mithilfe von Fluentd können Datenströme einheitlich gestaltet werden. 
+Ein Beispiel dafür sieht an in Abbildung \ref{fig:fluentdVorherNachher}.
+Im vorher Bild ist es Schwer zu erkennen wie die Daten versendet werden, im nachher Bild ist es einfach zu erkennen das alle Datenströme durch Fluentd gelangen müssen. \Cite{fluentdFluentdOpenSource} \\
+
+Fluentd versucht soweit es möglich ist, die Daten zu strukturieren. 
+Dabei werden die Daten in JSON gespeichert. 
+Somit kann Fluentd die Daten einheitlich verarbeiten. 
+Zum Verarbeiten gehören das Sammeln, Filtern, Puffern und die Weitergabe der Logs über verschiedene Quellen und Ziele hinweg. 
+Für weitere Funktionalitäten können Lösungen von der Community genutzt werden. 
+Das wird durch die Steckbare Architektur von Fluentd ermöglicht. 
+Fluentd ist in einer Kombination von C und Ruby entwickelt worden. 
+Deswegen benötigt es nur wenig System Ressourcen um zu Funktionieren.
+Die standard Version von Fluentd ohne weitere Komponenten benötigt ungefähr 30-40 MB Speicher. \cite{projectWhatFluentdFluentd}
+
+Die größten Vorteile von Fluentd sind die Menge an Plugins die verfügbar sind und die Performance. 
+Außerdem verbraucht Fluentd sehr wenig Speicher. 
+Der größte Nachteile ist der Zwang nach Strukturierten Daten, damit ist gemeint, dass es nicht so flexibel möglich ist zu entscheiden wie die Logs auszusehen haben. 
+
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/Fluentd.PNG} 
+    \caption{Fluentd vorher und nachher Vergleich \cite{projectWhatFluentdFluentd}}
+    \label{fig:fluentdVorherNachher}
+\end{figure}
+
+
+
+
+Logagent? 
+
+https://sematext.com/blog/logstash-alternatives/
 
 
 \section{Bewertung der Tools}
