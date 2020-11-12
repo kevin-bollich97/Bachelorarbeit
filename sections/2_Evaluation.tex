@@ -117,23 +117,51 @@ Abließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst
     \end{itemize}
 \end{itemize}
 
+\subsection{Sematext}
 
-Sematext? 
-\subsection{Loggly}
-\subsection{Splunk}
-\subsection{LogDNA}
+Sematext ist ein kostenpflichtiges Log-Management und Infrastructure Monitoring Tool. 
+Das Tool wird als SaaS (Software as a Service) angeboten, jedoch gibt es zusätzlich eine Enterprise Variante, die das laufen innerhalb der eigenen Infrastruktur ermöglicht. 
+Das heißt, dass eine Kopie der Cloud Version von Sematext auf der eigenen Infrastruktur laufen kann. 
+Sematext unterstützt im Vergleich zu anderen Tools nicht nur das Log-Management, sondern diese Funktionen: 
+\begin{itemize}
+    \item Infrastructure Monitoring
+    \item Application Performance Management (APM)
+    \item Log Management
+    \item Real User Monitoring 
+\end{itemize}
+
+Sematext nutzt für das Log-Management Elasticsearch und Kibana. 
+Das heißt beim Kauf von Sematext erhält man eine fertige Lösung des Elastic Stack. 
+Der Vorteil besteht hier in der Wartung die von Sematext selbst übernommen wird. 
+Ein Vor- und Nachteil besteht beim Log-Shipper, der zusätzlich noch installiert werden muss. 
+Dieser wird nicht von Sematext bestimmt. 
+Daher kann da Flexibel entschieden werden welcher Log Shipper am besten geeignet ist. 
+Jedoch kann dadurch auch nicht sichergestellt werden, dass der Log Shipper mit dem Tool gut funktioniert. 
+mithilfe der Filter Funktion können mit Sematext Benachrichtigungen definiert werden, die beim auftreten eine Nachricht senden. \cite{sematextSematextEnterpriseLog} \\
+
+Damit Sematext in der eigenen Infrastruktur laufen kann muss folgende Software installiert sein: 
+\begin{itemize}
+    \item Docker 
+    \item Kubernetes 
+    \item Helm
+\end{itemize}
+Sematext Enterprise wird als Helm Chart angeboten. 
+Helm Chart ist ein Paket für Kubernetes. 
+Das Helm Chart beinhaltet alles was nötig ist um Sematext Enterprise nutzen zu können. 
+Da Sematext Enterprise nur als Helm Chart angeboten wird, muss die Installation über Kubernetes erfolgen. \cite{sematextSematextEnterpriseOverview}
+
 
 \subsection{Fluentd}
 
-Fluentd ist ein Open Source data Collector, der es den Anwendern ermöglichen soll alles zu loggen. 
-Das heißt Fluentd sammelt Daten von einer Stelle und bringt sie in gewünschter Form in das Ziel. 
+Fluentd ist ein Open Source data Collector, der es Anwendern ermöglichen soll, alles zu loggen. 
+Das heißt Fluentd sammelt Daten und leitet sie in gewünschter Form weiter zum Ziel. 
 Also ist Fluentd kein Tool um zentralisiertes Logging zu ermöglichen, sondern nur ein Tool das beim zentralisierten Logging behilflich ist. 
-Mithilfe von Fluentd können Datenströme einheitlich gestaltet werden. 
-Ein Beispiel dafür sieht an in Abbildung \ref{fig:fluentdVorherNachher}.
-Im vorher Bild ist es Schwer zu erkennen wie die Daten versendet werden, im nachher Bild ist es einfach zu erkennen das alle Datenströme durch Fluentd gelangen müssen. \Cite{fluentdFluentdOpenSource} \\
+Mithilfe von Fluentd können Datenströme einheitlich und verständlich ablaufen. 
+Ein Beispiel dafür ist in Abbildung \ref{fig:fluentdVorherNachher} zu sehen.
+Die Datenströme im \glqq Before Fluentd\grqq{} Teil sind nicht zu erkennen, wobei mit der Nutzung von Fluentd die Datenströme einheitlich über Fluentd laufen. \Cite{fluentdFluentdOpenSource} \\
 
-Fluentd versucht soweit es möglich ist, die Daten zu strukturieren. 
-Dabei werden die Daten in JSON gespeichert. 
+Fluentd versucht soweit es möglich ist, die erhaltenen Daten zu strukturieren. 
+Dabei werden die Daten im JSON-Format gespeichert. 
 Somit kann Fluentd die Daten einheitlich verarbeiten. 
 Zum Verarbeiten gehören das Sammeln, Filtern, Puffern und die Weitergabe der Logs über verschiedene Quellen und Ziele hinweg. 
 Für weitere Funktionalitäten können Lösungen von der Community genutzt werden. 
@@ -145,6 +173,7 @@ Die standard Version von Fluentd ohne weitere Komponenten benötigt ungefähr 30
 Die größten Vorteile von Fluentd sind die Menge an Plugins die verfügbar sind und die Performance. 
 Außerdem verbraucht Fluentd sehr wenig Speicher. 
 Der größte Nachteile ist der Zwang nach Strukturierten Daten, damit ist gemeint, dass es nicht so flexibel möglich ist zu entscheiden wie die Logs auszusehen haben. 
+Fluentd formatiert die erhaltenen Daten immer in JSON-Format.
 
 \begin{figure}[H]
     \center 
@@ -154,12 +183,7 @@ Der größte Nachteile ist der Zwang nach Strukturierten Daten, damit ist gemein
 \end{figure}
 
 
-
-
-Logagent? 
-
-https://sematext.com/blog/logstash-alternatives/
-
-
+% https://sematext.com/blog/logstash-alternatives/
 \section{Bewertung der Tools}
 \label{kap:bewertungTools}
+
