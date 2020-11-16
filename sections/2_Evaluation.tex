@@ -50,16 +50,45 @@ Das waren die Vorgaben die Vom CFT Portale für ein Tool definiert wurden. Hier 
 
 \section{Log-Management Tools}
 
-In der Projektarbeit wurde der Elastic Stack in seiner Funktionsweise und dessen Möglichkeiten  schon ausreichend vorgestellt. 
-Daher wird in diesem Kapitel hauptsächlich auf die neu zu evaluieren Tools eingegangen. 
+In der Projektarbeit wurde der Elastic Stack in seiner Funktionsweise und dessen Möglichkeiten detailliert vorgestellt. 
+Jedoch wird in diesem Kapitel auf die wichtige Inhalte des Elastic Stack eingegangen, um eine Bewertung der Tools zu ermöglichen
 Alle Tools werden hier einmal vorgestellt mit all ihren Vor- und Nachteilen.
 Eine Bewertung der Tools wird in Kapitel \ref{kap:bewertungTools} durchgeführt.
 Bevor die Tools evaluiert werden können, musste eine vorauswahl getroffen werden, um potenzielle Tools finden zu können. 
 Dafür wurden eine Vielzahl an Tools betrachtet und nach den Anforderungen in Kapitel \ref{kap:anforderungenTools} ausgewählt. 
 
 
+\subsection{Elastic Stack}
+
+Der Elastic Stack ist eine Sammlung von Tools, die unterschiedliche Aufgaben erledigen. 
+Die Tools sind Elasticsearch, Kibana, Logstash und Beat. 
+Mit diesen Tools können unterschiedliche Aufgaben gelöst werden. 
+Im Rahmen dieser Bachelorarbeit ist jedoch nur das Log-Management interessant. 
+Daher wird hier nur auf das Log-Management eingegangen. 
+Die Aufgaben der einzelnen Tools sind: 
+\begin{itemize}
+    \item Elasticsearch - Speichern und Suchen
+    \item Kibana - Analyse und Anzeige 
+    \item Logstash - Parsen und Weiterleiten
+    \item Beat - Schicken von Daten 
+\end{itemize}
+Da der Elastic Stack Open Source ist, fallen für die Nutzung keine Kosten an. 
+Jedoch ist der Aufwand in der Wartung dadurch höher, da alles selber konfiguriert werden muss. 
+Der Elastic Stack bietet die Möglichkeit verschiedene Lösungen zu kaufen.
+Zu den Lösungen gehören:  \textbf{Enterprise Search}, \textbf{Observability} und \textbf{Security}.
+Für diese Bachelorarbeit wird nur die Selbstorganisierte Lösung in betracht gezogen. \cite{elasticElasticProdukteSucheAnalytics} \\
+
+Mit den Tools des Elastic Stack ist die einrichtung eines zentralisierten Logging Servers in einigen Schritten Möglich. 
+Dafür müssen die Tools auf den jeweiligen Servern installiert werden. 
+Kibana, Elasticsearch und Logstash können auf einem einzelnen Server installiert werden und Beat muss auf den Servern der einzelnen Anwendungen installiert werden. 
+Die Tools können auf Linux, Mac oder Windows installiert werden. \cite{elasticElasticStackElasticsearch}
+Elasticsearch ist im Ranking der Search Engines von \textbf{DB-Engines} auf Platz 1.\cite{db-enginesDBEnginesRanking}
+Alle definierten Anforderungen in Kapitel \ref{kap:anforderungenTools} werden vom Elastic Stack vollständig erfüllt. 
+
+
 
 \subsection{Graylog}
+
 Graylog ist ein Open-Source Log-Management Tool. 
 Dessen Motto ist:
 \begin{quote}
@@ -184,6 +213,30 @@ Fluentd formatiert die erhaltenen Daten immer in JSON-Format.
 
 
 % https://sematext.com/blog/logstash-alternatives/
-\section{Bewertung der Tools}
+\section{Vergleich der Tools}
 \label{kap:bewertungTools}
+
+In diesem Kapitel erfolgt ein Vergleich der einzeln vorgestellten Tools mit dem Elastic Stack. 
+So soll geprüft werden, welche Vor- und Nachteile die Tools im Vergleich zum Elastic Stack mitbringen. 
+Anschließend soll mit Hilfe der in Kapitel \ref{kap:anforderungenTools} definierten Anforderungen entschieden werden, ob ein Tool für das CFT Portale besser geeignet ist, als der Elastic Stack. 
+
+\subsection{Graylog vs. Elastic Stack}
+
+Graylog ist wie der Elastic Stack ein Open Source Tool um zentralisiertes Logging zu ermöglichen. 
+Dabei setzt Graylog bei der Suche auf Elasticsearch. 
+Dadurch ist die Suche bei beiden Produkten identisch. 
+Im vergleich zum Elastic Stack bietet Graylog keinen weiteren Vorteil den Elastic Stack nicht hat.
+Jedoch bringt Graylog einen Nachteil mit sich, die der Elastic Stack nicht hat. 
+Das ist die Installation weiterer Software, die Probleme beim zukünftigen Updaten bringen können. 
+Der Elastic Stack benötigt zum Laufen nur die Tools vom Elastic Stack. \\
+Beim Vergleich von Graylog und dem Elastic Stack fällt auf, dass der Elastic Stack insgesamt die bessere Entscheidung darstellt. 
+
+\subsection{Sematext vs. Elastic Stack}
+
+
+
+
+
+
+
 
