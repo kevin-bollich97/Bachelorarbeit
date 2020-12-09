@@ -1,0 +1,68 @@
+\chapter{Einrichtung des zentralisierten Logging Servers}
+
+Die im vorherigen Kapitel durchgeführte Evaluation kam zum entschluss, dass der Elastic Stack die Anforderungen des CFT Portale am besten erfüllen kann. 
+Daher wird in diesem Kapitel ein zentralisierter Logging-Server mit dem Elastic Stack installiert und konfiguriert.
+Dafür wird zu Beginn ein Server benötigt, auf dem die einzelnen Komponenten installiert werden können. 
+Anschließend müssen die einzelnen Tools des Elastic Stack installiert und konfiguriert werden. \\
+Dieses Kapitel ist wie folgt aufgebaut: 
+\begin{itemize}
+    \item RedHat Server 
+    \item Elasticsearch
+    \item Kibana
+    \item Logstash
+    \item Filebeat
+\end{itemize}
+
+
+\section{RedHat Server}
+
+Damit die einzelnen Komponenten des Elastic Stack installiert werden können, musste ein Server beantragt werden. 
+Dafür wurde ein Auftrag an das CFT Infrastruktur der KVWL gesendet, um so einen Server zu erhalten. 
+Wie schon in Kapitel \ref{kap:bewertungTools} geschrieben wurde, werden im CFT Portale Linux Server verwendet. 
+In der Regel werden RedHat Server genutzt. 
+So ist es auch bei dem Server für das zentralisierte Logging. 
+Es ist ein RedHat Server mit der Version 7.9. \\
+Damit die Kommunikation zum Server erfolgen kann, müssen einige Ports freigeschaltet werden. 
+Denn Elasticsearch und Kibana nutzen die Ports 9200 und 5601.
+Ohne Freischalten der Ports würde die Kommunikation von anderen Systemen nicht Funktionieren. 
+Die Portfreischaltung erfolgte mit diesen Befehlen: 
+\begin{lstlisting} [language=bash]
+$ sudo firewall-cmd --zone=public --add-port=9200/tcp --permanent    
+$ sudo firewall-cmd --zone=public --add-port=5601/tcp --permanent    
+\end{lstlisting}
+
+Bevor die Installation der Elastic Stack Komponenten erfolgen konnte, musste festgelegt werden wie die Installation durchgeführt werden soll. 
+Denn die KVWL nutzt \textit{Satellite} um die installierten Packages zu verwalten. 
+Aktuell sind die Komponenten des Elastic Stack nicht im Satellite eingebunden. 
+Daher muss geklärt werden wie die Komponenten installiert werden dürfen. 
+Um den Organisatorischen Aufwand möglichst gering zu halten, wurde in Absprache mit den Administratoren festgelegt, dass eine Manuelle Installation derzeit durchgeführt werden soll. 
+Im Anschluss an diese Bachelorarbeit sollen die Pakete, sofern das Ergebnis zufriedenstellende Ergebnisse liefert, ins Satellite eingebunden werden, um den zukünftigen Wartungsaufwand gering zu halten. 
+
+\section{Elasticsearch}
+
+Die erste zu installierende Komponente des Elastic Stack ist Elasticsearch.
+Bei der Installation wurde auf die Anleitung vom Hersteller zurückgegriffen. \cite{elasticInstallElasticsearchRPM}
+Bei der Installation war es wichtig zu beachten die richtigen Packages runterzuladen. 
+Denn in der Anleitung wird von der Kommerziellen Lösung gesprochen, die kostenlos getestet werden kann. 
+Die richtigen Package Versionen beinhalten ein \textit{oss} im Namen. \\ 
+Aus Sicherheitsgründen hat der Server keinen Zugriff auf das Internet. 
+Daher müssen die Installationspakete Manuell vom Entwickler Rechner runtergeladen werden und Anschließend zum Server rüberkopiert werden. 
+Da es sich um einen RedHat Server handelt, werden \textit{rpm} Pakete runtergeladen und installiert.
+Der Befehl der genutzt wurde um das Package runterzuladen ist: 
+\begin{lstlisting}[language=bash]
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.10.0-x86_64.rpm
+\end{lstlisting}
+Nachdem der Download fertiggestellt wurde, musste das \textit{rpm} package auf den RedHat Server kopiert werden. 
+Dies geschah mit dem Befehl: 
+\begin{lstlisting} [language=bash]
+pscp -P 22 elasticsearch-oss-7.10.0-x86_64.rpm bollich@DOT-RH-ZLOG1.doms.kvwl.de:/home/bollich
+\end{lstlisting}
+
+\section{Kibana}
+\subsection{Dashboards?}
+\subsection{Index Pattern}
+\section{Logstash}
+// Erklären warum logstash nicht gebraucht wird.
+\section{Filebeat}
+\section{Struktur der Logs(Also Index Pattern wie aufbauen. Mit Prod und so weiter, Grafik malen)}
+
