@@ -52,13 +52,95 @@ Der Befehl der genutzt wurde um das Package runterzuladen ist:
 \begin{lstlisting}[language=bash]
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.10.0-x86_64.rpm
 \end{lstlisting}
-Nachdem der Download fertiggestellt wurde, musste das \textit{rpm} package auf den RedHat Server kopiert werden. 
-Dies geschah mit dem Befehl: 
+Nachdem der Download fertiggestellt wurde, musste das \textit{rpm} package auf den RedHat Server kopiert werden:
 \begin{lstlisting} [language=bash]
 pscp -P 22 elasticsearch-oss-7.10.0-x86_64.rpm bollich@DOT-RH-ZLOG1.doms.kvwl.de:/home/bollich
 \end{lstlisting}
+Anschließend musste das \textit{rpm} Paket installiert werden.
+Nach der Installation musste eingestellt werden, dass der Elasticsearch Service automatisch startet wenn der Server hochfährt.
+
+\begin{lstlisting} [language=bash]
+sudo rpm --install elasticsearch-oss-7.10.0-x86_64.rpm
+sudo /bin/systemctl daemon-reload 
+sudo /bin/systemctl enable elasticsearch.service
+\end{lstlisting}
+
+Nun kann der Service gestartet werden. 
+Zum Starten und Stoppen werden folgende Befehle genutzt: 
+\begin{lstlisting}[language=bash]
+sudo systemctl start elasticsearch.service
+sudo systemctl stop elasticsearch.service    
+\end{lstlisting}
+
+Mit dem folgenden Befehl kann geprüft werden, ob der Elasticsearch Service am laufen ist: 
+\begin{lstlisting}[language=bash]
+curl localhost:9200
+\end{lstlisting}
+Die zu erwartende Ausgabe sieht wie folgt aus: 
+\begin{lstlisting}[language=bash]
+{
+"name" : "DOT-RH-ZLOG1",
+"cluster_name" : "elasticsearch",
+"cluster_uuid" : "5unW2cLtQoumj2z7P75pBA",
+"version" : {
+"number" : "7.10.0",
+"build_flavor" : "oss",
+"build_type" : "rpm",
+"build_hash" : "51e9d6f22758d0374a0f3f5c6e8f3a7997850f96",
+"build_date" : "2020-11-09T21:30:33.964949Z",
+"build_snapshot" : false,
+"lucene_version" : "8.7.0",
+"minimum_wire_compatibility_version" : "6.8.0",
+"minimum_index_compatibility_version" : "6.0.0-beta1"
+},
+"tagline" : "You Know, for Search"
+}
+\end{lstlisting}
+
+Hiermit ist die Installation nach der Anleitung abgeschlossen. 
+Damit der Elasticsearch Service von Außerhalb erreicht werden kann, muss der Service entsprechend konfiguriert werden. 
+Dafür müssen die IP-Adressen der Server eingetragen werden, die Daten an Elasticsearch senden dürfen. 
+Denn nach Installation ist es nur erlaubt Daten von Localhost zu senden. 
+Die Konfiguration muss in der \textit{elasticsearch.yml} Datei eingetragen werden.
+Diese ist im Pfad \glqq \textit{/etc/elasticsearch/elasticsearch.yml}\grqq{} zu finden.
+Für den Testfall ist es möglich zu definieren, dass von überall Daten an Elasticsearch gesendet werden können. 
+Dafür muss die IP-Adresse \textit{0.0.0.0} eingetragen werden. 
+Das Eintragen der IP-Adressen muss in \textit{network.host} eingetragen werden.
+Wenn mehrere IP-Adressen eingetragen werden müssen, dann erfolgen die Einträge in \textit{network.hosts}. 
+Elasticsearch ist mit diesen Konfigurationen nun bereit, daten zu erhalten.
 
 \section{Kibana}
+
+Die nächste zu installierende Komponente ist Kibana. 
+Wie bei der Installation von Elasticsearch wird hier auch auf die Anleitung des Herstellers zugegriffen, um die Installation erfolgreich durchzuführen. \cite{elasticInstallKibanaRPM}
+Die Installation des \textit{rpm} Packages von Kibana erfolgt vergleichbar wie die Installation des Packages von Elasticsearch. 
+Daher werden die einzelnen Schritte nicht nocheinmal vorgeführt. \\
+
+\subsection{Index Pattern}
+Kibana ist im Vergleich zu Elasticsearch eine Webanwendung die von außerhalb erreicht werden kann und von Nutzern in Zukunft genutzt wird. 
+Daher müssen wichtige Bestandteile der Oberfläche von Kibana näher erläutert werden. 
+Zum einen müssen \textit{Index Pattern} erstellt werden, um die Logs aus dem Elasticsearch visualisieren zu können. 
+Doch bevor ein \textit{Index Pattern} erstellt werden kann, müssen Daten im Elasticsearch vorhanden sein. 
+Das hat den Vorteil, dass keine \textit{Index Pattern} erstellt werden können, die niemals genutzt werden können, weil keine Daten zu dem Pattern passen.
+Wenn Daten vorhanden sind können im Reiter \textit{Stack Management -> Index Patterns} Index Patterns verwaltet werden.  
+Dabei muss ein \textit{Index Pattern} als default definiert werden. 
+Das als default definierte \textit{Index Pattern} wird beim aufrufen von Kibana angezeigt. 
+Die Logs die hinter diesem Pattern stehen, werden in \textit{Discover} angezeigt.  \ref{elasticCreateIndexPattern}
+
+\subsection{Dashboards}
+In Kibana gibt es auch Dashboards die erstellt werden können. 
+Dashboards sind eine Ansammlung 
+
+
+Nach den \textit{Index Pattern} können auch Dashboards erstellt werden, die einem bestimmte Metriken der Logs anzeigen können. 
+Dabei können eine Vielzahl an Möglichkeiten definiert werden, wie die Logs angezeigt werden können.
+
+\subsection{Kibana Query Language (KQL)}
+
+
+
+
+
 \subsection{Dashboards?}
 \subsection{Index Pattern}
 \section{Logstash}
