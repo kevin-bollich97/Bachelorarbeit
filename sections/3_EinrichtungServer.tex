@@ -125,26 +125,99 @@ Das hat den Vorteil, dass keine \textit{Index Pattern} erstellt werden können, 
 Wenn Daten vorhanden sind können im Reiter \textit{Stack Management -> Index Patterns} Index Patterns verwaltet werden.  
 Dabei muss ein \textit{Index Pattern} als default definiert werden. 
 Das als default definierte \textit{Index Pattern} wird beim aufrufen von Kibana angezeigt. 
-Die Logs die hinter diesem Pattern stehen, werden in \textit{Discover} angezeigt.  \ref{elasticCreateIndexPattern}
+Die Logs die hinter diesem Pattern stehen, werden in \textit{Discover} angezeigt.  \cite{elasticCreateIndexPattern}
 
 \subsection{Dashboards}
-In Kibana gibt es auch Dashboards die erstellt werden können. 
-Dashboards sind eine Ansammlung 
-
-
-Nach den \textit{Index Pattern} können auch Dashboards erstellt werden, die einem bestimmte Metriken der Logs anzeigen können. 
-Dabei können eine Vielzahl an Möglichkeiten definiert werden, wie die Logs angezeigt werden können.
+Die Oberfläche von Kibana ermöglicht es individuell angepasste Dashboards zu erstellen. 
+Dabei können mehrere Diagramme mit unterschiedlichen Index Pattern angezeigt werden, um die benötigten Metriken zu veranschaulichen. 
+So ist es möglich schnell bestimmte Informationen anzuzeigen. 
+Für die Visualisierung können alle bekannten klassischen Diagrammtypen genutzt werden. \cite{elasticKibanaVisualisierenAnalysieren}
 
 \subsection{Kibana Query Language (KQL)}
+Kibana Query Language (KQL) ist eine Abfragesprache (engl. query language), mit der das Suchen von Daten in großen Datenmengen ermöglicht wird. 
+In Kibana wird KQL dazu genutzt, die vorhanden Logs nach bestimmten Kriterien zu Filtern und die gewünschten Daten zu erhalten. 
+KQL setzt dabei auf eine leicht verständliche Syntax, damit keine große einarbeitung nötig ist.
+Beim eintippen in der Suchleiste werden Vorschläge gegeben, um schnelles Filtern zu ermöglichen.
+Jedoch wird dafür mindestens eine \textit{Basic License} benötigt.
+Sollte KQL nicht gewünscht sein, kann man diese ausschalten und \textit{Lucene} nutzen.
+Lucene ist sowie KQL eine Abfragesprache, die jedoch Open Source ist. 
+Die Syntax von Lucene sieht so aus: \cite{apacheApacheLuceneQuery}
+\begin{lstlisting}
+title:"The Right Way" AND text:go
+\end{lstlisting}
+Um beispielhaft eine KQL Abfrage vorzuführen, wurde eine Suche in Kibana durchgeführt. 
+Dabei können zwei unterschiedliche Methoden genutzt werden. 
+Beide Varianten der gleich Abfrage werden hier gezeigt: 
+\begin{lstlisting}
+properties.LANR=8303571; properties.username=TestPraesentation
+properties.LANR:8303571 or properties.username=TestPraesentation
+\end{lstlisting}
 
 
-
-
-
-\subsection{Dashboards?}
-\subsection{Index Pattern}
 \section{Logstash}
-// Erklären warum logstash nicht gebraucht wird.
+
+Logstash ist eine der Komponenten aus dem Elastic Stack. 
+Dabei ist Logstash eines der mächtigsten Tools aus dem Elastic Stack.
+Mit Logstash können die Logs Manipuliert werden und noch vieles mehr. 
+Jedoch ist ein großes Problem von Logstash, dass es sehr viel Leistung benötigt betrieben zu werden und sehr viel Wissen um es richtig zu konfigurieren. 
+Daher kann Logstash Probleme mit sich bringen. 
+Im laufe der Durchführung ist dabei aufgefallen, dass Logstash im Falle des CFT Portale nicht benötigt wird. 
+Denn Filebeat übernimmt das Senden der Logs an Elasticsearch und ist dabei leichter zu konfigurieren und benötigt nicht viel Leistung. 
+
 \section{Filebeat}
-\section{Struktur der Logs(Also Index Pattern wie aufbauen. Mit Prod und so weiter, Grafik malen)}
+Filebeat ist die letzte zu installierende Komponente des Elastic Stack. 
+Die Installation von Filebeat muss etwas anders ablaufen. 
+Denn Filebeat wird auf den Windows Servern der produktiven und test Systemen installiert. 
+Daher muss eine Windows Installation durchgeführt werden. 
+Zu Beginn muss ein Zip File runtergeladen werden, dass die Open Source Version von Filebeat enthält. 
+Nach der Extraktion des Archivs, muss ein PowerShell-Skript als Administrator ausgeführt werden. 
+Das PowerShell-Skript \textit{install-service-filebeat.ps1} führt die komplette installation durch. \\
+Nachdem die Installation abgeschlossen ist, muss die Verbindung zu Elasticsearch und Kibana hergestellt werden. 
+Dafür muss die Konfigurationsdatei \textit{Filebeat.yml} angepasst werden. 
+Zu erst muss eine Verbindung zum Elasticsearch hergestellt werden. 
+Das funktioniert mit folgender Zeile in der Konfigurationsdatei:
+\begin{lstlisting}
+output.elasticsearch:
+    hosts: ["http://DOT-RH-ZLOG1.doms.kvwl.de:9200"]
+\end{lstlisting}
+Sollte es mehrere Elasticsearch Services geben, können diese in das Interval der Hosts mit eingetragen werden. 
+So kann bei hoher Last zu mehreren Services gesendet wendet. \\
+Damit vordefinierte Index Pattern an Kibana gesendet werden können, muss Kibana auch in der Konfigurationsdatei eingetragen werden.
+Der Befehl ist dabei ein bisschen anders: 
+\begin{lstlisting}
+setup.kibana:
+    host: "http://DOT-RH-ZLOG1.doms.kvwl.de:5601"
+\end{lstlisting}
+Damit der Filebeat Service weiß welche Logs zu Elasticsearch gesendet werden sollen, müssen noch \textit{inputs} definiert werden.
+Dabei können mehrere Inputs definiert werden. 
+Die Inputs werden dabei getrennt mit \glqq -\grqq{} angegeben. 
+Für die Inputs können verschiedene Konfigurationen definiert werden. 
+Damit die Logs der Vierteljahreserklärung gesammelt und gesendet werden, wird diese Konfiguration benötigt: 
+\begin{lstlisting}
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths: D:\logs\KVWL.PortalVEAddIn\*
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields:
+    app_name: VEAddIn
+\end{lstlisting}
+Zeile 1 definiert, dass jetzt \textit{inputs} folgen. 
+Zeile 2 bis 8 sind die Konfigurationen von dem einen \textit{input}.
+Zeile 5 und 6 sind dabei wichtig, denn diese ermöglichen das Einlesen von strukturieren Log-Daten im JSON-Format. 
+Zeile 7 und 8 beschreiben selbst definierte Felder in den gesendeten Logs. 
+Da können Informationen für alle Logs aus diesem Input mitgesendet werden. 
+In diesem Fall ist das der Name der Anwendung der mitgeschickt wird. 
+So kann in Kibana nach den einzelnen Apps gefiltert werden. 
+
+\section{Struktur der Logs}
+
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/StagesMitLogs.png} 
+    \caption{Stages mit Logs }
+    \label{fig:stages}
+\end{figure}
+
 
