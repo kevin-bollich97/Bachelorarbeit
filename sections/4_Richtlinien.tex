@@ -1,3 +1,35 @@
 \chapter{Umsetzung der Richtlinien}
 
-\section{NLog}
+In diesem Kapitel werden die Richtlinien der vorher geschriebenen Projektarbeit praktisch an der Anwendung \textit{Vierteljahreserklärung} durchgeführt.
+Dafür muss der Quellcode angepasst werden, sowie einzelne Konfiguration der Anwendung. 
+Um das verständnis für die Anwendung zu erhalten, wird zu beginn erstmal beschrieben wofür die \textit{Vierteljahreserklärung} überhaupt genutzt wird und wie die Anwendung entwickelt wurde.
+
+\section{Vierteljahreserklärung}
+// Anfang was ist VJE? 
+
+Die Provider hosted App \textit{Vierteljahreserklärung} ermöglicht die Generierung einer PDF für die Vierteljahreserklärung.
+Dabei ist die Vierteljahreserklärung eine Erklärung, die von den Mitgliedern der Kassenärztlichen Vereinigung Westfalen-Lippe an die KVWL gesendet werden muss. 
+Die Mitglieder müssen dabei unterschiedliche Angaben zu dem Quartal abgeben. 
+Am Ende muss ein Quartal angegeben werden, für das die Vierteljahreserklärung erstellt werden soll. 
+Nach der Angabe des Quartals erfolgt eine Überprüfung der Software, für welche BSNR das Mitglied berechtigt ist eine Vierteljahreserklärung abzugeben. 
+Nach Auswahl der BSNR kann das PDF Dokument heruntergeladen werden. 
+Die Provider hosted App kann in Abbildung \ref{fig:vje} genauer betrachtet werden. 
+
+// BILD NOCHMAL AUF DER ARBEIT SCREENSHOTEN (GRÖßERER MONITOR UND HÖHERE AUFLÖSUNG)
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/VJE.PNG} 
+    \caption{Vierteljahreserklärung }
+    \label{fig:vje}
+\end{figure}
+
+// Ende wie ist es entwickelt
+
+
+
+\section{Konfiguration von NLog}
+
+\section{Aufbau der Logs}
+
+\section{Abgleich der Richtlinien}
+
