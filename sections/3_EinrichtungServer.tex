@@ -213,11 +213,56 @@ So kann in Kibana nach den einzelnen Apps gefiltert werden.
 
 \section{Struktur der Logs}
 
+Das CFT Portale arbeitet mit 3 Stages: Prod, Test und Dev.
+Dabei beschreibt Prod das produktive System auf denen die Apps für die Mitglieder installiert werden. 
+Test ist das Testsystem auf denen die Software getestet wird bevor sie ins produktive System deployed wird. 
+Dabei ist das Testsystem identisch zum produktiven System aufgebaut.
+So können Konfigurationsfehler ausgeschlossen werden. 
+Dev spiegelt eine Umgebung wieder, in der das Team neue Features testen kann. 
+Die Dev Umgebung kann sich von der Test- und der Prod Umgebung unterscheiden. \\
+Während in der Dev und Test Umgebung nur ein Server läuft, wird in der Prod Umgebung auf zwei Server gesetzt die gespiegelt sind. 
+Die zwei gespiegelten Server sollen dafür sorgen, dass ausfälle abgefangen werden können. \\
+
+Die Abbildung \ref{fig:stages} zeigt die Serverstruktur des CFT Portale.
+Dabei kann man alle Server erkennen, auf denen die Provider hosted Apps des CFT Portale installiert sind und zusätzlich des zentralisierten Log-Server.
+Der zentralisierte Log-Server hat den Namen: \textit{DOT-RH-ZLOG1}.
+Die anderen Server sind je nach Stage benannt. 
+Dabei ist die erste Stage Prod. 
+Auf Prod sind zwei Server vorhanden, die gespiegelt sind. 
+Dort sind die Apps installiert in der produktiven Umgebung.
+Die Servernamen sind: \textit{PHA1} und \textit{PHA2}.
+Für Test und Dev gibt es jeweils einen Server mit dem gleichen Namen wie die Stage. \\
+
+Auf jedem der in der Abbildung \ref{fig:stages} zu sehenden Server der drei Stages, sind alle Provider hosted Apps des CFT Portale installiert.
+Das heißt, dass für einen Server jeweils ein Filebeat Agent installiert wurde. 
+Dieser Agent kümmert sich um die Logs der Apps auf diesem einen Server. 
+Das bedeutet, dass jede App vier mal installiert ist und auch genau so viele Logs von unterschiedlichen Servern schreiben wird. 
+Damit die Logs lesbar und strukturiert bleiben, musste eine durchsuchbare Lösung erarbeitet werden. \\ 
+
 \begin{figure}[H]
     \center 
     \includegraphics[width=1\textwidth]{pictures/StagesMitLogs.png} 
     \caption{Stages mit Logs }
     \label{fig:stages}
 \end{figure}
+
+Damit die Suche in Kibana effektiv durchgeführt werden kann, werden drei Index Pattern erstellt. 
+Jeweils für eine Stage. 
+Also sind die drei Patterns dann: \textit{Prod}, \textit{Test} und \text{Dev}.
+So kann eine erste Schnelle Trennung der zuständigkeiten erreicht werden. 
+Da natürlich pro Stage immer noch eine hohe Anzahl an unterschiedlichen Apps vorhanden ist, wird es schwierig darin die erforderlichen Daten zu finden. 
+Die Patterns sollen als erste Filterung genutzt werden um den Anwendungsfall zu finden. 
+Anschließend soll nach den Apps gefiltert werden können. 
+Damit diese geschehen kann, muss in der Filebeat Konfiguration für jedes Input ein extra Feld definiert werden in dem der Appname definiert ist. 
+Die extra Zeilen für ein Input sehen so aus: 
+\begin{lstlisting}
+fields:
+    app_name: VEAddIn
+\end{lstlisting}
+Das Beispiel zeigt die Konfigurationen für die Vierteljahreserklärung.
+Mit diesen zusätzlichen Feldern ist eine effektive Filterung nach Stages und Anschließend nach den Apps möglich. 
+Für das Team ist ein häufig auftretender Fall in der produktiven Umgebung, dass es notwendig ist zu wissen auf welchem der beiden produktiven Server (PHA1 und PHA2) die Logs geschrieben wurden. 
+Filebeat sendet dafür automatisch die Informationen über den Hostname mit. 
+Somit muss das Team zusätzlich zu den zwei Filterungsoptionen noch nach dem \textit{agent.hostname} Filtern.
 
 
