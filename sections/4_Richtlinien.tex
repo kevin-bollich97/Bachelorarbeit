@@ -5,7 +5,6 @@ Dafür muss der Quellcode angepasst werden, sowie einzelne Konfiguration der Anw
 Um das verständnis für die Anwendung zu erhalten, wird zu beginn erstmal beschrieben wofür die \textit{Vierteljahreserklärung} überhaupt genutzt wird und wie die Anwendung entwickelt wurde.
 
 \section{Vierteljahreserklärung}
-// Anfang was ist VJE? 
 
 Die Provider hosted App \textit{Vierteljahreserklärung} ermöglicht die Generierung einer PDF für die Vierteljahreserklärung.
 Dabei ist die Vierteljahreserklärung eine Erklärung, die von den Mitgliedern der Kassenärztlichen Vereinigung Westfalen-Lippe an die KVWL gesendet werden muss. 
@@ -23,11 +22,43 @@ Die Provider hosted App kann in Abbildung \ref{fig:vje} genauer betrachtet werde
     \label{fig:vje}
 \end{figure}
 
-// Ende wie ist es entwickelt
-
+Die App \textit{Vierteljahreserklärung} besteht aus einer C\# Anwendung und einer Angular Anwendung. 
+Dabei ist die Angular Anwendung für die Darstellung der Daten zuständig. 
+Die C\# Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
+Damit beiden Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine REST-Schnittstelle zur Verfügung gestellt.
+Die Schnittstelle bietet zwei GET-Anfragen: \textit{GetBSNRsAsync} und \textit{GetPDFAsync}.
+GetBSNRsAsync liefert die gültigen BSNRs für ein bestimmtes Quartal. 
+Das Quartal und das zugehörige Jahr werden als Parameter übergeben. 
+In der Methode wird die \textit{GetBSNR} Methode aus der \textit{ArztregisterService} Klasse aufgerufen.
+Die Methode kümmert sich um das beschaffen der notwendigen Daten der Arztregister Schnittstelle. 
+Die Arztregister Schnittstelle stellt alle notwendigen Daten der Mitglieder zur Verfügung. 
+Die Schnittstelle wird von dem CFT Sicherstellung der KVWL gewartet und weiterentwickelt. 
+Die aus der Arztregister Schnittstelle erhaltenen Daten sind sehr stark verschachtelt und enthalten viele Informationen die für die Vierteljahreserklärung irrelevant sind. 
+Daher müssen die Daten in DTOs (Data transfer Objects) geladen werden, um die Menge an Daten zu reduzieren. 
+Das Reduzieren der Daten ist für die Anwendungen im Mitgliederportal wichtig, denn nicht jedes Mitglied der KVWL besitzt eine ausreichend starke Netzanbindung, um große Datenmengen zu erhalten. 
+Daher ist es wichtig, alle Daten die über das Netzwerk gesendet werden, nur relevante Informationen enthalten.
 
 
 \section{Konfiguration von NLog}
+
+Damit das Logging in der Vierteljahreserklärung eine klare Struktur aufweist und mit dem zentralisierten Logging Server optimal zusammen arbeitet, müssen bestimmte Konfigurationen vorgenommen werden, damit NLog strukturiertes Logging durchführt und dies auch im JSON-Format abspeichert. 
+
+
+\newpage
+\begin{lstlisting}[language=xml]
+<layout type="JsonLayout">
+<attribute name="properties" encode="false">
+<layout type="JsonLayout" includeAllProperties="true" maxRecursionLimit="2">
+    <attribute name="time" layout="${longdate}" />
+    <attribute name="correlationId" layout="${activityid}" />
+    <attribute name="method" layout="${callsite}" />
+    <attribute name="level" layout="${level}" />
+    <attribute name="username" layout="${mdlc:item=username}" />
+    <attribute name="message" layout="${message}" />
+</layout>
+</attribute>
+</layout>
+\end{lstlisting}
 
 \section{Aufbau der Logs}
 
