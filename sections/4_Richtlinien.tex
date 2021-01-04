@@ -41,26 +41,102 @@ Daher ist es wichtig, alle Daten die über das Netzwerk gesendet werden, nur rel
 
 \section{Konfiguration von NLog}
 
-Damit das Logging in der Vierteljahreserklärung eine klare Struktur aufweist und mit dem zentralisierten Logging Server optimal zusammen arbeitet, müssen bestimmte Konfigurationen vorgenommen werden, damit NLog strukturiertes Logging durchführt und dies auch im JSON-Format abspeichert. 
+Damit die Anforderungen aus den Richtlinien bezüglich NLog vollständig erfüllt werden können, muss NLog richtig konfiguriert werden. 
+Mithilfe von NLog können drei Richtlinien der Projektarbeit umgesetzt werden. 
+Die Richtlinien sind: 
+\begin{itemize}
+    \item Die Struktur eines Logs
+    \item Die Verwendung von strukturiertem Logging 
+    \item Die Verwendung des Logging Frameworks NLog
+\end{itemize}
 
+Die Konfiguration von NLog kann entweder durch eine eigene \textit{Nlog.config} Datei realisiert werden oder durch das einbinden der Konfigurationen in die \textit{Web.config}.
+Um den Zugriff auf die Konfigurationen von NLog zu vereinfachen, wurden die Konfigurationen in einer eigenen \textit{Nlog.config} Datei ausgelagert. \\
+Damit die gewünschte Log-Struktur und strukturiertes Logging verwendet werden können, muss ein \textit{target} definiert werden. 
+Dieses \textit{target} beschreibt den Ort an den die Logs geschrieben werden sollen und welche Informationen mitgeliefert werden. 
+Die gewünschte Struktur erfordert das erstellen eines eigenen Layouts für NLog. 
+Das definierte Layout ist in Quellcode \ref{code:nlogConfig} zu sehen. 
+In dem Layout werden alle attribute definiert. 
+Die Attributen werden dann in allen Logs mitgeliefert. 
+Im Layout wird außerdem definiert, dass strukturiertes Logging verwendet werden soll. 
+Durch die Zeile 3, in der \textit{includeAllProperties} auf \textit{true} gesetzt wird, wird das erweitern der Logs durch eigens erstellte Attribute im Quellcode ermöglicht. 
+So ist es dann möglich, für spezielle Fälle die Logs zu erweitern. 
 
-\newpage
-\begin{lstlisting}[language=xml]
+\begin{lstlisting}[language=xml, caption=Konfiguration NLog, label=code:nlogConfig]
 <layout type="JsonLayout">
-<attribute name="properties" encode="false">
-<layout type="JsonLayout" includeAllProperties="true" maxRecursionLimit="2">
-    <attribute name="time" layout="${longdate}" />
-    <attribute name="correlationId" layout="${activityid}" />
-    <attribute name="method" layout="${callsite}" />
-    <attribute name="level" layout="${level}" />
-    <attribute name="username" layout="${mdlc:item=username}" />
-    <attribute name="message" layout="${message}" />
-</layout>
-</attribute>
+  <attribute name="properties" encode="false">
+    <layout type="JsonLayout" includeAllProperties="true" maxRecursionLimit="2">
+      <attribute name="time" layout="${longdate}"/>
+      <attribute name="correlationId" layout="${activityid}"/>
+      <attribute name="method" layout="${callsite}"/>
+      <attribute name="level" layout="${level}"/>
+      <attribute name="message" layout="${message}"/>
+    </layout>
+  </attribute>
 </layout>
 \end{lstlisting}
 
+Um die gewünschten Daten im Log zu erhalten, werden vordefinierte Variablen genutzt. 
+Jedoch reichen die vordefinierten Variablen nicht aus. 
+Damit die \textit{correlationId} genutzt werden kann, muss die \textit{\$\{activityid\}} bei dem Beginn eines Requests neu gesetzt werden. 
+Das geschieht in der \textit{Global.asax}. 
+Der Quellcode dafür ist in Quellcode \ref{code:correlationId} zu finden. 
+Die genutzte Methode wird von der Oberklasse der \textit{Global.asax} vererbt und sorgt dafür, dass die Methode beim starten eines neuen Requests aufgerufen wird.
+Die Oberklasse ist \textit{HttpApplication}.
+
+\begin{lstlisting}[caption=Setzen der CorrelationID, label=code:correlationId]
+protected void Application_BeginRequest(object sender, EventArgs e)
+{ 
+    Trace.CorrelationManager.ActivityId = Guid.NewGuid();
+}
+\end{lstlisting}
+
 \section{Aufbau der Logs}
+
+Das Ziel der Richtlinien ist das Produzieren von Logs, die lesbarer und effizienter zu durchsuchen sind.
+Wichtig beim Lesen und Suchen ist dabei der Aufbau der Logs. 
+In den Richtlinien wurde definiert, dass ein Log folgende Informationen liefern soll: 
+
+\begin{itemize}
+    \item Timestamp
+    \item LogLevel
+    \item Correlation ID
+    \item System Komponente 
+    \item String, um den Fehler oder das Ereignis zu beschreiben
+\end{itemize}
+
+Durch die Konfiguration von NLog werden alle Informationen die benötigt werden auch mitgeliefert. 
+Ein Log, dass jetzt geschrieben wird, sieht wie folgt aus: 
+
+\begin{lstlisting}
+{ 
+    "properties": { 
+        "time": "2021-01-04 11:47:18.7972", 
+        "correlationId": "4f80c77d-30d4-453a-933a-392e502a29e6", 
+        "method": "KVWL.PortalVEAddIn.BLL.Services.ArztregisterService.GetBSNR", 
+        "level": "Info", 
+        "message": "LANR: \"8303571\" in dem Jahr: 2020 Mit diesem Quartal: 4", 
+        "LANR": "8303571", 
+        "year": 2020, 
+        "quarter": 4 
+    } 
+}
+\end{lstlisting}
+
+Der Dafür genutzte Log Befehl ist: 
+\begin{lstlisting}
+log.Info("LANR: {LANR} in dem Jahr: {year} Mit diesem Quartal: {quarter}", lANR, year, quarter);
+\end{lstlisting}
+
+Die Nachricht die beim Log-Befehl eingegeben wird, ist im Log anschließend im Attribut \textit{message} hinterlegt.
+Im Log werden auch die drei definierten Attribute \textit{LANR}, \textit{quarter} und \textit{year} als eigene Attribute gespeichert. 
+Alle Attribute die von NLog geschrieben werden, sind unter dem Attribut \textit{properties} gespeichert. 
+Der Grund dafür ist der Elastic Stack. 
+Denn durch das extra Attribut können die Logs besser in Kibana visualisiert werden. 
+Filebeat sendet zusätzlich zu den Logs eigene daten. 
+Durch das zusätzliche Attribut \textit{properties} können die Anwendungsspezifischen Daten schneller von den Filebeat spezifischen Daten differenziert werden.
+
+
 
 \section{Abgleich der Richtlinien}
 
