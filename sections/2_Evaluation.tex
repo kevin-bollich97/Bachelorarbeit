@@ -3,14 +3,14 @@ In der vorherigen Projektarbeit wurden für das CFT Portale Richtlinien definier
 Eine dieser Richtlinien war die Nutzung von einem zentralisierten Logging-Server mithilfe des Elastic Stack. 
 Jedoch wurden in der Projektarbeit keine weiteren Tools herangezogen, um zu prüfen, ob der Elastic Stack die beste Alternative ist. \\
 In diesem Kapitel werden unterschiedliche Tools, die für das Log-Management genutzt werden können, evaluiert. 
-Das Ziel dieser Evaluation ist zu prüfen, ob es eine bessere Alternative für eine zentralisierte Logging Lösung gibt als den Elastic Stack.
+Das Ziel dieser Evaluation ist es, zu prüfen, ob es eine bessere Alternative für eine zentralisierte Logging Lösung gibt als den Elastic Stack.
 Dafür werden Tools evaluiert, die den kompletten Elastic Stack ersetzen können, aber auch Tools, die einzelne Komponenten austauschen können. \\
 Das CFT Portale wäre in der Lage, weitere Kosten für ein Tool auf sich zu nehmen, sollte es dem Team die Arbeit erleichtern können. 
 Daher werden Open-Source und lizenzpflichtige Tools in dieser Evaluation betrachtet.
-Sollten jedoch zwei Tools gleichermaßen die Anforderungen erfüllen und eines der Tools Open-Source sein, dann wird sich für das Open-Source-Tool entschieden, um kosten zu sparen. \\
+Sollten jedoch zwei Tools gleichermaßen die Anforderungen erfüllen und eines der Tools Open-Source sein, dann wird sich für das Open-Source-Tool entschieden, um Kosten zu sparen. \\
 Damit eine Evaluation erfolgen kann, müssen Anforderungen aufgestellt werden. 
 Die Anforderungen sollen dabei helfen, eine Entscheidung bezüglich der Tools treffen zu können. 
-Denn Tools, die diese Anforderungen nicht erfüllen können, werden nicht weiter betrachtet.
+Tools, die diese Anforderungen nicht erfüllen können, werden nicht weiter betrachtet.
 Im nächsten Abschnitt werden die Anforderungen definiert.
 
 \section{Anforderungen an die Log-Management Tools}
@@ -20,31 +20,30 @@ Die Anforderungen helfen bei der Entscheidung, ein passendes Tool für das CFT P
 Daher wurden in Absprache mit dem Team einige Anforderungen definiert, die das zukünftige Tool haben sollte. 
 Für das CFT Portale spielt Wartung eine wichtige Rolle, daher werden einige Anforderungen sich auf den Wartungsaufwand beziehen. \\
 
-Da das KV-Netz sicherheitstechnisch stark abgeschirmt ist, kommt eine Cloud Lösung nicht in Frage. 
-Das bedeutet, dass das Tool eine Selbstorganisierte Lösung bieten muss. \\
-Durch die Menge an Anwendungen, die das CFT Portale betreuen muss, ist es wichtig, dass das Tool die einzelnen Logs entweder von den unterschiedlichen Maschinen selbst einsammeln kann oder ein Senden von den Anwendungen heraus möglich ist. 
-Das Installieren weiterer Log-Agenten, die für das schicken der Logs zuständig sind, sollten vermieden werden. 
-Da sonst weiterer Wartungsaufwand entstehen würde. \\
-Da das CFT Portale keine Datenbanken betreuen muss, ist der aktuelle Wissensstand des Teams eher allgemein vorhanden. 
+Da das KV-Netz sicherheitstechnisch stark abgeschirmt ist, kommt eine Cloud-Lösung nicht in Frage. 
+Das bedeutet, dass das Tool eine Lösung bieten muss, die auf den Servern der KV laufen sollen. \\
+Durch die Menge an Anwendungen, die das CFT Portale betreuen muss, ist es wichtig, dass das Tool die einzelnen Logs entweder von den unterschiedlichen Maschinen selbst einsammeln kann oder das Senden der Logs möglich ist.
+Das Installieren weiterer Log-Agenten, die für das Senden der Logs zuständig sind, sollten vermieden werden, da sonst weiterer Wartungsaufwand entstehen würde. \\
+Da das CFT Portale keine Datenbanken betreuen muss, ist der aktuelle Wissensstand des Teams daher eher allgemein vorhanden. 
 Denn das Team übernimmt in der Regel die Entwicklung von Provider-hosed Apps im SharePoint Umfeld. 
 Damit das Team also erfolgreich mit den Datenbanken arbeiten kann, müssen Schulungen absolviert werden. 
-Daher ist eine wichtige Anforderung die Speicherung der Logs. 
-Das ausgewählte Tool muss eine Möglichkeit anbieten, die Logs zu speichern. \\
-Ein wichtiger Punkt ist die Analyse und Anzeige von Logs. 
-Damit ist eine Oberfläche gemeint, die intuitiv benutzt werden kann, um die Logs anzusehen und zu Analysieren. 
+Daher ist es wichtig, dass das ausgewählte Tool eine Möglichkeit bietet, die Logs zu speichern. \\
+Ein wichtiger Punkt ist die Analyse und Anzeige von Logs.
+Das heißt, es soll eine Oberfläche vorhanden sein, die intuitiv benutzt werden kann, um die Logs anzusehen und zu Analysieren. 
 Jedoch sollte in dem Tool auch die Möglichkeit bestehen, Logs zu filtern und zu durchsuchen. \\
 Im CFT Portale sind Linux- und Windows Server im Betrieb. 
-Jedoch möchte das Team das Tool gerne auf einer Linuxmaschine installieren. 
-Da dort das Updaten von neuen Versionen einfacher funktioniert und der Wissensstand des Teams da komplett gegeben ist. \\
+Jedoch möchte das Team das Tool gerne auf einem Linux-Server installieren, da dort das Updaten von neuen Versionen einfacher funktioniert und der Wissensstand des Teams da komplett gegeben ist. \\
 
-Das waren die Vorgaben, die vom CFT Portale für ein Tool definiert wurden. Hier noch mal eine kleine Aufzählung der einzelnen Anforderungen:
+Diese Vorgaben wurden im gemeinsamen Gespräch mit den Entwicklern des CFT Portale definiert. 
+Mithilfe dieser Vorgaben soll ein passendes Log-Management Tool für das CFT Portale ausgesucht werden. 
+Zur veranschaulichung der Vorgaben folgt eine Aufzählung:
 
 \begin{itemize}
-    \item Selbstorganisierte Lösung (Kein CLoud)
+    \item Selbstorganisierte Lösung
     \item Einsammeln von Logs aus unterschiedlichen Anwendungen 
     \item Speicherung von Logs ohne externe Datenbank
     \item Anzeige und Analyse von Logs 
-    \item Filtern und Dursuchen von Logs 
+    \item Filtern und durchsuchen von Logs 
     \item Installation auf Linux Server 
 \end{itemize}
 
@@ -52,43 +51,56 @@ Das waren die Vorgaben, die vom CFT Portale für ein Tool definiert wurden. Hier
 
 In der Projektarbeit wurde der Elastic Stack in seiner Funktionsweise und dessen Möglichkeiten detailliert vorgestellt. 
 Jedoch wird in diesem Kapitel auf die wichtigen Inhalte des Elastic Stack eingegangen, um eine Bewertung der Tools zu ermöglichen.
-Alle Tools werden hier einmal vorgestellt mit all ihren Vor- und Nachteilen.
+Alle Tools werden hier mit all ihren Vor- und Nachteilen vorgestellt.
 Eine Bewertung der Tools wird in Kapitel \ref{kap:bewertungTools} durchgeführt.
-Bevor die Tools evaluiert werden können, musste eine Vorauswahl getroffen werden, um potenzielle Tools finden zu können. 
+Bevor die Tools evaluiert werden können, musste eine Vorauswahl getroffen werden. 
 Dafür wurden viele Tools betrachtet und nach den Anforderungen in Kapitel \ref{kap:anforderungenTools} ausgewählt. 
 
 
 \subsection{Elastic Stack}
-
+% ALLGEMEIN
 Der Elastic Stack ist eine Sammlung von Tools, die unterschiedliche Aufgaben erledigen. 
 Die Tools sind Elasticsearch, Kibana, Logstash und Beat. 
 Mit diesen Tools können unterschiedliche Aufgaben gelöst werden. 
 Im Rahmen dieser Bachelorarbeit ist jedoch nur das Log-Management interessant. 
 Daher wird hier nur auf das Log-Management eingegangen. 
+Die Komponente Elasticsearch aus dem Elastic Stack ist laut dem Ranking der Searchengines von \textbf{DB-Engines} auf Platz 1. \cite{db-enginesDBEnginesRanking}
+Das bedeutet, dass die effizienz der Suche sichergestellt sein kann. 
 Die Aufgaben der einzelnen Tools sind: 
 \begin{itemize}
     \item Elasticsearch - Speichern und Suchen
     \item Kibana - Analyse und Anzeige 
     \item Logstash - Parsen und Weiterleiten
-    \item Beat - Schicken von Daten 
+    \item Beat - Senden von Daten 
 \end{itemize}
-Da der Elastic Stack Open Source ist, fallen für die Nutzung keine Kosten an. 
-Jedoch ist der Aufwand in der Wartung dadurch höher, da alles selber konfiguriert werden muss. 
-Der Elastic Stack bietet die Möglichkeit, verschiedene Lösungen zu kaufen.
-Zu den Lösungen gehören:  \textbf{Enterprise Search}, \textbf{Observability} und \textbf{Security}.
-Für diese Bachelorarbeit wird nur die selbstorganisierte Lösung in Betracht gezogen. \cite{elasticElasticProdukteSucheAnalytics} \\
 
-Mit den Tools des Elastic Stack ist die Einrichtung eines zentralisierten Logging Servers in einigen Schritten möglich. 
-Dafür müssen die Tools auf den jeweiligen Servern installiert werden. 
-Kibana, Elasticsearch und Logstash können auf einem einzelnen Server installiert werden und Beat muss auf den Servern der einzelnen Anwendungen installiert werden. 
-Die Tools können auf Linux, Mac oder Windows installiert werden. \cite{elasticElasticStackElasticsearch}
-Elasticsearch ist im Ranking der Searchengines von \textbf{DB-Engines} auf Platz 1.\cite{db-enginesDBEnginesRanking}
-Alle definierten Anforderungen in Kapitel \ref{kap:anforderungenTools} werden vom Elastic Stack vollständig erfüllt. 
+% VORAUSSETZUNGEN
+Die Vorraussetzungen für die Nutzung des Elastic Stack sind niedrig. 
+Denn die einzelnen Komponenten des Elastic Stack können auf den aktuell vorhanden Betriebssystemen installiert werden. 
+Zusätzlich zu den Komponenten des Elastic Stack wird nur noch eine Installation von Java benötigt.
+Java wird jedoch automatisch bei der Installation von Elasticsearch mitinstalliert. 
+Elasticsearch wurde in Java geschrieben und muss daher in einer JVM (Java virtual machine) laufen. \cite{elasticElasticStackElasticsearch} \\
+
+% KOSTEN
+Die Kosten für den Elastic Stack können unterschiedlich ausfallen, denn die Komponenten selber sind Open Source und damit dann auch kostenlos. 
+Es ist jedoch möglich fertig konfigurierte Lösungen zu kaufen. 
+Einerseits gibt es eine Cloud Lösung, die nach dem Kauf sofort genutzt werden kann ohne jegliche Installation, oder auch vorgefertigte Lösungen die dann noch auf den eigenen Systemen installiert werden müssen. 
+Der Vorteil von der gekauften Version, ist der niedrigere Wartungsaufwand der gefordert ist und der Support der mitangeboten wird. 
+Die Cloud Lösung kommt jedoch nicht infrage, wie im Kapitel \ref{kap:anforderungenTools} beschrieben wurde. 
+Das günstigste Modell des Elastic Stack kostet 16 \$ im Monat. 
+Jedoch bietet dieser nur Support für den Elastic Cloud dienst. 
+Damit der Support richtig genutzt werden kann muss mindestens die Gold Version für 19\$ im Monat gekauft werden. 
+Mit dem Kauf steigen auch die Funktionalitäten, die mit dem Elastic Stack möglich sind. 
+Zum Beispiel würde das Reporting bei der Gold-Stufe hinzukommen. \cite{elasticOffiziellePreisinformationenElasticsearch}
+
+
+
+
 
 
 
 \subsection{Graylog}
-
+%ALLGEMEIN
 Graylog ist ein Open-Source Log-Management Tool. 
 Dessen Motto ist:
 \begin{quote}
@@ -114,6 +126,7 @@ Einfache Boolean Operationen werden für die Suche genutzt.
 Die dazu benötigten Felder werden durch einfaches Klicken ausgewählt.
 Damit muss keine neue Suchsprache erlernt werden und kann von nicht Fachpersonal genutzt werden. \cite{graylogIndustryLeadingLog} \\
 
+% KOSTENSTRUKTUR
 Wenn mehr benötigt wird, als die Open Source Version anbietet, dann kann Graylog als Enterprise Variante gekauft werden. 
 Bei der Enterprise Variante werden Support und zusätzliche Funktionen angeboten.
 Der genaue Vergleich der beiden Varianten kann in Abbildung \ref{fig:vergleichGraylogOSvsE} im Anhang \ref{anhang:vergleichGraylogOSvsE} gesehen werden.
@@ -124,6 +137,7 @@ Zum Thema der zu installierenden Maschine ist wichtig zu beachten, dass Graylog 
 Die Graylog Enterprise variante kann bis zu 5 GB/Tag kostenlos erworben werden. 
 Für so kleine Datenmengen ist es daher ratsam direkt auf die Enterprise Variante zu setzen. \cite{graylogGraylogOpenSource} \\
 
+% VORRAUSSETZUNGEN
 Damit Graylog funktionieren kann, muss weitere Software auf der Maschine installiert werden. 
 Das bewirkt, dass der Aufwand für das Updaten des Tools zu Problemen führen kann. 
 Beim Betrieb von Graylog muss darauf geachtet werden, dass die Versionen der Tools passen. 
@@ -147,7 +161,7 @@ Abließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst
 \end{itemize}
 
 \subsection{Sematext}
-
+% ALLGEMEIN
 Sematext ist ein kostenpflichtiges Log-Management und Infrastructure Monitoring Tool. 
 Das Tool wird als SaaS (Software as a Service) angeboten, jedoch gibt es zusätzlich eine Enterprise Variante, die das Laufen innerhalb der eigenen Infrastruktur ermöglicht. 
 Das heißt, dass eine Kopie der Cloud Version von Sematext auf der eigenen Infrastruktur läuft. 
@@ -167,13 +181,15 @@ Dieser wird nicht von Sematext bestimmt.
 Daher kann da flexibel entschieden werden, welcher Log Shipper am besten geeignet ist. 
 Jedoch kann dadurch auch nicht sichergestellt werden, dass der Log-Shipper mit dem Tool gut funktioniert. 
 mithilfe der Filter Funktion können mit Sematext Benachrichtigungen definiert werden, die beim Auftreten eine Nachricht senden. \cite{sematextSematextEnterpriseLog} \\
-
+% VORAUSSETZUNGEN
 Damit Sematext in der eigenen Infrastruktur laufen kann muss folgende Software installiert sein: 
 \begin{itemize}
     \item Docker 
     \item Kubernetes 
     \item Helm
 \end{itemize}
+
+% INSTALLATION 
 Sematext Enterprise wird als Helm Chart angeboten. 
 Helm Chart ist ein Paket für Kubernetes. 
 Das Helm Chart beinhaltet alles, was nötig ist, um Sematext Enterprise nutzen zu können. 
@@ -181,7 +197,7 @@ Da Sematext Enterprise, nur als Helm Chart angeboten wird, muss die Installation
 
 
 \subsection{Fluentd}
-
+% ALLGEMEIN
 Fluentd ist ein Open Source data Collector, der es Anwendern ermöglichen soll, alles zu loggen. 
 Das heißt Fluentd sammelt Daten und leitet sie in gewünschter Form weiter zum Ziel. 
 Also ist Fluentd kein Tool, um zentralisiertes Logging zu ermöglichen, sondern nur ein Tool, das beim zentralisierten Logging behilflich ist. 
