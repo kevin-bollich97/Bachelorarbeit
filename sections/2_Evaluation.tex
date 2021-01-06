@@ -25,7 +25,7 @@ Das bedeutet, dass das Tool eine Lösung bieten muss, die auf den Servern der KV
 Durch die Menge an Anwendungen, die das CFT Portale betreuen muss, ist es wichtig, dass das Tool die einzelnen Logs entweder von den unterschiedlichen Maschinen selbst einsammeln kann oder das Senden der Logs möglich ist.
 Das Installieren weiterer Log-Agenten, die für das Senden der Logs zuständig sind, sollten vermieden werden, da sonst weiterer Wartungsaufwand entstehen würde. \\
 Da das CFT Portale keine Datenbanken betreuen muss, ist der aktuelle Wissensstand des Teams daher eher allgemein vorhanden. 
-Denn das Team übernimmt in der Regel die Entwicklung von Provider-hosed Apps im SharePoint Umfeld. 
+Denn das Team übernimmt in der Regel die Entwicklung von Provider-hosted Apps im SharePoint Umfeld. 
 Damit das Team also erfolgreich mit den Datenbanken arbeiten kann, müssen Schulungen absolviert werden. 
 Daher ist es wichtig, dass das ausgewählte Tool eine Möglichkeit bietet, die Logs zu speichern. \\
 Ein wichtiger Punkt ist die Analyse und Anzeige von Logs.
@@ -60,13 +60,12 @@ Dafür wurden viele Tools betrachtet und nach den Anforderungen in Kapitel \ref{
 \subsection{Elastic Stack}
 % ALLGEMEIN
 Der Elastic Stack ist eine Sammlung von Tools, die unterschiedliche Aufgaben erledigen. 
-Die Tools sind Elasticsearch, Kibana, Logstash und Beat. 
-Mit diesen Tools können unterschiedliche Aufgaben gelöst werden. 
-Im Rahmen dieser Bachelorarbeit ist jedoch nur das Log-Management interessant. 
-Daher wird hier nur auf das Log-Management eingegangen. 
-Die Komponente Elasticsearch aus dem Elastic Stack ist laut dem Ranking der Searchengines von \textbf{DB-Engines} auf Platz 1. \cite{db-enginesDBEnginesRanking}
-Das bedeutet, dass die effizienz der Suche sichergestellt sein kann. 
-Die Aufgaben der einzelnen Tools sind: 
+Die KernprodukteTools sind Elasticsearch, Kibana, Logstash und Beat. 
+Mit den Tools ist es möglich zuverlässig Daten aus vielen unterschiedlichen Quellen zu erfassen und anschließend zu analysieren und visualisieren. \\
+Mit der Komponente Elasticsearch ist das effiziente Suchen in großen Datenmengen möglich. \cite{elasticElasticStackElasticsearch}
+In einem Ranking von Searchengines wurde Elasticsearch als erster Platz ausgezeichnet und beweist damit, dass Elasticsearch schnell und Effizient mit großen Datenmengen umgehen kann. \cite{db-enginesDBEnginesRanking} \\
+\newpage
+Die Aufgaben der einzelnen Tools sind:
 \begin{itemize}
     \item Elasticsearch - Speichern und Suchen
     \item Kibana - Analyse und Anzeige 
@@ -82,23 +81,18 @@ Java wird jedoch automatisch bei der Installation von Elasticsearch mitinstallie
 Elasticsearch wurde in Java geschrieben und muss daher in einer JVM (Java virtual machine) laufen. \cite{elasticElasticStackElasticsearch} \\
 
 % KOSTEN
-Die Kosten für den Elastic Stack können unterschiedlich ausfallen, denn die Komponenten selber sind Open Source und damit dann auch kostenlos. 
-Es ist jedoch möglich fertig konfigurierte Lösungen zu kaufen. 
-Einerseits gibt es eine Cloud Lösung, die nach dem Kauf sofort genutzt werden kann ohne jegliche Installation, oder auch vorgefertigte Lösungen die dann noch auf den eigenen Systemen installiert werden müssen. 
-Der Vorteil von der gekauften Version, ist der niedrigere Wartungsaufwand der gefordert ist und der Support der mitangeboten wird. 
-Die Cloud Lösung kommt jedoch nicht infrage, wie im Kapitel \ref{kap:anforderungenTools} beschrieben wurde. 
-Das günstigste Modell des Elastic Stack kostet 16 \$ im Monat. 
-Jedoch bietet dieser nur Support für den Elastic Cloud dienst. 
-Damit der Support richtig genutzt werden kann muss mindestens die Gold Version für 19\$ im Monat gekauft werden. 
-Mit dem Kauf steigen auch die Funktionalitäten, die mit dem Elastic Stack möglich sind. 
-Zum Beispiel würde das Reporting bei der Gold-Stufe hinzukommen. \cite{elasticOffiziellePreisinformationenElasticsearch}
+Die Nutzung des Elastic Stack ist grundsätzlich Kostenlos und ist zu einem großen Teil Open Source.
+Es ist möglich den Quellcode des Elastic Stack in öffentlichen Repositories betrachtet. 
+Der Elastic Stack kann ebenfalls als Open Source Variante installiert werden, jedoch ist die Nutzung der Basic Version nicht möglich. 
+Wichtige Features, wie Sicherheitsmechanismen sind nicht Nutzbar. 
+Daher ist es ratsam die kostenlose Basic Version mit mehr Features zu nutzen. 
+Zusätzlich zu den kostenlosen Versionen ist es möglich ein kostenpflichtiges Abonnement abzuschließen um zusätzliche Features zu erhalten. 
+Die wichtigsten Features die durch das kostenpflichtige Abonnement zugänglich werden, sind Machine Learning und der Support. \\
+Elastic Stack bietet zu der selbsverwalteten Lösung zusätzlich eine Cloud Lösung die ohne Installation genutzt werden kann. 
+Der Vorteil der Cloud lösung liegt am Wartungsaufwand, denn bei der Cloud Lösung ist kein Installieren und upgraden notwendig. 
+Da die Anforderungen des Teams eine Cloud Lösung ausschließt, wird die Cloud Lösung nicht weiter beachtet. \cite{elasticOffiziellePreisinformationenElasticsearch} 
 
-
-
-
-
-
-
+\newpage
 \subsection{Graylog}
 %ALLGEMEIN
 Graylog ist ein Open-Source Log-Management Tool. 
@@ -108,12 +102,12 @@ Dessen Motto ist:
 \end{quote}
 
 Das Tool setzt auf Performance.
-Die Funktionalitäten des Tools beziehen sich auf das Sammeln, verbessern, Speichern und der Analyse von Logs. 
+Die Funktionalitäten des Tools beziehen sich auf das Sammeln, Verbessern, Speichern und der Analyse von Logs. 
 In Graylog kann man eigene Dashboards erstellen und individuell anpassen. 
 Das Dashboard wird mithilfe von Suchabfragen definiert.
 Damit nicht jeder Mitarbeiter sich mit den Suchabfragen beschäftigen muss, können die Dashboards untereinander geteilt werden. 
 Graylog bietet zusätzlich vordefinierte Dashboards an, die genutzt werden können. \\
-Mithilfe von Graylog können unmengen an Logs gespeichert werden.
+Mithilfe von Graylog können Unmengen an Logs gespeichert werden.
 Daher ist die Suche in großen Datenmengen essenziell. 
 In Graylog werden die Logs beim Speichern indiziert, um eine effiziente Suche zu ermöglichen. 
 Die Daten werden beim Speichern geprüft. 
@@ -124,48 +118,67 @@ Jede Suche nutzt dabei mehrere Prozessoren, um möglichst effizient zu sein.
 Die Suche in Graylog ist dabei einfach aufgebaut. 
 Einfache Boolean Operationen werden für die Suche genutzt. 
 Die dazu benötigten Felder werden durch einfaches Klicken ausgewählt.
-Damit muss keine neue Suchsprache erlernt werden und kann von nicht Fachpersonal genutzt werden. \cite{graylogIndustryLeadingLog} \\
+Damit muss keine neue Suchsprache erlernt werden und kann von unausgebildetem Personal genutzt werden. \cite{graylogIndustryLeadingLog} \\
 
 % KOSTENSTRUKTUR
 Wenn mehr benötigt wird, als die Open Source Version anbietet, dann kann Graylog als Enterprise Variante gekauft werden. 
 Bei der Enterprise Variante werden Support und zusätzliche Funktionen angeboten.
-Der genaue Vergleich der beiden Varianten kann in Abbildung \ref{fig:vergleichGraylogOSvsE} im Anhang \ref{anhang:vergleichGraylogOSvsE} gesehen werden.
+Der genaue Vergleich der beiden Varianten kann in Abbildung \ref{fig:vergleichGraylogOSvsE} gesehen werden.
 Zu dem Support gehört Hilfe zu allen Graylog bezogenen Fragen, jedoch bietet Graylog zusätzlich Support für Elasticsearch, MongoDB und Oracle Java SE 8 (oder OpenJDK 8).
-Sie bieten diesen Support an, weil Graylog diese Produkte benötigt, um laufen zu können. 
-Das bedeutet, dass diese Produkte zusätzlich auf der zu installierenden Maschine installiert werden. 
-Zum Thema der zu installierenden Maschine ist wichtig zu beachten, dass Graylog nur auf Linux-basierten Betriebssystemen installiert werden kann. \\
-Die Graylog Enterprise variante kann bis zu 5 GB/Tag kostenlos erworben werden. 
+Sie bieten diesen Support an, weil Graylog diese Produkte benötigt, um Laufen zu können. 
+Das bedeutet, dass diese Produkte zusätzlich auf der zu installierenden Maschine installiert werden müssen.  \\
+Die Graylog Enterprise Variante kann bis zu 5 GB/Tag kostenlos erworben werden. 
+Bei den 5 GB handelt es sich um Logs die gesendet werden. 
 Für so kleine Datenmengen ist es daher ratsam direkt auf die Enterprise Variante zu setzen. \cite{graylogGraylogOpenSource} \\
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/graylogVergleichOS-Enterprise.PNG} 
+    \caption{Vergleich Graylog Open Source vs. Enterprise}
+    \label{fig:vergleichGraylogOSvsE}
+\end{figure}
 
 % VORRAUSSETZUNGEN
-Damit Graylog funktionieren kann, muss weitere Software auf der Maschine installiert werden. 
-Das bewirkt, dass der Aufwand für das Updaten des Tools zu Problemen führen kann. 
-Beim Betrieb von Graylog muss darauf geachtet werden, dass die Versionen der Tools passen. 
-Das sorgt dafür, dass der Wartungsaufwand sehr hoch ist. \\
-Abließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst werden: \\
+Graylog benötigt ein paar System Vorraussetzungen um installiert werden zu können. 
+Zum Beispiel kann Graylog nur auf linux-basierten Systemen installiert werden. 
+Zusätzlich zu dem Betriebssystem muss noch Software installiert werden. 
+Die zu installierende Software ist: // ZITIEREN -> https://docs.graylog.org/en/4.0/pages/installation.html
+\begin{itemize}
+    \item Elasticsearch 6.8+ oder 7
+    \item MongoDB 3.6, 4.0 oder 4.2
+    \item Oracle Java SE 8 (OpenJDK 8 funktioniert auch)
+\end{itemize} 
 
+An der Auflistung sieht man, dass spezielle Versionen der Tools installiert sein müssen, damit Graylog funktionieren kann. 
+Dies kann bei der Wartung zu Problemen führen. 
+Denn es muss beim Updaten auf neuere Versionen darauf geachtet werden, dass alle Versionen miteinander kompatibel sind.
+Daher ist das Updaten von Graylog nicht so einfach möglich.
+Ein Problem ist auch die veraltete Java Version, die von Graylog genutzt wird. 
+Aktuell ist es schon möglich Graylog mit Java 11 zum laufen zu bringen, jedoch ist es noch in der Testphase.  
+Das Updaten wird dadurch nicht vereinfacht und erfordert zusätzliche Arbeit.
+Das sorgt dafür, dass der Wartungsaufwand sehr hoch ist. \\
+Abließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst werden:
 \begin{itemize}
     \item Vorteile: 
     \begin{itemize}
         \item Open Source (Enterprise auch möglich)
-        \item Sehr performant durch multi-threaded Suche und indizierung
+        \item Sehr performant durch multi-threaded Suche und Indizierung
         \item Speichern großer Datenmengen möglich
     \end{itemize}
      
     \item Nachteile: 
     \begin{itemize}
         \item Notwendige Installation von weiterer Software
-        \item Durch extra Software Updates Problematisch
-        \item Installation nur auf Linux Maschinen
+        \item Durch extra Software Updates problematisch
+        \item Installation nur auf Linux
     \end{itemize}
 \end{itemize}
 
 \subsection{Sematext}
 % ALLGEMEIN
 Sematext ist ein kostenpflichtiges Log-Management und Infrastructure Monitoring Tool. 
-Das Tool wird als SaaS (Software as a Service) angeboten, jedoch gibt es zusätzlich eine Enterprise Variante, die das Laufen innerhalb der eigenen Infrastruktur ermöglicht. 
-Das heißt, dass eine Kopie der Cloud Version von Sematext auf der eigenen Infrastruktur läuft. 
-Sematext unterstützt im Vergleich zu anderen Tools nicht nur das Log-Management, sondern diese Funktionen: 
+Das Tool wird als SaaS (Software as a Service) angeboten, jedoch gibt es zusätzlich eine Enterprise Variante, die das ausführen innerhalb der eigenen Infrastruktur ermöglicht. 
+Das bedeutet, dass eine Kopie der Cloud Version von Sematext auf der eigenen Infrastruktur läuft. 
+Sematext unterstützt im Vergleich zu anderen Tools nicht nur das Log-Management, sondern auch diese Funktionen: 
 \begin{itemize}
     \item Infrastructure Monitoring
     \item Application Performance Management (APM)
@@ -174,15 +187,15 @@ Sematext unterstützt im Vergleich zu anderen Tools nicht nur das Log-Management
 \end{itemize}
 
 Sematext nutzt für das Log-Management Elasticsearch und Kibana. 
-Das heißt, beim Kauf von Sematext erhält man eine fertige Lösung des Elastic Stack. 
+Das bedeutet, beim Kauf von Sematext erhält man eine fertige Lösung des Elastic Stack. 
 Der Vorteil besteht hier in der Wartung, die von Sematext selbst übernommen wird. 
 Ein Vor- und Nachteil besteht beim Log-Shipper, der zusätzlich noch installiert werden muss. 
 Dieser wird nicht von Sematext bestimmt. 
-Daher kann da flexibel entschieden werden, welcher Log Shipper am besten geeignet ist. 
+Daher kann flexibel entschieden werden, welcher Log Shipper am besten geeignet ist. 
 Jedoch kann dadurch auch nicht sichergestellt werden, dass der Log-Shipper mit dem Tool gut funktioniert. 
-mithilfe der Filter Funktion können mit Sematext Benachrichtigungen definiert werden, die beim Auftreten eine Nachricht senden. \cite{sematextSematextEnterpriseLog} \\
+Mithilfe der Filter-Funktion können mit Sematext Benachrichtigungen definiert werden, die beim Auftreten eine Nachricht senden. \cite{sematextSematextEnterpriseLog} \\
 % VORAUSSETZUNGEN
-Damit Sematext in der eigenen Infrastruktur laufen kann muss folgende Software installiert sein: 
+Damit Sematext in der eigenen Infrastruktur betrieben werden kann, muss folgende Software installiert sein: 
 \begin{itemize}
     \item Docker 
     \item Kubernetes 
@@ -198,7 +211,7 @@ Da Sematext Enterprise, nur als Helm Chart angeboten wird, muss die Installation
 
 \subsection{Fluentd}
 % ALLGEMEIN
-Fluentd ist ein Open Source data Collector, der es Anwendern ermöglichen soll, alles zu loggen. 
+Fluentd ist ein Open Source Data Collector, der es Anwendern ermöglichen soll, alles zu loggen. 
 Das heißt Fluentd sammelt Daten und leitet sie in gewünschter Form weiter zum Ziel. 
 Also ist Fluentd kein Tool, um zentralisiertes Logging zu ermöglichen, sondern nur ein Tool, das beim zentralisierten Logging behilflich ist. 
 Mithilfe von Fluentd können Datenströme einheitlich und verständlich ablaufen. 
@@ -212,12 +225,13 @@ Zum Verarbeiten gehören das Sammeln, Filtern, Puffern und die Weitergabe der Lo
 Für weitere Funktionalitäten können Lösungen von der Community genutzt werden. 
 Das wird durch die steckbare Architektur von Fluentd ermöglicht. 
 Fluentd ist in einer Kombination von C und Ruby entwickelt worden. 
-Deswegen benötigt es nur wenig System Ressourcen, um zu Funktionieren.
+Deswegen benötigt es nur wenig System Ressourcen.
 Die Standard Version von Fluentd ohne weitere Komponenten benötigt ungefähr 30-40 MB Speicher. \cite{projectWhatFluentdFluentd}
 
 Die größten Vorteile von Fluentd sind die Menge an Plugins die verfügbar und die Performance. 
 Außerdem verbraucht Fluentd sehr wenig Speicher. 
-Der größte Nachteile ist der Zwang nach strukturierten Daten, damit ist gemeint, dass es nicht so flexibel möglich ist, zu entscheiden, wie die Logs auszusehen haben. 
+Der größte Nachteil ist der Zwang von strukturierten Daten. 
+Dies bedeutet, dass es nicht so flexibel möglich ist, zu entscheiden, wie die Logs auszusehen haben. 
 Fluentd formatiert die erhaltenen Daten immer in JSON-Format.
 
 \begin{figure}[H]
@@ -242,17 +256,18 @@ Graylog ist wie der Elastic Stack ein Open Source Tool, um zentralisiertes Loggi
 Dabei setzt Graylog bei der Suche auf Elasticsearch. 
 Dadurch ist die Suche bei beiden Produkten identisch. 
 Im Vergleich zum Elastic Stack bietet Graylog keinen weiteren Vorteil, den Elastic Stack nicht hat.
-Jedoch bringt Graylog einen Nachteil mit sich, die der Elastic Stack nicht hat. 
+Jedoch bringt Graylog einen Nachteil mit sich, die der Elastic Stack nicht hat:
 Das ist die Installation weiterer Software, die Probleme beim zukünftigen Updaten bringen können. 
-Der Elastic Stack benötigt zum Laufen nur die Tools vom Elastic Stack. \\
-Beim Vergleich von Graylog und dem Elastic Stack fällt auf, dass der Elastic Stack insgesamt die bessere Entscheidung darstellt. 
+Der Elastic Stack benötigt zum ausführen nur die Tools vom Elastic Stack. \\
+Beim Vergleich von Graylog und dem Elastic Stack fällt auf, dass der Elastic Stack insgesamt die bessere Entscheidung darstellt, weil keine weitere Software installiert werden muss. 
+Dadurch ist der Wartungsaufwand geringer. 
 
 \subsection{Sematext vs. Elastic Stack}
 
 Sematext bietet eine vollständig installierte Version vom Elastic Stack an. 
-Das heißt, die Vor- und Nachteile sind sehr identisch, da sie an Funktionalitäten das Gleiche bieten. 
-Jedoch ist der Vorteil von Sematext, dass der Support mit angeboten wird und das konfigurieren und einrichten nicht so komplex fällt wie beim Elastick Stack selber. 
-Ein großes Problem von Sematext stellt sich bei der Installation der Enterprise Variante auf. 
+Das bedeutet, die Vor- und Nachteile sind identisch, da sie an Funktionalitäten das selbe anbieten. 
+Jedoch ist der Vorteil von Sematext, dass der Support mit angeboten wird und das Konfigurieren und Einrichten nicht so komplex ausfällt wie beim Elastic Stack selber. 
+Ein großes Problem von Sematext stellt die Installation der Enterprise Variante dar. 
 Denn die Installation erfolgt über Kubernetes und Docker Container. 
 Im CFT Portale besitzt kein Teammitglied das nötige Wissen, um die Installation und Wartung zu übernehmen. 
 Daher kommt die Nutzung von Sematext nicht infrage. 
@@ -264,7 +279,7 @@ Da Fluentd kein Tool ist, um zentralisiertes Logging zu ermöglichen, sondern nu
 Im Vergleich zu Logstash ist Fluentd sehr viel performanter und verbraucht weniger Speicherplatz. 
 Jedoch sind die zwei Vorteile nicht relevant für den Einsatz im CFT Portale. 
 Ressourcen sind genügend vorhanden. \\
-Da Logstash mit den Komponenten des Elastic Stack zusammen Entwickelt wurde, ist der Wechsel zu Fluentd im Szenario des CFT Portale nicht sehr sinnvoll. 
+Da Logstash mit den Komponenten des Elastic Stack zusammen entwickelt wurde, ist der Wechsel zu Fluentd im Szenario des CFT Portale nicht sehr sinnvoll. 
 
 
 \section{Zusammenfassung}
@@ -273,7 +288,7 @@ Im Rahmen dieser Evaluation wurden drei Tools zusätzlich zum Elastic Stack gena
 Das Ziel der Evaluation war die Antwort auf die Frage: \glqq Ist der Elastic Stack die beste Wahl für das CFT Portale?\grqq{}
 Anhand der Anforderungen wurden eine Vielzahl an Tools untersucht. 
 Dabei wurden viele der Tools durch die Anforderungen direkt ausgeschlossen. 
-Es wurden drei Tools gefunden, die den Anforderungen des CFT Portale am ehesten passten. 
+Es wurden drei Tools gefunden, die zu den Anforderungen des CFT Portale am ehesten passten. 
 Während der Evaluation wurden die Tools mit dem Elastic Stack verglichen. 
-Dabei ist aufgefallen, dass der Elastic Stack die beste Wahl für einen zentralisierten Logging Server für das CFT Portale bietet. 
+Bei der Evaluation ist klar geworden, dass der Elastic Stack die beste Wahl für einen zentralisierten Logging Server für das CFT Portale ist. 
 
