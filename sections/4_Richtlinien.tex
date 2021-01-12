@@ -2,7 +2,7 @@
 
 In diesem Kapitel werden die Richtlinien der vorher geschriebenen Projektarbeit praktisch an der Anwendung \textit{Vierteljahreserklärung} durchgeführt.
 Dafür muss der Quellcode angepasst werden, sowie einzelne Konfiguration der Anwendung. 
-Um das verständnis für die Anwendung zu erhalten, wird zu beginn erstmal beschrieben wofür die \textit{Vierteljahreserklärung} überhaupt genutzt wird und wie die Anwendung entwickelt wurde.
+Um das Verständnis für die Anwendung zu erhalten, wird zu Beginn erstmal beschrieben wofür die \textit{Vierteljahreserklärung} überhaupt genutzt wird und wie die Anwendung entwickelt wurde.
 
 \section{Vierteljahreserklärung}
 
@@ -11,7 +11,7 @@ Dabei ist die Vierteljahreserklärung eine Erklärung, die von den Mitgliedern d
 Die Mitglieder müssen dabei unterschiedliche Angaben zu dem Quartal abgeben. 
 Am Ende muss ein Quartal angegeben werden, für das die Vierteljahreserklärung erstellt werden soll. 
 Nach der Angabe des Quartals erfolgt eine Überprüfung der Software, für welche BSNR das Mitglied berechtigt ist eine Vierteljahreserklärung abzugeben. 
-Nach Auswahl der BSNR kann das PDF Dokument heruntergeladen werden. 
+Nach Auswahl der BSNR kann das PDF-Dokument heruntergeladen werden. 
 Die Provider hosted App kann in Abbildung \ref{fig:vje} genauer betrachtet werden. 
 
 \begin{figure}[H]
@@ -21,19 +21,20 @@ Die Provider hosted App kann in Abbildung \ref{fig:vje} genauer betrachtet werde
     \label{fig:vje}
 \end{figure}
 
-Die App \textit{Vierteljahreserklärung} besteht aus einer C\# Anwendung und einer Angular Anwendung. 
-Dabei ist die Angular Anwendung für die Darstellung der Daten zuständig. 
-Die C\# Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
-Damit beiden Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine REST-Schnittstelle zur Verfügung gestellt.
+Die App \textit{Vierteljahreserklärung} besteht aus einer C\#-Anwendung und einer Angular-Anwendung. 
+Dabei ist die Angular-Anwendung für die Darstellung der Daten zuständig. 
+Die C\#-Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
+Damit beide Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine REST-Schnittstelle zur Verfügung gestellt.
 Die Schnittstelle bietet zwei GET-Anfragen: \textit{GetBSNRsAsync} und \textit{GetPDFAsync}.
 GetBSNRsAsync liefert die gültigen BSNRs für ein bestimmtes Quartal. 
 Das Quartal und das zugehörige Jahr werden als Parameter übergeben. 
 In der Methode wird die \textit{GetBSNR} Methode aus der \textit{ArztregisterService} Klasse aufgerufen.
-Die Methode kümmert sich um das beschaffen der notwendigen Daten der Arztregister Schnittstelle. 
-Die Arztregister Schnittstelle stellt alle notwendigen Daten der Mitglieder zur Verfügung. 
+Die Methode kümmert sich um das Beschaffen der notwendigen Daten der Arztregister-Schnittstelle. 
+Die Arztregister-Schnittstelle stellt alle notwendigen Daten der Mitglieder zur Verfügung. 
 Die Schnittstelle wird von dem CFT Sicherstellung der KVWL gewartet und weiterentwickelt. 
-Die aus der Arztregister Schnittstelle erhaltenen Daten sind sehr stark verschachtelt und enthalten viele Informationen die für die Vierteljahreserklärung irrelevant sind. 
-Daher müssen die Daten in DTOs (Data transfer Objects) geladen werden, um die Menge an Daten zu reduzieren. 
+Die aus der Arztregister-Schnittstelle erhaltenen Daten sind sehr stark verschachtelt und enthalten viele Informationen die für die Vierteljahreserklärung irrelevant sind. 
+Daher müssen die Daten in DTOs (Data transfer Objects) geladen werden, um die Menge an HTTP-Anfragen zu reduzieren. 
+Mit den DTOs können dann mehr Daten über einen Aufruf gesendet werden. 
 Das Reduzieren der Daten ist für die Anwendungen im Mitgliederportal wichtig, denn nicht jedes Mitglied der KVWL besitzt eine ausreichend starke Netzanbindung, um große Datenmengen zu erhalten. 
 Daher ist es wichtig, alle Daten die über das Netzwerk gesendet werden, nur relevante Informationen enthalten.
 
@@ -49,16 +50,16 @@ Die Richtlinien sind:
     \item Die Verwendung des Logging Frameworks NLog
 \end{itemize}
 
-Die Konfiguration von NLog kann entweder durch eine eigene \textit{Nlog.config} Datei realisiert werden oder durch das einbinden der Konfigurationen in die \textit{Web.config}.
+Die Konfiguration von NLog kann entweder durch eine eigene \textit{Nlog.config} Datei realisiert werden oder durch das Einbinden der Konfigurationen in die \textit{Web.config}.
 Um den Zugriff auf die Konfigurationen von NLog zu vereinfachen, wurden die Konfigurationen in einer eigenen \textit{Nlog.config} Datei ausgelagert. \\
 Damit die gewünschte Log-Struktur und strukturiertes Logging verwendet werden können, muss ein \textit{target} definiert werden. 
 Dieses \textit{target} beschreibt den Ort an den die Logs geschrieben werden sollen und welche Informationen mitgeliefert werden. 
-Die gewünschte Struktur erfordert das erstellen eines eigenen Layouts für NLog. 
+Die gewünschte Struktur erfordert das Erstellen eines eigenen Layouts für NLog. 
 Das definierte Layout ist in Quellcode \ref{code:nlogConfig} zu sehen. 
-In dem Layout werden alle attribute definiert. 
-Die Attributen werden dann in allen Logs mitgeliefert. 
+In dem Layout werden alle Attribute definiert. 
+Die Attribute werden dann in allen Logs mitgeliefert. 
 Im Layout wird außerdem definiert, dass strukturiertes Logging verwendet werden soll. 
-Durch die Zeile 3, in der \textit{includeAllProperties} auf \textit{true} gesetzt wird, wird das erweitern der Logs durch eigens erstellte Attribute im Quellcode ermöglicht. 
+Durch die Zeile 3, in der \textit{includeAllProperties} auf \textit{true} gesetzt wird, wird das Erweitern der Logs durch eigens erstellte Attribute im Quellcode ermöglicht. 
 So ist es dann möglich, für spezielle Fälle die Logs zu erweitern. 
 
 \begin{lstlisting}[language=xml, caption=Konfiguration NLog, label=code:nlogConfig]
@@ -100,11 +101,11 @@ In den Richtlinien wurde definiert, dass ein Log folgende Informationen liefern 
     \item Timestamp
     \item LogLevel
     \item Correlation ID
-    \item System Komponente 
+    \item System-Komponente 
     \item String, um den Fehler oder das Ereignis zu beschreiben
 \end{itemize}
 
-Durch die Konfiguration von NLog werden alle Informationen die benötigt werden auch mitgeliefert. 
+Durch die Konfiguration von NLog werden alle Informationen, die benötigt werden, auch mitgeliefert. 
 Ein Log, dass jetzt geschrieben wird, sieht wie folgt aus: 
 
 \begin{lstlisting}
