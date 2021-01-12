@@ -4,31 +4,32 @@ Das CFT Portale der Kassenärztlichen Vereinigung Westfalen-Lippe (KVWL) verwalt
 Bei der stetigen Weiterentwicklung können während der Laufzeit Fehler auftreten, deren Herkunft nicht immer eindeutig ist. 
 Damit die Herkunft solcher Fehler erkannt werden kann, sollten bestimmte Laufzeitinformationen geloggt werden.
 Da derzeit keine klare Struktur im Logging erkennbar ist, ist das Bugtracking im CFT Portale sehr zeitaufwendig.
-Der Grund dafür liegt hauptsächlich an der redundanten Serververteilung und dem unstrukturierten Logging. 
+Der Grund dafür liegt hauptsächlich in der redundanten Serververteilung und dem unstrukturierten Logging. 
 
 
 \section{Problemstellung}
 
 Im CFT Portale müssen die Entwickler regelmäßig die Ursachen von aufgetretenen Fehlern analysieren. 
 Dabei sieht der Prozess folgendermaßen aus: \\
-Jede Anwendung ist auf zwei redundanten Servern installiert und schreibt auf dem jeweiligen Server ihre Logs. 
+Jede Anwendung ist auf zwei redundanten Servern installiert und 
+speichert ihre Logs auf dem jeweiligen Server.
 Damit die Entwickler herausfinden können, wo das entsprechende Log geschrieben wurde, muss auf beiden Servern manuell nach dem Fehler gesucht werden. 
 Da ein Fehler nicht immer sofort nach Auftreten gemeldet wird und die Software trotz des Fehlers weiter läuft, steigt die Menge an geschriebenen Logs. 
-Den Fehler in den Logdateien zu finden, kann durch die fehlende Möglichkeit des Filterns sehr zeitaufwendig werden. \\
+Den Fehler in den Logdateien zu finden, kann durch die fehlende Filtermöglichkeit sehr zeitaufwendig werden. \\
 Eine weitere Herausforderung bei der Fehlersuche liegt in den unstrukturierten Informationen in den Logdateien. \\
 \newpage
 Daraus leiten sich folgende Forschungsfragen ab: 
 \begin{itemize}
     \item Mit welchem Log-Management-Tool ist ein an die Probleme des CFT Portale angepasstes zentralisiertes Logging möglich?
     \item Wie kann ein zentralisierter Logging-Server eingerichtet werden? 
-    \item Können die Logging-Richtlinien aus der Projektarbeit in der Praxis umgesetzt werden? \cite{bollichErarbeitungLoggingRichtlinienFuer}
+    \item Können die Logging-Richtlinien aus der Projektarbeit in der Praxis umgesetzt werden? \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 \end{itemize}
 
 
 \section{Zielsetzung}
 
 Ziel dieser Bachelorarbeit ist es, die in der Projektarbeit definierten Logging-Richtlinien anhand der Software \glqq Vierteljahreserklärung\grqq{} durchzuführen.  
-Außerdem soll eine Evaluierung von Log-Management Tools erfolgen, damit herausgefunden werden kann, ob der in der Projektarbeit erwähnte Elastic-Stack die beste Lösung für das CFT Portale ist, um ein zentralisiertes Logging einzurichten.  
+Außerdem soll eine Evaluierung von Log-Management Tools erfolgen, damit herausgefunden werden kann, ob der in der Projektarbeit erwähnte Elastic Stack die beste Lösung für das CFT Portale ist, um ein zentralisiertes Logging einzurichten.  
 Wenn die Entscheidung über das Log-Management Tool getroffen wurde, soll ein zentralisiertes Logging mit dem Log-Management Tool umgesetzt werden. 
 
 \section{Vorgehensweise}
@@ -38,7 +39,7 @@ Bevor dies geschieht, müssen noch die Anforderungen an das Tool aufgestellt wer
 Dies geschieht in Absprache mit dem CFT Portale. 
 Nachdem ein Tool identifiziert wurde, soll ein zentralisierter Logging-Server eingerichtet werden. 
 Dieser soll in Zukunft die erstellten Logs sammeln, anzeigen und analysieren.
-Anschließend sollen in der Applikationen \glqq Vierteljahreserklärung\grqq{} alle in der Projektarbeit definierten Richtlinien umgesetzt werden. 
+Anschließend sollen in der Applikation \glqq Vierteljahreserklärung\grqq{} alle in der Projektarbeit definierten Richtlinien umgesetzt werden. 
 Zum Schluss wird ein Fazit zum Verlauf der Bachelorarbeit gezogen. 
 Dabei werden die Ergebnisse der Arbeit noch einmal vorgestellt und bewertet. \\
 
