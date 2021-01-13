@@ -1,4 +1,4 @@
-\chapter{Evaluation von Log-Management Tools}
+\chapter{Evaluation von Log-Management-Tools}
 In der vorherigen Projektarbeit wurden für das CFT Portale Richtlinien definiert, die in dieser Bachelorarbeit praktisch umgesetzt werden sollen. 
 Eine dieser Richtlinien war die Nutzung von einem zentralisierten Logging-Server mithilfe des Elastic Stacks. 
 Jedoch wurden in der Projektarbeit keine weiteren Tools herangezogen, um zu prüfen, ob der Elastic Stack die beste Alternative ist. \\
@@ -13,7 +13,7 @@ Die Anforderungen sollen dabei helfen, eine Entscheidung bezüglich der Tools tr
 Tools, die diese Anforderungen nicht erfüllen können, werden nicht weiter betrachtet.
 Im nächsten Abschnitt werden die Anforderungen definiert.
 
-\section{Anforderungen an die Log-Management Tools}
+\section{Anforderungen an die Log-Management-Tools}
 \label{kap:anforderungenTools}
 In diesem Abschnitt werden Anforderungen für die zentralisierten Logging-Tools definiert. 
 Die Anforderungen helfen bei der Entscheidung, ein passendes Tool für das CFT Portale auszuwählen. 
@@ -24,10 +24,9 @@ Da das KV-Netz sicherheitstechnisch stark abgeschirmt ist, kommt eine Cloud-Lös
 Das bedeutet, dass das Tool eine Lösung bieten muss, die auf den Servern der KV läuft. \\
 Durch die Menge an Anwendungen, die das CFT Portale betreuen muss, ist es wichtig, dass das Tool die einzelnen Logs entweder von den unterschiedlichen Maschinen selbst einsammeln kann oder das Senden der Logs möglich ist.
 Das Installieren weiterer Log-Agenten, die für das Senden der Logs zuständig sind, sollten vermieden werden, da sonst weiterer Wartungsaufwand entstehen würde. \\
-Da das CFT Portale keine Datenbanken betreuen muss, ist der aktuelle Wissensstand des Teams daher eher allgemein vorhanden. 
-Denn das Team übernimmt in der Regel die Entwicklung von Provider-hosted Apps im SharePoint-Umfeld. 
-Damit das Team also erfolgreich mit den Datenbanken arbeiten kann, müssen Schulungen absolviert werden. 
-Daher ist es wichtig, dass das ausgewählte Tool eine Möglichkeit bietet, die Logs zu speichern. \\
+Durch den Geschäftsbereichsleiter der IT Abteilung der KVWL wurde beschlossen, dass das CFT Portale keine eigenen Datenbanken im Team betreuen soll. 
+Das CFT Portale erhält die Daten von anderen Teams der KVWL über Schnittstellen. 
+Daher muss das Tool die Logs speichern, ohne das eine Datenbank dafür betreut werden muss. \\
 Ein wichtiger Punkt ist die Analyse und Anzeige von Logs.
 Das heißt, es soll eine Oberfläche vorhanden sein, die intuitiv benutzt werden kann, um die Logs anzusehen und zu analysieren. 
 Jedoch sollte in dem Tool auch die Möglichkeit bestehen, Logs zu filtern und zu durchsuchen. \\
@@ -35,7 +34,7 @@ Im CFT Portale sind Linux- und Windows-Server im Betrieb.
 Jedoch möchte das Team das Tool gerne auf einem Linux-Server installieren, da dort das Updaten von neuen Versionen einfacher funktioniert und der Wissensstand des Teams da größer ist. \\
 
 Diese Vorgaben wurden im gemeinsamen Gespräch mit den Entwicklern des CFT Portale definiert. 
-Mithilfe dieser Vorgaben soll ein passendes Log-Management Tool für das CFT Portale ausgesucht werden. 
+Mithilfe dieser Vorgaben soll ein passendes Log-Management-Tool für das CFT Portale ausgesucht werden. 
 Die Anforderungen werden nachfolgend kurz zusammenfassend aufgelistet:
 
 \begin{itemize}
@@ -47,7 +46,7 @@ Die Anforderungen werden nachfolgend kurz zusammenfassend aufgelistet:
     \item Installation auf Linux-Server 
 \end{itemize}
 
-\section{Log-Management Tools}
+\section{Log-Management-Tools}
 
 In der Projektarbeit wurde der Elastic Stack in seiner Funktionsweise und dessen Möglichkeiten detailliert vorgestellt. 
 Jedoch wird in diesem Kapitel auf die wichtigsten Inhalte des Elastic Stacks eingegangen, um eine Bewertung der Tools zu ermöglichen.
@@ -95,7 +94,7 @@ Da die Anforderungen des Teams eine Cloud-Lösung ausschließen, wird die Cloud-
 \newpage
 \subsection{Graylog}
 %ALLGEMEIN
-Graylog ist ein Open Source Log-Management Tool. 
+Graylog ist ein Open Source Log-Management-Tool. 
 Dessen Motto ist:
 \begin{quote}
     \glqq  less cost, more performance\grqq \cite{graylogIndustryLeadingLog}
@@ -252,15 +251,33 @@ Anschließend soll mit Hilfe der in Kapitel \ref{kap:anforderungenTools} definie
 
 \subsection{Graylog vs. Elastic Stack}
 
-Graylog ist wie der Elastic Stack ein Open Source Tool, um zentralisiertes Logging zu ermöglichen. 
+Graylog ist wie der Elastic Stack ein Open-Source-Tool, um zentralisiertes Logging zu ermöglichen. 
 Dabei setzt Graylog bei der Suche auf Elasticsearch. 
-Dadurch ist die Suche bei beiden Produkten identisch. 
-Im Vergleich zum Elastic Stack bietet Graylog keinen weiteren Vorteil, den Elastic Stack nicht hat.
-Jedoch bringt Graylog einen Nachteil mit sich, die der Elastic Stack nicht hat:
-Das ist die Installation weiterer Software, die Probleme beim zukünftigen Updaten bringen können. 
-Der Elastic Stack benötigt zum ausführen nur die Tools vom Elastic Stack. \\
-Beim Vergleich von Graylog und dem Elastic Stack fällt auf, dass der Elastic Stack insgesamt die bessere Entscheidung darstellt, weil keine weitere Software installiert werden muss. 
-Dadurch ist der Wartungsaufwand geringer. 
+Dadurch ist die Suche bei beiden Produkten identisch. \\
+Damit Graylog gestartet werden kann, müssen Java, Elasticsearch und MongoDB vorher installiert werden. 
+Graylog ist somit auf drittanbieter Software angewiesen. 
+Beim Updaten muss darauf geachtet werden, dass die neue Graylog Version mit den installierten Versionen der drittanbieter Software kompatibel ist. 
+Das erfordert geringfügigen Anstieg des Wartungsaufwandes. 
+Jedoch ist das Updaten beim Elastic Stack ebenfalls aufwändig. 
+Obwohl der Elastic Stack nur als drittanbieter Software Java benötigt, ist die Installation dennoch aufwendig. 
+Denn beim Updaten müssen alle Tools in einer bestimmten Reihenfolge installiert werden. \cite{elasticUpgradingElasticStack} 
+\begin{enumerate}
+    \item Elasticsearch Hadoop 
+    \item Elasticsearch
+    \item Kibana
+    \item Logstash
+    \item Beats
+    \item APM Server
+\end{enumerate}
+Der Wartungsaufwand ist durch die bestimmte Reihenfolge der Installation eher Aufwendiger als bei Graylog. \\
+Graylog bietet keinen eigenen Log-Agenten, der sich um das Senden von Logdateien kümmert. 
+Graylog empfiehlt den Log-Agenten des Elastic Stacks zu nutzen, Filebeat. \cite{graylogIngestFilesGraylog} \\
+
+Beide Tools bieten ähnliche Funktionen an und erfüllen alle Anforderungen die vom CFT Portale definiert wurden. 
+Daher ist es nicht möglich ein Tool für die Nutzung im Team auszuschließen. 
+Da die Zeit für diese Bachelorarbeit begrenzt ist, wird in dieser Bachelorarbeit der Elastic Stack installiert und getestet. 
+Sollte der Test nicht zufriedenstellend ausgehen, sollte in Anschluss der Graylog installiert und getestet werden. 
+
 
 \subsection{Sematext vs. Elastic Stack}
 
