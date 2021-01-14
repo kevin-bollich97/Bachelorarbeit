@@ -38,7 +38,7 @@ Mithilfe dieser Vorgaben soll ein passendes Log-Management-Tool für das CFT Por
 Die Anforderungen werden nachfolgend kurz zusammenfassend aufgelistet:
 
 \begin{itemize}
-    \item Selbstorganisierte Lösung
+    \item Selbsverwaltete Lösung
     \item Einsammeln von Logs aus unterschiedlichen Anwendungen 
     \item Speicherung von Logs ohne externe Datenbank
     \item Anzeige und Analyse von Logs 
@@ -280,15 +280,16 @@ Sollte der Test nicht zufriedenstellend ausgehen, sollte in Anschluss der Graylo
 
 
 \subsection{Sematext vs. Elastic Stack}
-
-Sematext bietet eine vollständig installierte Version vom Elastic Stack an. 
-Das bedeutet, die Vor- und Nachteile sind identisch, da sie an Funktionalitäten das selbe anbieten. 
-Jedoch ist der Vorteil von Sematext, dass der Support mit angeboten wird und das Konfigurieren und Einrichten nicht so komplex ausfällt wie beim Elastic Stack selber. 
-Ein großes Problem von Sematext stellt die Installation der Enterprise Variante dar. 
-Denn die Installation erfolgt über Kubernetes und Docker Container. 
-Im CFT Portale besitzt kein Teammitglied das nötige Wissen, um die Installation und Wartung zu übernehmen. 
+Im gegensatz zum Elastic Stack ist Sematext kein Open-Source-Tool.
+Damit Sematext auf der eigenen Infrastruktur betrieben werden kann, muss Sematext Enterprise erworben werden. 
+Durch den Erwerb der Sematext Enterprise Version, erhält man eine Kopie des Sematext Cloud Service, der auf der eigenen Infrastruktur installiert werden kann. 
+Mit Sematext ist es anschließend möglich, \textit{Infrastructure Monitoring}, \textit{Application Performance Monitoring}, \textit{Log Management} und \textit{Real User Monitoring} durchzuführen. 
+Im Hintergrund von Sematext läuft ein voll Konfigurierter Elastic Stack, der alle Funktionalitäten ermöglicht. 
+Jedoch erhält man durch den Erwerb der Enterprise Version mehr Funktionen als die kostenlose Version des Elastic Stack. \\
+Der größte Vorteil von Sematext ist die einfache und schnellere Konfiguration des Systems. 
+Bei der Installation von Sematext besteht jedoch ein Problem, denn die Installation erfolgt über Kubernetes und Docker Container. 
+Kein Teammitglied des CFT Portale besitzt das nötige Wissen, um die Installation und Wartung zu übernehmen. 
 Daher kommt die Nutzung von Sematext nicht infrage. 
-
 
 \subsection{Fluentd vs. Logstash}
 
@@ -307,5 +308,25 @@ Anhand der Anforderungen wurden eine Vielzahl an Tools untersucht.
 Dabei wurden viele der Tools durch die Anforderungen direkt ausgeschlossen. 
 Es wurden drei Tools gefunden, die zu den Anforderungen des CFT Portale am ehesten passten. 
 Während der Evaluation wurden die Tools mit dem Elastic Stack verglichen. 
-Bei der Evaluation ist klar geworden, dass der Elastic Stack die beste Wahl für einen zentralisierten Logging Server für das CFT Portale ist. 
+Bei der Evaluation ist aufgefallen, dass der Elastic Stack und Graylog die Anforderungen des CFT Portale am besten erfüllen. 
+Jedoch ist es nicht möglich im Rahmen dieser Bachelorarbeit beide Tools zu installieren und zu testen. 
+Daher wird im Rahmen dieser Bachelorarbeit der Elastic Stack installiert und getestet.
+In Tabelle \ref{tab:vergleichLogTools} ist eine Auflistung der getesteten Tools mit relevanten Anforderungen. 
 
+
+
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+                                                                               & \textbf{Elastic Stack}                                            & \textbf{Graylog}                                                           & \textbf{Sematext}                                                    & \textbf{Fluentd} \\ \hline
+    \textbf{Open Source}                                                       & Ja                                                                & Ja                                                                         & Nein                                                                 & Ja               \\ \hline
+    \textbf{\begin{tabular}[c]{@{}l@{}}Selbstverwaltete\\ Lösung\end{tabular}} & Ja                                                                & Ja                                                                         & Ja                                                                   & Ja               \\ \hline
+    \textbf{\begin{tabular}[c]{@{}l@{}}Drittanbieter\\ Software\end{tabular}}  & Java                                                              & \begin{tabular}[c]{@{}l@{}}MongoDB, \\ Java, \\ Elasticsearch\end{tabular} & \begin{tabular}[c]{@{}l@{}}Docker,\\ Kubernetes,\\ Helm\end{tabular} & Nein             \\ \hline
+    \textbf{Log-Agent}                                                         & Ja, Filebeat                                                      & \begin{tabular}[c]{@{}l@{}}Nein, \\ Filebeat\\ empholen\end{tabular}       & Nein                                                                 & Nein             \\ \hline
+    \textbf{Wartungsaufwand}                                                   & Hoch                                                              & Mittel                                                                     & Niedrig                                                              & Niedrig          \\ \hline
+    \textbf{Installation}                                                      & \begin{tabular}[c]{@{}l@{}}Linux,\\ Windows,\\ MacOS\end{tabular} & OVA, rpm,                                                                  & \begin{tabular}[c]{@{}l@{}}Docker und\\ Kubernetes\end{tabular}      &                  \\ \hline
+    \end{tabular}
+    \label{tab:vergleichLogTools}
+    \caption{Vergleich der Log-Management-Tools}
+    \end{table}
+    
