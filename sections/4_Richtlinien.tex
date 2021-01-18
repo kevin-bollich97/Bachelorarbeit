@@ -140,3 +140,43 @@ Durch das zusätzliche Attribut \textit{properties} können die Anwendungsspezif
 
 %\section{Abgleich der Richtlinien}
 
+\section{Wie wird geloggt?}
+In diesem Kapitel werden Beispiele der durchgeführten Logging-Anweisungen gezeigt. 
+Dabei werden die Logs in drei Kategorien unterteilt. 
+Jede der in diesem kapitel vorgestellten Logs sind in der Vierteljahreserklärung durchgeführt worden.
+
+\subsection{Aufruf von externen Schnittstellen}
+
+Ein Abschnitt der in der Vierteljahreserklärung geloggt werden muss, ist der Aufruf von externen Schnittstellen. 
+In der Vierteljahreserklärung wird eine Schnittstelle mehrmals genutzt um Daten der Mitglieder zu erhalten. 
+Die Schnittstelle ist die Arztregister-Schnittstelle. 
+Die Arztregister-Schnittstelle wird vom CFT Sicherstellung \& Versorgungsqualität verwaltet. 
+Die Arztregister-Schnittstelle liefert alle relevanten Daten über die Mitglieder der KVWL. 
+//HIER NOCHMAL JEMANDEN FRAGEN WEGEN Arztregister \\
+
+Das loggen dieser Aufrufe ist wichtig, um zu prüfen ob die Schnittstelle die Daten zurück liefert, die erwartet werden. 
+So kann bei fehlerhaftem Aufruf überprüft werden, ob die Daten noch übereinstimmen oder durch veränderung der Struktur falsche Daten übermittelt werden. 
+Die Aufrufe dieser Schnittstelle werden von einem ArztregisterClient durchgeführt, der vom CFT Portale entwickelt wurde. 
+Durch diesen Client ist die Kommunikation mit dem Arztregister vereinfacht worden. 
+Der Client sorgt dafür, dass beim Aufruf der Schnittstelle nur die für das CFT Portale relevanten Daten zurückgeliefert werden. 
+Ohne Client werden von der Schnittstelle viel mehr Daten mitgeliefert, die für das CFT Portale nicht relevant sind. 
+
+\begin{lstlisting}[caption=Aufruf der Arztregister-Schnittstelle]
+var leistungserbringerListe = await _arztregisterClient.GetLeistungserbringerClusterAsync(lanr: lANR);
+log.Debug("Erhaltene Leistungserbringerliste: leistungserbringerliste={leistungserbringerliste}", leistungserbringerListe);
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+log.debug
+\subsection{Auftreten von Fehlern}
+log.error
+\subsection{Aufruf der REST-Schnittstellen}
+log.info
