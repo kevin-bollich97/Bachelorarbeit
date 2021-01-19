@@ -137,13 +137,11 @@ Filebeat sendet zusätzlich zu den Logs eigene daten.
 Durch das zusätzliche Attribut \textit{properties} können die Anwendungsspezifischen Daten schneller von den Filebeat spezifischen Daten differenziert werden.
 
 
-
-%\section{Abgleich der Richtlinien}
-
-\section{Wie wird geloggt?}
+\section{Was wird geloggt?}
 In diesem Kapitel werden Beispiele der durchgeführten Logging-Anweisungen gezeigt. 
 Dabei werden die Logs in drei Kategorien unterteilt. 
 Jede der in diesem kapitel vorgestellten Logs sind in der Vierteljahreserklärung durchgeführt worden.
+Die Logs werden zusätzlich in die Kategorien eingeordnet, die in der Projektarbeit vorgestellt wurden. \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 
 \subsection{Aufruf von externen Schnittstellen}
 
@@ -156,27 +154,75 @@ Die Arztregister-Schnittstelle liefert alle relevanten Daten über die Mitgliede
 
 Das loggen dieser Aufrufe ist wichtig, um zu prüfen ob die Schnittstelle die Daten zurück liefert, die erwartet werden. 
 So kann bei fehlerhaftem Aufruf überprüft werden, ob die Daten noch übereinstimmen oder durch veränderung der Struktur falsche Daten übermittelt werden. 
-Die Aufrufe dieser Schnittstelle werden von einem ArztregisterClient durchgeführt, der vom CFT Portale entwickelt wurde. 
+Die Aufrufe dieser Schnittstelle werden von einem \textit{ArztregisterClient} durchgeführt, der vom CFT Portale entwickelt wurde. 
 Durch diesen Client ist die Kommunikation mit dem Arztregister vereinfacht worden. 
 Der Client sorgt dafür, dass beim Aufruf der Schnittstelle nur die für das CFT Portale relevanten Daten zurückgeliefert werden. 
 Ohne Client werden von der Schnittstelle viel mehr Daten mitgeliefert, die für das CFT Portale nicht relevant sind. 
+Quellcode \ref{code:aufrufArztregister} zeigt ein Log, dass nach dem Aufruf einer vom ArztregisterClient zur Verfügung gestellten Methode, geschrieben wird. 
+Das Log-Level ist in diesem Fall \textit{Debug}.
+Das Log-Level \textit{Debug} wurde hier gewählt, weil die Informationen nur für die Entwicklung relevant ist. 
+Im produktiven-Betrieb ist es nicht relevant, welche Informationen von dem Befehl zurückgeliefert werden. \\
+Diese Log gehört zu der Kategorie \textit{Semantic Description} die in der Projektarbeit vorgestellt wurde.
+Um präziser zu sein, gehört dieses Log zu der Unterkategorie \textit{variable Description}. 
+Das Log liefert den Inhalt einer Variable, um zu überprüfen ob die Variable den erwarteten Wert beinhaltet. \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 
-\begin{lstlisting}[caption=Aufruf der Arztregister-Schnittstelle]
+\begin{lstlisting}[caption=Aufruf der Arztregister-Schnittstelle, label=code:aufrufArztregister]
 var leistungserbringerListe = await _arztregisterClient.GetLeistungserbringerClusterAsync(lanr: lANR);
 log.Debug("Erhaltene Leistungserbringerliste: leistungserbringerliste={leistungserbringerliste}", leistungserbringerListe);
 \end{lstlisting}
 
 
-
-
-
-
-
-
-
-
-log.debug
 \subsection{Auftreten von Fehlern}
-log.error
+
+Logs werden oft genutzt um Fehler anzuzeigen und analysieren zu können. 
+Daher wurden in der Vierteljahreserklärung Error-Messages geloggt. 
+Dafür wurde das Log-Level \textit{Error} genutzt. 
+Quellcode \ref{code:auftretenFehler} zeigt die Methode \textit{ValidatePflichtangaben}. 
+Diese Methode startet die Validierung von \textit{Pflichtangaben}.
+Wenn die Validierung fehlgeschlagen ist, wird ein error-log geschrieben und eine Exception wird geworfen. \\
+Das Loggen dieser Aufrufe ist wichtig, um zu verstehen welche Fehler während der Laufzeit aufgetreten sind, damit diese Anschließend analysiert werden können. 
+Fehleranalyse ist ein wichtiger Teil des Log-Managements. \\
+Die Art von Logs gehören zu der Kategorie \textit{Error Message}. 
+Die genaue Unterkategorie ist in diesem Fall \textit{value-check}. \\
+
+\begin{lstlisting}[caption=Auftreten von Fehlern, label=code:auftretenFehler]
+private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
+  {
+    var pflichtangabenValidator = new PflichtangabenValidation();
+    var validateResult = pflichtangabenValidator.Validate(pflichtangaben);
+    if (!validateResult.IsValid) {
+      log.Error("Die BSNR {bsnr} ist nicht im richtigen Format. Die BSNR muss 9-stellig sein und darf nur aus Ziffern besten.", pflichtangaben.Bsnr);
+      throw new VierteljahreserklaerungException("Die BSNR ist nicht im richtigen Format. Die BSNR muss 9-stellig sein und darf nur aus Ziffern besten.");
+    }
+  }
+\end{lstlisting}
+
+
+
 \subsection{Aufruf der REST-Schnittstellen}
-log.info
+
+Eine wichtige Stelle zum Loggen ist für das CFT Portale, der Aufruf von REST-Schnittstellen. 
+Deswegen müssen diese Aufrufe geloggt werden, um prüfen zu können welche Mitglieder wann eine Anfrage gesendet haben. 
+Das ist für das Bugtracking im Team wichtig. 
+Die Software im CFT Portale ist in \textit{Server} und \textit{Client} aufgeteilt.
+Der Client ruft die REST-Schnittstellen der Server-Anwendung auf, um Daten zu erhalten. 
+Die Operationen die für die Anwendungen wichtig sind, werden von der Server Anwendung durchgeführt. 
+Daher müssen Alle Anfragen in den Logs dokumentiert werden. 
+Das hierfür genutzte Log-Level ist \textit{Info}.
+Das Log-Level \textit{Info} wird in diesem Fall genutzt, weil diese Logs in der Produktion benötigt werden. \\
+Quellcode \ref{code:aufrufREST} zeigt die die Methode \textit{GetBSNRsAsync}. 
+Diese Methode wird über HTTP-Requests erreicht und liefert die BSNRs für ein bestimmtes Quartal. 
+Das dazu geschriebene Log befindet sich zu Beginn dieser Operation, um zu definieren, dass der Aufruf der Methode geklappt hat. \\
+Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{Program Operation} und zusätzlich zu der Unterkategorie \textit{nex operation}.
+
+
+\begin{lstlisting}[caption=Aufruf der REST-Schnittstellen, label=code:aufrufREST]
+[Route("api/bsnrs")]
+public async Task<IHttpActionResult> GetBSNRsAsync(int quarter, int year)
+{
+  log.Info("Aufruf der REST-Schnittstelle: GetBSNRsAsync mit: quarter={quarter}, year={year}", quarter, year);
+  var bsnrList = await _arztregisterService.GetBSNR(quarter, year, LANR);
+  return Ok(bsnrList);
+}
+\end{lstlisting}
+
