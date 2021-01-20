@@ -1,2 +1,59 @@
-Das ergebnis zeigenn
-Vergleich alt mit neu 
+\chapter{Ergebnis}
+
+In diesem Kapitel wird das Ergebnis der durchgeführten Installationen und Anpassungen des Quellcodes vorgestellt. 
+Dabei wird zu Beginn das Problem des vorherigen Prozesses näher erläutert, um genauer Festzustellen, was die Veränderungen hinsichtlich Fehlersuche gebracht haben. 
+Damit das Ergebnis besser bewertet werden kann, wird der Ablauf der aktuellen Version anhand von einem Beispiel genauer erläutert und dargestellt. 
+
+
+\section{Prozess vor der Bachelorarbeit}
+
+Das CFT Portale muss bei der fehleranalyse auf einen langwierig prozess setzen.
+Dieser Prozess ist in Abbildung \ref{fig:prozessVorher} anhand eines Aktivitätsdiagramms dargestellt. 
+Der Prozess beginnt mit dem Erhalt eines Tickets oder einer Email, dass einen Fehler in der Vierteljahreserklärung beschreibt. 
+Nachdem der Entwickler sich das Ticket näher angeschaut hat, muss dieser nach dem dabei entstandenem Log suchen. 
+Dafür muss sich der Entwickler an einem der Beiden PHA-Server anmelden und die Logs Manuell durchsuchen. 
+Dabei wird eine Remotedesktopverbindung auf den ersten PHA1-Server aufgebaut.
+Anschließend muss die entsprechende Log-Datei für die Vierteljahreserklärung in der Ordnerstruktur des Servers gefunden werden. 
+Nachdem die Log-Datei geöffnet wurde, muss die Textbasierte-Datei manuell nach dem entsprechenden Log durchsucht werden. 
+Bei der Suche kann der Fall auftreten, dass der entsprechende Fehler nicht auf diesem PHA-Server entstanden ist. 
+Das bedeutet, dass der Fehler noch auf dem zweiten PHA-Server durchsucht werden muss. 
+Daher müssen die Schritte Suchen der Datei und das Durchsuchen der Logs wiederholt werden. 
+Wenn der Fehler auf dem zweiten PHA-Server entdeckt wurde, kann der Fehler analysiert werden und Anschließend dokumentiert. 
+Der Prozess ist mit der Dokumentation abgeschlossen. 
+
+
+% Diagramm zeichnen
+% Aktivitätsdiagramm?
+% Logs zeigen
+
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/ProzessVorher.png} 
+    \caption{Prozess vor der Bachelorarbeit }
+    \label{fig:prozessVorher}
+\end{figure}
+
+\section{Aktueller Prozess}
+
+Der aktuelle Prozess, der durch das zentralisierte Logging und die Veränderungen des Logging-Codes ermöglicht wurde, fällt im Vergleich zum vorherigen Prozess deutlich einfacher aus. 
+Denn schon anhand der beiden Abbildungen \ref{fig:prozessVorher} und \ref{fig:prozessDanach} ist erkennbar, dass der aktuelle Prozess mit weniger Aktionen auskommt. 
+Jedoch ist der aktuelle Prozess ebenfalls vom Umfang her deutlich geringer. 
+Die Aktionen im vorherigen Prozess benötigen mehr Aufwand für die Durchführung, als der aktuelle. \\
+
+Beide Prozesse starten mit dem erhalt eines Tickets. 
+Dann beginnt der Unterschied, denn beim vorherigen Prozess musste mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschalten werden, beim aktuellen Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
+So wird dann Kibana aufgerufen. 
+Der einzige Schritt der jetzt noch durchgeführt werden muss, ist die Filterung nach den Kriterien. 
+Der entsprechende Log taucht dann in der Suche auf. 
+Der Fehler kann nun analysiert und dokumentiert werden.  
+
+
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/ProzessDanach.png} 
+    \caption{Aktueller Prozess }
+    \label{fig:prozessDanach}
+\end{figure}
+
+
+\section{Was ist möglich \& Was nicht }
