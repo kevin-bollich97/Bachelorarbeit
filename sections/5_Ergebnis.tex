@@ -45,7 +45,17 @@ Dann beginnt der Unterschied, denn beim vorherigen Prozess musste mit einer Remo
 So wird dann Kibana aufgerufen. 
 Der einzige Schritt der jetzt noch durchgeführt werden muss, ist die Filterung nach den Kriterien. 
 Der entsprechende Log taucht dann in der Suche auf. 
-Der Fehler kann nun analysiert und dokumentiert werden.  
+Der Fehler kann nun analysiert und dokumentiert werden.  \\
+
+Der größte Unterschied der beiden Abbildungen, ist das Fehlen der Schleife in der Abbildung \ref{fig:prozessDanach}.
+Das heißt der aktuelle Prozess muss keine Aktionen mehrmals ausführen, um ans Ziel zu gelangen. 
+Im vorherigen Prozess kann dies jedoch geschehen, sollten die gesuchten Logs nicht im \textit{PHA1} vorhanden sein. 
+Wenn dies der Fall ist, dann muss die Anmeldung am Server, das Öffnen der Log-Datei und das durchsuchen der Logs zweimal durchgeführt werden. 
+Das erhöht den Aufwand beim Suchen nach bestimmten Logs. \\
+Nicht nur das mehrfache Ausführen von Aktionen sind Unterschiede der beiden Prozesse, sondern der Aufwand je Aktion ist ebenfalls unterschiedlich. 
+Denn schon das durchsuchen der Logs ist bei dem vorherigen Prozess deutlich Aufwändiger.
+Dies resultiert daraus, dass die Log-Datei aus dem vorherigen Prozess nicht nach bestimmten Attributen gefiltert werden kann und auch kein ausblenden von irrelevanten Informationen. 
+Im Vergleich dazu ist es in Kibana möglich nach bestimmten Kriterien zu Suchen und nur die Informationen anzuzeigen, die relevant sind. 
 
 
 \begin{figure}[H]
@@ -55,5 +65,40 @@ Der Fehler kann nun analysiert und dokumentiert werden.
     \label{fig:prozessDanach}
 \end{figure}
 
+\section{Ablauf der Logs}
+Ein bestimmtes Log raussuchen, zeigen und dann wie dieses Log in Kibana aussieht.
 
-\section{Was ist möglich \& Was nicht }
+
+\begin{lstlisting}
+log.Info("Aufruf der REST-Schnittstelle: GetBSNRsAsync mit: quarter={quarter}, year={year}", quarter, year);
+\end{lstlisting}
+
+
+\begin{lstlisting}
+{ 
+    "properties": 
+    { 
+        "time": "2021-01-20 14:14:41.0664", 
+        "correlationId": "297c0eca-4692-433d-b649-de16db5a89b4", 
+        "method": "KVWL.PortalVEAddInWeb.Controller
+            .SessionController.GetBSNRsAsync", 
+        "level": "Info", 
+        "username": "TestPraesentation", 
+        "message": "Aufruf der REST-Schnittstelle: GetBSNRsAsync 
+            mit: quarter=1, year=2021", 
+        "quarter": 1, 
+        "year": 2021 
+    } 
+}
+\end{lstlisting}
+
+
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/KibanaBearbeitet.PNG} 
+    \caption{Kibana}
+    \label{fig:prozessDanach}
+\end{figure}
+
+
+\section{Erste praktische Erfahrungen}
