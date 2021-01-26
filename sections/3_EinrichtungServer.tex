@@ -158,13 +158,25 @@ properties.LANR:1234567 or properties.username=TestUser
 
 \section{Logstash}
 
-Logstash ist eine der Komponenten aus dem Elastic Stack. 
-Dabei ist Logstash eines der mächtigsten Tools aus dem Elastic Stack.
+Logstash ist eines der mächtigsten Tools aus dem Elastic Stack.
 Mit Logstash können die Logs gesammelt, geparsed und transformiert werden. 
 Jedoch ist ein großes Problem von Logstash, dass es sehr viel Leistung benötigt, betrieben zu werden und sehr viel Wissen um es richtig zu konfigurieren. 
-Daher kann Logstash Probleme mit sich bringen. 
-Im Laufe der Durchführung ist dabei aufgefallen, dass Logstash im Falle des CFT Portale nicht benötigt wird. 
-Denn Filebeat übernimmt das Senden der Logs an Elasticsearch und ist dabei leichter zu konfigurieren und benötigt nicht viel Leistung. \cite{elasticLogstashSammelnParsen}
+In Abbildung \ref{fig:auslastung} ist ein Auschnitt aus der CPU-Auslastung des Servers, auf dem Logstash installiert wurde. 
+Obwohl noch keine Logs gesendet wurden, gab es eine 100\% Auslastung der CPU. 
+Das zeigt deutlich, dass Logstash sehr viel Rechenleistung benötigt. 
+Nach der deinstallation ist die CPU-Auslastung wieder auf den normal Bereich gesunken. \\
+Außerdem ist während der Konfiguration aufgefallen, dass durch die neu geschaffenen Richtlinien, die Transformation und das Parsen der Logs nicht benötigt werden. 
+Das Senden der Logs an Elasticsearch wird von Filebeat übernommen. 
+Da die Logs durch NLog im JSON-Format gespeichert werden, gibt es keinen Nutzen mehr für Logstash.
+Daher wurde entschieden, dass Logstash in diesem Szenario nicht benötigt wird. 
+
+
+\begin{figure}[H]
+    \center 
+    \includegraphics[width=1\textwidth]{pictures/auslastungSchnitt.jpg} 
+    \caption{CPU-Auslastung }
+    \label{fig:auslastung}
+\end{figure}
 
 \section{Filebeat}
 Filebeat ist die letzte zu installierende Komponente des Elastic Stack. 
@@ -222,7 +234,7 @@ Dabei ist das Testsystem identisch zum produktiven System aufgebaut.
 So können Konfigurationsfehler ausgeschlossen werden. 
 Dev spiegelt eine Umgebung wieder, in der das Team neue Features testen kann. 
 Die Dev-Umgebung kann sich von der Test- und der Prod-Umgebung unterscheiden. \\
-Während in der Dev- und Test-Umgebung nur ein Server läuft, wird in der Prod Umgebung auf zwei Server gesetzt die gespiegelt sind. 
+Während in der Dev-Umgebung nur ein Server läuft, wird in der Prod- und Test-Umgebung auf zwei Server gesetzt die gespiegelt sind. 
 Die zwei gespiegelten Server sollen dafür sorgen, dass Ausfälle abgefangen werden können. \\
 
 Die Abbildung \ref{fig:stages} zeigt die Serverstruktur des CFT Portale.
@@ -233,12 +245,13 @@ Dabei ist die erste Stage Prod.
 Auf Prod sind zwei Server vorhanden, die gespiegelt sind. 
 Dort sind die Apps installiert in der produktiven Umgebung.
 Die Servernamen sind: \textit{PHA1} und \textit{PHA2}.
-Für Test und Dev gibt es jeweils einen Server mit dem gleichen Namen wie die Stage. \\
+Für die Test-Server werden die Namen \textit{Test1} und \textit{Test2} verwendet.
+Dev hat einen Server mit dem gleichen Namen wie die Stage. \\
 
 Auf jedem der in der Abbildung \ref{fig:stages} zu sehenden Server der drei Stages, sind alle Provider hosted Apps des CFT Portale installiert.
 Das heißt, dass für einen Server jeweils ein Filebeat-Agent installiert wurde. 
 Dieser Agent kümmert sich um die Logs der Apps auf diesem einen Server. 
-Das bedeutet, dass jede App vier mal installiert ist und auch genau so viele Logs von unterschiedlichen Servern schreiben wird. 
+Das bedeutet, dass jede App fünf mal installiert ist und auch genau so viele Logs von unterschiedlichen Servern schreiben wird. 
 Damit die Logs lesbar und strukturiert bleiben, musste eine durchsuchbare Lösung erarbeitet werden. \\ 
 
 \begin{figure}[H]

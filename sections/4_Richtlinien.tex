@@ -7,22 +7,35 @@ Um das Verständnis für die Anwendung zu erhalten, wird zu Beginn beschrieben, 
 \section{Vierteljahreserklärung}
 
 Die Provider hosted App \textit{Vierteljahreserklärung} ermöglicht die PDF-Generierung der \textit{Erklärung zur Vierteljahresabrechnung}. 
-Die \textit{Erklärung zur Vierteljahresabrechnung} muss von Vertragsärzten zu der Abrechnung beigefügt werden, um schriftlich zu bestätigen, dass die dokumentiert Leistungen tatsächlich erbracht worden sind. 
+Mit der \textit{Erklärung zu Vierteljahresabrechnung} bestätigt der Vertragsarzt seine abgerechneten Leistungen. 
+Dies ist in den Abrechnungsrichtlinien der KVWL festgelegt. 
+Der Ausschnitt der Richtlinien, der die pflichten des Vertragsarztes bezüglich der \textit{Erklärung der Vierteljahresabrechnung} beschreibt, ist Anschließend zitiert. 
+Der Ausschnitt ist in §7 Absatz 1 zu finden:    
 
 \begin{quote}
   \glqq Der Vertragsarzt hat gegenüber der KVWL auf dem der Abrechnung beizufügenden Vordruck „Erklärung zur Vierteljahresabrechnung“ (§ 35 Abs. 2 BMV-Ä)
   schriftlich zu bestätigen, dass die zur Abrechnung gestellten Leistungen unter Beachtung der Vorgaben nach § 2 Abs. 1 tatsächlich erbracht worden sind und die
   Abrechnung sachlich-rechnerisch richtig ist. Die Vorlage des unterschriebenen
-  Vordrucks „Erklärung zur Vierteljahresabrechnung“ ist Abrechnungsvoraussetzung.\grqq{} \cite{AbrechnungsrichtlinienKassenaerztlichenVereinigung2015}
+  Vordrucks „Erklärung zur Vierteljahresabrechnung“ ist Abrechnungsvoraussetzung.\grqq{} \cite{kassenaerztlichevereinigungwestfalen-lippeAbrechnungsrichtlinienKassenaerztlichenVereinigung2015}
 \end{quote}
 
+\newpage
 
-Dabei ist die Vierteljahreserklärung eine Erklärung, die von den Mitgliedern der Kassenärztlichen Vereinigung Westfalen-Lippe an die KVWL gesendet werden muss. 
-Die Mitglieder müssen dabei unterschiedliche Angaben zu dem Quartal abgeben. 
-Am Ende muss ein Quartal angegeben werden, für das die Vierteljahreserklärung erstellt werden soll. 
-Nach der Angabe des Quartals erfolgt eine Überprüfung der Software, für welche BSNR das Mitglied berechtigt ist eine Vierteljahreserklärung abzugeben. 
-Nach Auswahl der BSNR kann das PDF-Dokument heruntergeladen werden. 
-Die Provider hosted App kann in Abbildung \ref{fig:vje} genauer betrachtet werden. 
+Mithilfe der Anwendung \textit{Vierteljahreserklärung} können die Angaben, die für die Vierteljahresabrechnung notwendig sind, eingetragen werden. 
+Ein Screenshot der Anwendung ist in Abbildung \ref{fig:vje} abbgebildet. 
+Bevor die PDF generiert werden kann, ist die eingabe des Quartals und der Betriebstättennummer (BSNR) vorraussetzung. \\
+
+Die BSNR ist eine neunstellige Zahl, die eine Zuordnung ärztlicher Leistungen zum Ort der Leistungerbringung ermöglicht. 
+Die ersten beiden Ziffern stellen den KV-Landes- oder Bezirksstellenschlüssel dar. 
+Die Ziffern drei bis neuen werden von der Kassenärztlichen Vereinigung vergeben, in dessen Bereich die Betriebstätte liegt. 
+Bei Abrechnungen muss die BSNR mit angegeben werden. 
+Dies ist in den Richtlinien der Kassenärztlichen Bundesvereinigung (KBV) festgelegt worden. 
+Eine BSNR bekommt jede Betriebstätte und Nebenbetriebstätte, sowie Einrichtungen die zur Teilnahme der vertragsärztlichen Versorgung ermächtigt wurden. \cite{kassenarztlichebundesvereinigungRichtlinieKassenarztlichenBundesvereinigung2019} \\
+
+Nach Angabe des Quartals erfolgt eine Überprüfung der BSNRs, die in diesem Quartal für den Vertragsarzt gültig sind. 
+Dabei wird geprüft, an welchen Betriebstätten der Vertragsarzt tätig war. 
+Nach Erhalt der BSNRs, kann der Vertragsarzt eine BSNR aussuchen, für die diese Erklärung erstellt werden soll. 
+
 
 \begin{figure}[H]
     \center 
@@ -35,7 +48,7 @@ Die App \textit{Vierteljahreserklärung} besteht aus einer C\#-Anwendung und ein
 Dabei ist die Angular-Anwendung für die Darstellung der Daten zuständig. 
 Die C\#-Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
 Damit beide Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine REST-Schnittstelle zur Verfügung gestellt.
-Die Schnittstelle bietet zwei GET-Anfragen: \textit{GetBSNRsAsync} und \textit{GetPDFAsync}.
+Die Schnittstelle bietet zwei GET-Anfragen: \textit{GetBSNRsAsync} und \textit{GetPDFAsync}. \\
 GetBSNRsAsync liefert die gültigen BSNRs für ein bestimmtes Quartal. 
 Das Quartal und das zugehörige Jahr werden als Parameter übergeben. 
 In der Methode wird die \textit{GetBSNR} Methode aus der \textit{ArztregisterService} Klasse aufgerufen.
@@ -51,7 +64,6 @@ Daher ist es wichtig, alle Daten die über das Netzwerk gesendet werden, nur rel
 
 \section{Konfiguration von NLog}
 
-Damit die Anforderungen aus den Richtlinien bezüglich NLog vollständig erfüllt werden können, muss NLog richtig konfiguriert werden. 
 Mithilfe von NLog können drei Richtlinien der Projektarbeit umgesetzt werden. 
 Die Richtlinien sind: 
 \begin{itemize}
@@ -60,11 +72,15 @@ Die Richtlinien sind:
     \item Die Verwendung des Logging Frameworks NLog
 \end{itemize}
 
+Damit die Anforderungen aus den Richtlinien bezüglich NLog vollständig erfüllt werden können, muss NLog richtig konfiguriert werden. 
 Die Konfiguration von NLog kann entweder durch eine eigene \textit{Nlog.config} Datei realisiert werden oder durch das Einbinden der Konfigurationen in die \textit{Web.config}.
-Um den Zugriff auf die Konfigurationen von NLog zu vereinfachen, wurden die Konfigurationen in einer eigenen \textit{Nlog.config} Datei ausgelagert. \\
+Um den Zugriff auf die Konfigurationen von NLog zu vereinfachen, wurden die Konfigurationen in einer eigenen \textit{Nlog.config} Datei ausgelagert. 
+Dies hat den Vorteil, dass die Konfigurationen für NLog schneller erreicht werden und Global von mehreren Anwendungen genutzt werden können. \\
 Damit die gewünschte Log-Struktur und strukturiertes Logging verwendet werden können, muss ein \textit{target} definiert werden. 
 Dieses \textit{target} beschreibt den Ort an den die Logs geschrieben werden sollen und welche Informationen mitgeliefert werden. 
-Die gewünschte Struktur erfordert das Erstellen eines eigenen Layouts für NLog. 
+Die gewünschte Struktur erfordert das Nutzen des \textit{JsonLayout}.
+Ein Layout ist ein vordefiniertes Format, in dem die Logs ausgegeben werden. \cite{julianverdurmenNLogNLog} \\
+Das Layout kann dann mit attributen erweitert werden, um den Inhalt individuell zu gestalten, denn das Layout bezieht sich nur auf die Form der Daten. In diesem Fall ist es im JSON-Format. 
 Das definierte Layout ist in Quellcode \ref{code:nlogConfig} zu sehen. 
 In dem Layout werden alle Attribute definiert. 
 Die Attribute werden dann in allen Logs mitgeliefert. 
@@ -90,8 +106,12 @@ Um die gewünschten Daten im Log zu erhalten, werden vordefinierte Variablen gen
 Jedoch reichen die vordefinierten Variablen nicht aus. 
 Damit die \textit{correlationId} genutzt werden kann, muss die \textit{\$\{activityid\}} bei dem Beginn eines Requests neu gesetzt werden. 
 Das geschieht in der \textit{Global.asax}. 
+Die \textit{Global.asax} ist eine global Anwendungsdatei in ASP.NET Anwendungen. 
+In der \textit{Global.asax} werden seitenübergreifende Ereignisbehandlungsroutinen definiert. 
+Zum Beispiel der Start einer Sitzung.
+\cite{schwichtenbergGlobaleEreignisseASP} \\
 Der Quellcode dafür ist in Quellcode \ref{code:correlationId} zu finden. 
-Die genutzte Methode wird von der Oberklasse der \textit{Global.asax} vererbt und sorgt dafür, dass die Methode beim starten eines neuen Requests aufgerufen wird.
+Die genutzte Methode wird von der Oberklasse der \textit{Global.asax} vererbt und sorgt dafür, dass die Methode beim Starten eines neuen Requests aufgerufen wird.
 Die Oberklasse ist \textit{HttpApplication}.
 
 \begin{lstlisting}[caption=Setzen der CorrelationID, label=code:correlationId]
@@ -125,7 +145,7 @@ Ein Log, dass jetzt geschrieben wird, sieht wie folgt aus:
         "correlationId": "4f80c77d-30d4-453a-933a-392e502a29e6", 
         "method": "KVWL.PortalVEAddIn.BLL.Services.ArztregisterService.GetBSNR", 
         "level": "Info", 
-        "message": "LANR: \"8303571\" in dem Jahr: 2020 Mit diesem Quartal: 4", 
+        "message": "LANR: \"1234567\" in dem Jahr: 2020 Mit diesem Quartal: 4", 
         "LANR": "8303571", 
         "year": 2020, 
         "quarter": 4 
@@ -133,7 +153,7 @@ Ein Log, dass jetzt geschrieben wird, sieht wie folgt aus:
 }
 \end{lstlisting}
 
-Der Dafür genutzte Log Befehl ist: 
+Der dafür genutzte Log-Befehl ist: 
 \begin{lstlisting}
 log.Info("LANR: {LANR} in dem Jahr: {year} Mit diesem Quartal: {quarter}", lANR, year, quarter);
 \end{lstlisting}
@@ -159,8 +179,7 @@ Ein Abschnitt der in der Vierteljahreserklärung geloggt werden muss, ist der Au
 In der Vierteljahreserklärung wird eine Schnittstelle mehrmals genutzt um Daten der Mitglieder zu erhalten. 
 Die Schnittstelle ist die Arztregister-Schnittstelle. 
 Die Arztregister-Schnittstelle wird vom CFT Sicherstellung \& Versorgungsqualität verwaltet. 
-Die Arztregister-Schnittstelle liefert alle relevanten Daten über die Mitglieder der KVWL. 
-//HIER NOCHMAL JEMANDEN FRAGEN WEGEN Arztregister \\
+Die Arztregister-Schnittstelle liefert alle relevanten Stammdaten über die Mitglieder der KVWL. \\
 
 Das loggen dieser Aufrufe ist wichtig, um zu prüfen ob die Schnittstelle die Daten zurück liefert, die erwartet werden. 
 So kann bei fehlerhaftem Aufruf überprüft werden, ob die Daten noch übereinstimmen oder durch veränderung der Struktur falsche Daten übermittelt werden. 
