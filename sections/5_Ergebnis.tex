@@ -65,40 +65,6 @@ Im Vergleich dazu ist es in Kibana möglich nach bestimmten Kriterien zu Suchen 
     \label{fig:prozessDanach}
 \end{figure}
 
-\section{Ablauf der Logs}
-Ein bestimmtes Log raussuchen, zeigen und dann wie dieses Log in Kibana aussieht.
 
+%\section{Erste praktische Erfahrungen}
 
-\begin{lstlisting}
-log.Info("Aufruf der REST-Schnittstelle: GetBSNRsAsync mit: quarter={quarter}, year={year}", quarter, year);
-\end{lstlisting}
-
-
-\begin{lstlisting}
-{ 
-    "properties": 
-    { 
-        "time": "2021-01-20 14:14:41.0664", 
-        "correlationId": "297c0eca-4692-433d-b649-de16db5a89b4", 
-        "method": "KVWL.PortalVEAddInWeb.Controller
-            .SessionController.GetBSNRsAsync", 
-        "level": "Info", 
-        "username": "TestPraesentation", 
-        "message": "Aufruf der REST-Schnittstelle: GetBSNRsAsync 
-            mit: quarter=1, year=2021", 
-        "quarter": 1, 
-        "year": 2021 
-    } 
-}
-\end{lstlisting}
-
-
-\begin{figure}[H]
-    \center 
-    \includegraphics[width=1\textwidth]{pictures/KibanaBearbeitet.PNG} 
-    \caption{Kibana}
-    \label{fig:prozessDanach}
-\end{figure}
-
-
-\section{Erste praktische Erfahrungen}
