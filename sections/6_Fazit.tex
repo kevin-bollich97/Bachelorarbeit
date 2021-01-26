@@ -1,18 +1,25 @@
 \chapter{Fazit und Ausblick}
 
-Diese Bachelorarbeit beschäftigte sich mit der Umsetzung von Logging-Richtlinien und das Einrichten eines zentralisierten Logging-Servers.
-
 % Interessanter Einstieg, Einleitung
-Das Ziel dieser Bachelorarbeit war es, einen zentralisierten Logging-Server für das CFT Portale einzurichten und Anhand einer Anwendung die Logging-Richtlinien umzusetzen.
-Damit soll dem Team bei der Fehleranalyse geholfen werden. \\
+Das Ziel dieser Bachelorarbeit war es, einen zentralisierten Logging-Server für das CFT Portale einzurichten und an einer Anwendung die Logging-Richtlinien der Projektarbeit umzusetzen.
+Das Einrichten des zentralisierten Logging-Servers war nötig, weil der Prozess der fehleranalyse sehr aufwändig war. 
+Zudem Aufwand kamen noch die schlecht lesbaren Logdateien, die in den Anwendungen geschrieben werden. 
+Die enthaltenen Informationen helfen nur wenig bei der Suche nach einem Fehler.   \\
 
 % Zusammenfassung der Arbeit 
-Zu Beginn musste eine Evaluation durchgeführt werden, um ein passendes Tool für das zentralisierte Logging zu erhalten. 
-Das Ergebnis der Evaluation lieferte den Elastic Stack als beste Alternative. 
+Zu Beginn wurde eine Evaluation durchgeführt werden, um ein passendes Tool für das zentralisierte Logging zu finden. 
+Das Ergebnis der Evaluation lieferte den Elastic Stack als beste Alternative für die Anforderungen des CFT Portale. 
 Nach der Evaluation erfolgte die Installation des Elastic Stacks.
 Beim installieren der Komponenten des Elastic Stack ist aufgefallen, dass Logstash hohe CPU-Anforderungen mitbringt und im Falle des CFT Portale nicht gebraucht wird. 
 Mit Abschluss der Installationen mussten die Logging-Richtlinien an einer Anwendung umgesetzt werden. 
 Die Anwendung an der die Richtlinien umgesetzt worden sind, war die Vierteljahreserklärung. 
+Damit die Richtlinien überhaupt umgesetzt werden können, musste die Anwendung verstanden werden. 
+Dafür wurden die rechtlich relevanten Dinge erläutert und Anschließend die Architektur, um zu verstehen an welchen Stellen die wichtigen Anhaltspunkte für das Logging sind. 
+Bevor die log-Nachrichten an den richtigen Stellen platziert werden konnten, musste das NLog Framework konfiguriert werden. 
+Mit der Konfiguration wurde der Aufbau der Logs fest definiert. 
+Mit Abschluss der Konfiguration konnten die logs an den richtigen Stellen in den Quellcode eingetragen werden. 
+Zum Abschluss wurden beide Prozesse der Fehleranalyse miteinander verglichen.
+Dabei fiel auf, dass beide sich vom Aufwand her stark Unterscheiden.
 
 
 % Wichtige Ergebnisse 
