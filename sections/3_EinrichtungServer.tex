@@ -97,8 +97,7 @@ Die zu erwartende Ausgabe sieht wie folgt aus:
 "tagline" : "You Know, for Search"
 }
 \end{lstlisting}
-
-Hiermit ist die Installation nach der Anleitung abgeschlossen. 
+Hiermit ist die Installation abgeschlossen. 
 Damit der Elasticsearch-Service von außerhalb erreicht werden kann, muss der Service entsprechend konfiguriert werden. 
 Dafür müssen die IP-Adressen der Server eingetragen werden, die Daten an Elasticsearch senden dürfen. 
 Denn nach Installation ist es nur erlaubt, Daten von localhost zu senden. 
@@ -120,7 +119,11 @@ Daher werden die einzelnen Schritte nicht noch einmal vorgeführt. \\
 \subsection{Index Pattern}
 Kibana ist im Vergleich zu Elasticsearch eine Webanwendung die von außerhalb erreicht werden kann und von Nutzern in Zukunft genutzt wird. 
 Daher müssen wichtige Bestandteile der Oberfläche von Kibana näher erläutert werden. 
-Zum einen müssen \textit{index pattern} erstellt werden, um die Logs aus dem Elasticsearch visualisieren zu können. 
+Zum einen müssen \textit{index pattern} erstellt werden, um die Logs aus dem Elasticsearch visualisieren zu können.
+\textit{Index pattern} sind Muster, nach denen in den Logs gesucht wird. 
+Das Suchen erfolgt dabei auf ein bestimmtes Attribut der Logs, dem \textit{index}.
+Ein Beispiel für ein \textit{index pattern} ist: \textit{\glqq prod-*\grqq{}}.
+Jedes Log das ein \textit{index} mit dem Beginn \textit{prod} enthält, wird somit angezeigt. \\
 Doch bevor ein \textit{index pattern} erstellt werden kann, müssen Daten im Elasticsearch vorhanden sein. 
 Das hat den Vorteil, dass keine \textit{Index Pattern} erstellt werden können, die niemals genutzt werden können, weil keine Daten zu dem pattern passen.
 Wenn Daten vorhanden sind können im Reiter \textit{Stack Management -> Index Patterns} Index Patterns verwaltet werden.  
@@ -145,14 +148,14 @@ Lucene ist eine Java-Bibliothek, die Such-Features anbietet.
 Dazu gehören das Überprüfen der Syntax, Markieren der Ergebnisse und weitere Funktionen. \cite{apacheApacheLuceneWelcome}
 Die Syntax von Lucene sieht so aus: \cite{apacheApacheLuceneQuery}
 \begin{lstlisting}
-title:"The Right Way" AND text:go
+properties.LANR:"1234567" AND properties.level:Info
 \end{lstlisting}
 Um beispielhaft eine KQL Abfrage vorzuführen, wurde eine Suche in Kibana durchgeführt. 
 Dabei können zwei unterschiedliche Methoden genutzt werden. 
 Beide Varianten der gleich Abfrage werden hier gezeigt: 
 \begin{lstlisting}
-properties.LANR=1234567; properties.username=TestUser
-properties.LANR:1234567 or properties.username=TestUser
+properties.LANR=1234567; properties.level=Info
+properties.LANR:1234567 or properties.level=Info
 \end{lstlisting}
 
 

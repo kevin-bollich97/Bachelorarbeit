@@ -7,7 +7,7 @@ Das Ziel dieser Evaluation ist es, zu prüfen, ob es eine bessere Alternative f�
 Dafür werden Tools evaluiert, die den kompletten Elastic Stack ersetzen können, aber auch Tools, die einzelne Komponenten austauschen können. \\
 Das CFT Portale wäre in der Lage, weitere Kosten für ein Tool auf sich zu nehmen, sollte es dem Team die Arbeit erleichtern können. 
 Daher werden Open-Source- und lizenzpflichtige Tools in dieser Evaluation betrachtet.
-Sollten jedoch zwei Tools gleichermaßen die Anforderungen erfüllen und eines der Tools Open Source sein, dann wird sich für das Open-Source-Tool entschieden, um Kosten zu sparen. \\
+Sollten jedoch zwei Tools gleichermaßen die Anforderungen erfüllen und eines der Tools kostenlos sein, dann wird sich für das kostenlose Tool entschieden, um Kosten zu sparen. \\
 Damit eine Evaluation erfolgen kann, müssen Anforderungen aufgestellt werden. 
 Die Anforderungen sollen dabei helfen, eine Entscheidung bezüglich der Tools treffen zu können. 
 Tools, die diese Anforderungen nicht erfüllen können, werden nicht weiter betrachtet.
@@ -24,9 +24,9 @@ Da das Netzwerk der KVWL sicherheitstechnisch stark abgeschirmt ist, kommt eine 
 Das bedeutet, dass das Tool eine Lösung bieten muss, die auf den Servern der KVWL läuft. \\
 Durch die Menge an Anwendungen, die das CFT Portale betreuen muss, ist es wichtig, dass das Tool die einzelnen Logs entweder von den unterschiedlichen Maschinen selbst einsammeln kann oder das Senden der Logs möglich ist.
 Das Installieren weiterer Log-Agenten, die für das Senden der Logs zuständig sind, sollten vermieden werden, da sonst weiterer Wartungsaufwand entstehen würde. \\
-Durch den Geschäftsbereichsleiter des Geschäftsbereichs IT \& eHealth der KVWL wurde beschlossen, dass das CFT Portale keine eigenen Datenbanken im Team betreuen soll. 
-Das CFT Portale erhält die Daten von anderen Teams der KVWL über Schnittstellen. 
-Daher muss das Tool die Logs speichern, ohne das eine Datenbank dafür betreut werden muss. \\
+Im CFT Portale werden keine eigenen Datenbanken betreut.
+Alle notwendigen Daten werden von anderen Teams zur Verfügung gestellt. 
+Damit das CFT Portale keine weiteren Aufgaben zu sich zieht, fordert das CFT Portale, dass das Log-Management-Tool keine Logs in einer Datenbank speichert. \\ \\
 Ein wichtiger Punkt ist die Analyse und Anzeige von Logs.
 Das heißt, es soll eine Oberfläche vorhanden sein, die intuitiv benutzt werden kann, um die Logs anzusehen und zu analysieren. 
 Jedoch sollte in dem Tool auch die Möglichkeit bestehen, Logs zu filtern und zu durchsuchen. \\
@@ -206,7 +206,22 @@ Damit Sematext in der eigenen Infrastruktur betrieben werden kann, muss folgende
 Sematext Enterprise wird als Helm Chart angeboten. 
 Helm ist der Paketmanager für Kubernetes. Ein Chart ist eine Menge von Dateien, die zugehörige Kubernetes-Ressourcen beschreibt. 
 Das Helm Chart beinhaltet alles, was nötig ist, um Sematext Enterprise nutzen zu können. 
-Da Sematext Enterprise, nur als Helm Chart angeboten wird, muss die Installation über Kubernetes erfolgen. \cite{sematextSematextEnterpriseOverview}
+Da Sematext Enterprise, nur als Helm Chart angeboten wird, muss die Installation über Kubernetes erfolgen. \cite{sematextSematextEnterpriseOverview} \\
+Anschließend eine Auflistung der Vor- und Nachteile von Sematext:
+
+\begin{itemize}
+    \item Vorteile:
+    \begin{itemize}
+        \item Support und Wartung
+        \item Benachrichtigungen
+    \end{itemize} 
+    \item Nachteile: 
+     \begin{itemize}
+        \item Kostenpflichtig
+        \item Kein eigener Log-Shipper
+        \item Nur eine Installation mit Docker möglich
+    \end{itemize}
+\end{itemize}
 
 
 \subsection{Fluentd}
@@ -217,7 +232,6 @@ Also ist Fluentd kein Tool, um zentralisiertes Logging zu ermöglichen, sondern 
 Mithilfe von Fluentd können Datenströme einheitlich und verständlich ablaufen. 
 Ein Beispiel dafür ist in Abbildung \ref{fig:fluentdVorherNachher} zu sehen.
 Die Datenströme im \glqq Before Fluentd\grqq{} Teil sind chaotisch und undstrukturiert, wobei mit der Nutzung von Fluentd die Datenströme einheitlich über Fluentd laufen. \Cite{fluentdFluentdOpenSource} \\
-
 Fluentd versucht, soweit es möglich ist, die erhaltenen Daten zu strukturieren. 
 Dabei werden die Daten im JSON-Format gespeichert. 
 Somit kann Fluentd die Daten einheitlich verarbeiten. 
@@ -226,13 +240,26 @@ Für weitere Funktionalitäten können Lösungen von der Community genutzt werde
 Das wird durch die Plugin-Architektur von Fluentd ermöglicht. 
 Fluentd ist in einer Kombination von C und Ruby entwickelt worden. 
 Deswegen benötigt es nur wenig Systemressourcen.
-Die Standard Version von Fluentd ohne weitere Komponenten benötigt ungefähr 30-40 MB Speicher. \cite{projectWhatFluentdFluentd}
-
+Die Standard Version von Fluentd ohne weitere Komponenten benötigt ungefähr 30-40 MB Speicher. \cite{projectWhatFluentdFluentd}\\
 Die größten Vorteile von Fluentd sind die Menge an Plugins die verfügbar sind und die Performance. 
 Außerdem verbraucht Fluentd sehr wenig Speicher. 
 Der größte Nachteil ist der Zwang zu strukturierten Daten. 
 Dies bedeutet, dass es nicht so flexibel möglich ist, zu entscheiden, wie die Logs auszusehen haben. 
-Fluentd formatiert die erhaltenen Daten immer in JSON-Format.
+Fluentd formatiert die erhaltenen Daten immer im JSON-Format. 
+Hier nochmal eine Auflistung der Vor- und Nachteile von Fluentd:
+
+\begin{itemize}
+    \item Vorteile:
+    \begin{itemize}
+        \item Open Source
+        \item Hohe Auswahl an Plugins
+        \item Performance
+    \end{itemize} 
+    \item Nachteile: 
+     \begin{itemize}
+        \item Zwang von strukturierten Daten
+    \end{itemize}
+\end{itemize}
 
 \begin{figure}[H]
     \center 
@@ -316,18 +343,5 @@ In Tabelle \ref{tab:vergleichLogTools} ist eine Auflistung der getesteten Tools 
 
 
 
-\begin{table}[H]
-    \begin{tabular}{|l|l|l|l|l|}
-    \hline
-                                                                               & \textbf{Elastic Stack}                                            & \textbf{Graylog}                                                           & \textbf{Sematext}                                                    & \textbf{Fluentd} \\ \hline
-    \textbf{Open Source}                                                       & Ja                                                                & Ja                                                                         & Nein                                                                 & Ja               \\ \hline
-    \textbf{\begin{tabular}[c]{@{}l@{}}Selbstverwaltete\\ Lösung\end{tabular}} & Ja                                                                & Ja                                                                         & Ja                                                                   & Ja               \\ \hline
-    \textbf{\begin{tabular}[c]{@{}l@{}}Drittanbieter\\ Software\end{tabular}}  & Java                                                              & \begin{tabular}[c]{@{}l@{}}MongoDB, \\ Java, \\ Elasticsearch\end{tabular} & \begin{tabular}[c]{@{}l@{}}Docker,\\ Kubernetes,\\ Helm\end{tabular} & Nein             \\ \hline
-    \textbf{Log-Agent}                                                         & Ja, Filebeat                                                      & \begin{tabular}[c]{@{}l@{}}Nein, \\ Filebeat\\ empholen\end{tabular}       & Nein                                                                 & Nein             \\ \hline
-    \textbf{Wartungsaufwand}                                                   & Hoch                                                              & Mittel                                                                     & Niedrig                                                              & Niedrig          \\ \hline
-    \textbf{Installation}                                                      & \begin{tabular}[c]{@{}l@{}}Linux,\\ Windows,\\ MacOS\end{tabular} & OVA, rpm,                                                                  & \begin{tabular}[c]{@{}l@{}}Docker und\\ Kubernetes\end{tabular}      &                  \\ \hline
-    \end{tabular}
-    \label{tab:vergleichLogTools}
-    \caption{Vergleich der Log-Management-Tools}
-    \end{table}
-    
+
+\input{tables/vergleichTools.tex}
