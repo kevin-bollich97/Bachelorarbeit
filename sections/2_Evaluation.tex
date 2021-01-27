@@ -114,7 +114,6 @@ Die Daten werden beim Speichern geprüft.
 Bei der Prüfung wird die Struktur genauer untersucht, um festzustellen, ob die Struktur in Ordnung ist.
 Wenn die Struktur nicht in Ordnung ist, wird sie verbessert. \\
 Die Architektur von Graylog ermöglicht eine multi-threaded Suche. 
-Jede Suche nutzt dabei mehrere Prozessoren, um möglichst effizient zu sein. 
 Die Suche in Graylog ist dabei einfach aufgebaut. 
 Einfache boolesche Operationen werden für die Suche genutzt. 
 Die dazu benötigten Felder werden durch einfaches Klicken ausgewählt.
@@ -151,11 +150,9 @@ Die zu installierende Software ist: \cite{graylogInstallingGraylogGraylog}
 An der Auflistung wird deutlich, dass spezielle Versionen der Tools installiert sein müssen, damit Graylog funktionieren kann. 
 Dies kann bei der Wartung zu Problemen führen: 
 Es muss beim Updaten auf neuere Versionen darauf geachtet werden, dass alle Versionen miteinander kompatibel sind.
-Daher ist das Updaten von Graylog nicht so einfach möglich.
-Ein Problem ist auch die veraltete Java Version, die von Graylog genutzt wird. 
-Aktuell ist es schon möglich Graylog mit Java 11 zu betreiben, jedoch ist es noch in der Testphase.  
-Das Updaten wird dadurch nicht vereinfacht und erfordert zusätzliche Arbeit.
-Das sorgt dafür, dass der Wartungsaufwand sehr hoch ist. \\
+Graylog bietet die Möglichkeit an, die Installation mithilfe von Docker oder dem Open Virtualization Format (OVA) durchzuführen. 
+Das kann den Aufwand beim Updaten vereinfachen. 
+Jedoch mit Installation auf Linux-Server ohne Docker oder OVAs besteht weiterhin das Problem mit der kompatibilität der einzelnen Versionen miteinander. \\
 Abschließend können die folgenden Vor- und Nachteile für Graylog zusammengefasst werden:
 \begin{itemize}
     \item Vorteile: 
@@ -321,11 +318,17 @@ Daher kommt die Nutzung von Sematext nicht infrage.
 
 \subsection{Fluentd vs. Logstash}
 
-Da Fluentd kein Tool ist, um zentralisiertes Logging zu ermöglichen, sondern nur eine Middleware, die beim Senden der Logs behilflich sein kann, wird das Tool mit Logstash alleine verglichen. 
-Im Vergleich zu Logstash ist Fluentd sehr viel performanter und verbraucht weniger Speicherplatz. 
-Jedoch sind die zwei Vorteile nicht relevant für den Einsatz im CFT Portale. 
-Ressourcen sind genügend vorhanden. \\
-Da Logstash mit den Komponenten des Elastic Stack zusammen entwickelt wurde, ist der Wechsel zu Fluentd im Szenario des CFT Portale nicht sehr sinnvoll. 
+Da Fluentd kein Tool ist, um zentralisiertes Logging zu ermöglichen, sondern nur eine Middleware, die beim Senden der Logs behilflich sein kann, wird das Tool mit Logstash alleine verglichen. \\
+Fluentd ermöglicht die Vereinheitlichung von Daten aus unterschiedlichen Quellen in ein JSON-Format.
+Durch die strukturierung können die Daten besser analysiert werden. 
+Mit logstash ist dies ebenfalls möglich. 
+Jedoch kann Logstash zusätzlich die Daten Transformieren.
+Zum Beispiel können IP-Adressen in geographische Daten transformiert werden und personenbezogene Daten können komplett anonymisiert werden. \\
+Logstash und Fluentd bieten beide eine hervorragende Möglichkeit an, Logdaten zu strukturieren und an die erforderlichen Ziele weiterzuleiten. 
+Jedoch ist es für das CFT Portale nicht notwendig die Daten zu strukturieren. 
+Durch die erstellten Logging-Richtlinien werden die gespeicherten Logs im JSON-Format gespeichert und müssen daher nur noch an die richtige stelle gesendet werden. 
+Da die Logs nur von selbsterstellten Anwendungen verwaltet werden sollen und nicht von zusätzlichen Systemen, reicht ein einfach Log-Shipper aus. 
+Dafür wird die Komponente Filebeat des Elastic Stacks genutzt. 
 
 
 \section{Zusammenfassung}
@@ -340,8 +343,5 @@ Bei der Evaluation ist aufgefallen, dass der Elastic Stack und Graylog die Anfor
 Jedoch ist es nicht möglich im Rahmen dieser Bachelorarbeit beide Tools zu installieren und zu testen. 
 Daher wird im Rahmen dieser Bachelorarbeit der Elastic Stack installiert und getestet.
 In Tabelle \ref{tab:vergleichLogTools} ist eine Auflistung der getesteten Tools mit relevanten Anforderungen. 
-
-
-
 
 \input{tables/vergleichTools.tex}
