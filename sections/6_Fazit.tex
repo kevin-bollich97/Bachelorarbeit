@@ -3,7 +3,7 @@
 % Interessanter Einstieg, Einleitung
 Das Ziel dieser Bachelorarbeit war es, einen zentralisierten Logging-Server für das CFT Portale einzurichten und an einer Anwendung die Logging-Richtlinien der Projektarbeit umzusetzen.
 Das Einrichten des zentralisierten Logging-Servers war nötig, weil der Prozess der fehleranalyse sehr aufwändig war. 
-Zudem Aufwand kamen noch die schlecht lesbaren Logdateien, die in den Anwendungen geschrieben werden. 
+Hinzu kamen noch die schlecht lesbaren Logdateien, die in den Anwendungen geschrieben werden. 
 Die enthaltenen Informationen helfen nur wenig bei der Suche nach einem Fehler.   \\
 
 % Zusammenfassung der Arbeit 
@@ -19,11 +19,27 @@ Bevor die log-Nachrichten an den richtigen Stellen platziert werden konnten, mus
 Mit der Konfiguration wurde der Aufbau der Logs fest definiert. 
 Mit Abschluss der Konfiguration konnten die logs an den richtigen Stellen in den Quellcode eingetragen werden. 
 Zum Abschluss wurden beide Prozesse der Fehleranalyse miteinander verglichen.
-Dabei fiel auf, dass beide sich vom Aufwand her stark Unterscheiden.
-
+Dabei fiel auf, dass der neu entstandene Prozess deutlich weniger Aufwand erfordert, als der ursprüngliche. \\
 
 % Wichtige Ergebnisse 
+Das Ergebnis der Bachelorarbeit war die erfolgreiche Einrichtung eines zentralisierten Logging-Servers, der den Arbeitsprozess der Fehlersuche des CFT Portale vereinfacht hat. 
+Außerdem enthalten die geschriebenen Logs deutlich mehr Informationen als zuvor. 
+Mithilfe des strukturierten Loggings ist es nun möglich, effektiv in den Logs nach bestimmten Attributen zu Filtern und zu Suchen. \\
 
 % Beantwortung der Forschungsfrage
+Alle Forschungsfragen die zu Beginn der Bachelorarbeit aufgestellt wurden, konnten im Rahmen der Arbeit vollständig beantwortet werden. 
+Die erste Forschungsfrage konnte mithilfe der Evaluation beantwortet werden. 
+Das Ergebnis der Evaluation von Log-Management-Tools bestätigte die ursprüngliche Entscheidung, den Elastic Stack als zentralisiertes Logging-Tool einzusetzen. 
+In der zweiten Forschungsfrage handelt sich um die Frage, wie ein zentralisierter Logging-Server eingerichtet werden kann. 
+Das konnte mittels der Installation des Elastic Stacks beantwortet werden. 
+Die genauen Schritten wurden in dem dazugehörigen Kapitel vollständig erklärt. 
+In der Abschließenden Forschungsfrage drehte es sich um die Logging-Richtlinien, die in dieser Arbeit praktisch umgesetzt werden sollten. 
+Die Frage bezog sich dabei darauf, ob die Richtlinien umgesetzt werden können.
+Ja, die Logging-Richtlinien konnten praktisch an einem Projekt vollständig umgesetzt werden. \\
 
 % Ausblick auf weitere Forschung
+Im Anschluss an diese Bachelorarbeit sollten die aufgestellten Logging-Richtlinien an allen Applikationen des CFT Portale durchgeführt werden. 
+Der aktuelle Stand bezieht sich nur auf die Vierteljahreserklärung. 
+Dadurch ist bei der Fehlersuche in der Vierteljahreserklärung zwar ein optimaler Ablauf möglich, jedoch ist das Ziel, dass alle Applikationen des Teams über den Elastic Stack analysierbar sind. 
+Nach erfolgreicher Integration des Elastic Stack wird das Ergebnis weiteren Teams der KVWL vorgestellt. 
+
