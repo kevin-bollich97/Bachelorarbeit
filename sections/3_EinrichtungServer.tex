@@ -31,8 +31,8 @@ $ sudo firewall-cmd --zone=public --add-port=9200/tcp --permanent
 $ sudo firewall-cmd --zone=public --add-port=5601/tcp --permanent    
 \end{lstlisting}
 
-Bevor die Installation der Elastic Stack Komponenten erfolgen konnte, musste festgelegt werden wie die Installation durchgeführt werden soll. 
-Denn die KVWL nutzt \textit{Satellite} um die installierten Packages zu verwalten. 
+Bevor die Installation der Elastic Stack Komponenten erfolgen konnte, musste festgelegt werden, wie die Installation durchgeführt werden soll. 
+Denn die KVWL nutzt \textit{Satellite}, um die installierten Packages zu verwalten. 
 Aktuell sind die Komponenten des Elastic Stack nicht im Satellite eingebunden. 
 Daher musste geklärt werden, wie die Komponenten installiert werden dürfen. 
 Um den organisatorischen Aufwand möglichst gering zu halten, wurde in Absprache mit den Administratoren festgelegt, dass eine manuelle Installation derzeit durchgeführt werden soll. 
@@ -43,13 +43,13 @@ Im Anschluss an diese Bachelorarbeit sollen die Pakete, sofern das Ergebnis zufr
 Die erste zu installierende Komponente des Elastic Stack ist Elasticsearch.
 Bei der Installation wurde auf die Anleitung vom Hersteller zurückgegriffen. \cite{elasticInstallElasticsearchRPM}
 Bei der Installation war es wichtig zu beachten, die richtigen Packages runterzuladen. 
-Sollte die Open-Source-Version runtergeladen und installiert worden sein, dann ist es nicht möglich ein Upgrade auf die Basic-Version zu vollbringen. 
+Sollte die Open-Source-Version heruntergeladen und installiert worden sein, dann ist es nicht möglich, ein Upgrade auf die Basic-Version zu vollbringen. 
 Damit anschließend die Basic Version genutzt werden kann, muss der komplette Stack neu installiert werden. 
 Daher musste darauf geachtet werden, dass die Basic Version direkt installiert wird. \\
 Aus Sicherheitsgründen hat der Server keinen Zugriff auf das Internet. 
-Daher müssen die Installationspakete manuell vom Entwickler-Rechner runtergeladen werden und anschließend zum Server kopiert werden. 
-Da es sich um einen RedHat Server handelt, werden \textit{rpm-Pakete} runtergeladen und installiert.
-Der Befehl der genutzt wurde, um das Package runterzuladen, ist: 
+Daher müssen die Installationspakete manuell vom Entwickler-Rechner heruntergeladen und anschließend zum Server kopiert werden. 
+Da es sich um einen RedHat Server handelt, werden \textit{rpm-Pakete} heruntergeladen und installiert.
+Der Befehl, der genutzt wurde, um das Package herunterzuladen, ist: 
 \begin{lstlisting}[language=bash]
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.0-x86_64.rpm
 \end{lstlisting}
@@ -104,7 +104,7 @@ Die Konfiguration muss in der \textit{elasticsearch.yml} Datei eingetragen werde
 Diese ist im Pfad \glqq \textit{/etc/elasticsearch/elasticsearch.yml}\grqq{} zu finden.
 Für den Testfall ist es möglich zu definieren, dass von überall Daten an Elasticsearch gesendet werden können. 
 Dafür muss die IP-Adresse \textit{0.0.0.0} eingetragen werden. 
-Das Eintragen der IP-Adressen muss in \textit{network.host} eingetragen werden.
+Das Eintragen der IP-Adressen muss in \textit{network.host} vorgenommen werden.
 Wenn mehrere IP-Adressen benötigt werden, dann erfolgen die Einträge in \textit{network.hosts}. 
 Elasticsearch ist mit diesen Konfigurationen nun bereit, Daten zu erhalten.
 
@@ -113,16 +113,16 @@ Elasticsearch ist mit diesen Konfigurationen nun bereit, Daten zu erhalten.
 Die nächste zu installierende Komponente ist Kibana. 
 Wie bei der Installation von Elasticsearch wird hier auch auf die Anleitung des Herstellers zugegriffen, um die Installation erfolgreich durchzuführen. \cite{elasticInstallKibanaRPM}
 Die Installation des \textit{rpm-Paketes} von Kibana erfolgt auf vergleichbare Weise wie die Installation des Packages von Elasticsearch. 
-Daher werden die einzelnen Schritte nicht noch einmal vorgeführt. \\
+Daher werden die einzelnen Schritte nicht noch einmal aufgeführt. \\
 
 \subsection{Index Pattern}
-Kibana ist im Vergleich zu Elasticsearch eine Webanwendung, die mit einem Internet Browser erreicht werden kann und von Nutzern in Zukunft genutzt wird. 
+Kibana ist im Vergleich zu Elasticsearch eine Webanwendung, die mit einem Internet Browser erreicht werden kann und von Anwendern in Zukunft genutzt wird. 
 Daher müssen wichtige Bestandteile der Oberfläche von Kibana näher erläutert werden. \\
 Es müssen \textit{index patterns} erstellt werden, um die Logs aus dem Elasticsearch visualisieren zu können.
 \textit{Index pattern} sind Muster, nach denen in den Logs gesucht wird. 
 Das Suchen erfolgt dabei auf ein bestimmtes Attribut der Logs, dem \textit{index}.
 Ein Beispiel für ein \textit{index pattern} ist \textit{\glqq prod-*\grqq{}}.
-Jedes Log mit dem Präfix \textit{prod} wird angezeigt. \\
+Jedes Log mit dem Präfix \textit{prod}, wird angezeigt. \\
 Doch bevor ein \textit{index pattern} erstellt werden kann, müssen Daten im Elasticsearch vorhanden sein. 
 Das hat den Vorteil, dass keine \textit{Index Pattern} erstellt werden können, die niemals genutzt werden können, weil keine Daten zu dem Pattern passen.
 Wenn Daten vorhanden sind, können im Reiter \textit{Stack Management -> Index Patterns} Index Patterns verwaltet werden.  
@@ -133,12 +133,12 @@ Die Logs, die hinter diesem Pattern stehen, werden in \textit{Discover} angezeig
 \subsection{Dashboards}
 Die Oberfläche von Kibana ermöglicht es, individuell angepasste Dashboards zu erstellen. 
 Dabei können mehrere Diagramme mit unterschiedlichen \textit{index patterns} angezeigt werden, um die benötigten Metriken zu veranschaulichen. 
-So ist es möglich schnell bestimmte Informationen anzuzeigen. 
+So ist es möglich, schnell bestimmte Informationen anzuzeigen. 
 Für die Visualisierung können alle bekannten klassischen Diagrammtypen genutzt werden. \cite{elasticKibanaVisualisierenAnalysieren}
 
 \subsection{Kibana Query Language (KQL)}
 Kibana Query Language (KQL) ist eine Abfragesprache (engl. query language), mit der das Suchen von Daten in großen Datenmengen ermöglicht wird. 
-In Kibana wird KQL dazu genutzt, die vorhandenen Logs nach bestimmten Kriterien zu filtern und die gewünschten Daten zu erhalten. 
+In Kibana wird KQL dazu genutzt, um die vorhandenen Logs nach bestimmten Kriterien zu filtern und die gewünschten Daten zu erhalten. 
 KQL setzt dabei auf eine leicht verständliche Syntax, damit keine große Einarbeitung nötig ist.
 Beim Eintippen in der Suchleiste werden Vorschläge gegeben, um schnelles Filtern zu ermöglichen.
 Jedoch wird dafür mindestens eine \textit{Basic License} benötigt.
@@ -151,7 +151,7 @@ properties.LANR:"1234567" AND properties.level:Info
 \end{lstlisting}
 Um beispielhaft eine KQL Abfrage vorzuführen, wurde eine Suche in Kibana durchgeführt. 
 Dabei können zwei unterschiedliche Methoden genutzt werden. 
-Beide Varianten der gleich Abfrage werden hier gezeigt: \\
+Beide Varianten der gleichen Abfrage werden hier gezeigt: \\
 \begin{lstlisting}
 properties.LANR=1234567; properties.level=Info
 properties.LANR:1234567 or properties.level=Info
@@ -162,12 +162,12 @@ properties.LANR:1234567 or properties.level=Info
 
 Logstash ist eines der mächtigsten Tools aus dem Elastic Stack.
 Mit Logstash können die Logs gesammelt, geparsed und transformiert werden. 
-Jedoch ist ein großes Problem von Logstash, dass es sehr viel Leistung benötigt, betrieben zu werden und sehr viel Wissen um es richtig zu konfigurieren. 
+Jedoch ist ein großes Problem von Logstash, dass es sehr viel Leistung benötigt, um betrieben zu werden und sehr viel Wissen, um es richtig zu konfigurieren. 
 In Abbildung \ref{fig:auslastung} ist ein Auschnitt aus der CPU-Auslastung des Servers, auf dem Logstash installiert wurde. 
 Obwohl noch keine Logs gesendet wurden, gab es eine 100\% Auslastung der CPU. 
 Das zeigt deutlich, dass Logstash sehr viel Rechenleistung benötigt. 
-Nach der deinstallation ist die CPU-Auslastung wieder auf den normal Bereich gesunken. \\
-Außerdem ist während der Konfiguration aufgefallen, dass durch die neu geschaffenen Richtlinien, die Transformation und das Parsen der Logs nicht benötigt werden. 
+Nach der Deinstallation ist die CPU-Auslastung wieder auf den normal Bereich gesunken. \\
+Außerdem ist während der Konfiguration aufgefallen, dass durch die neu geschaffenen Richtlinien die Transformation und das Parsen der Logs nicht benötigt werden. 
 Das Senden der Logs an Elasticsearch wird von Filebeat übernommen. 
 Da die Logs durch NLog im JSON-Format gespeichert werden, gibt es keinen Nutzen mehr für Logstash.
 Daher wurde entschieden, dass Logstash in diesem Szenario nicht benötigt wird. 
@@ -185,8 +185,8 @@ Filebeat ist die letzte zu installierende Komponente des Elastic Stacks.
 Die Installation von Filebeat muss etwas anders ablaufen als die anderen Komponenten. 
 Denn Filebeat wird auf den Windows-Servern der Produktiv- und Test-Systeme installiert. 
 Daher muss eine Windows-Installation durchgeführt werden. 
-Zu Beginn muss ein Zip-File runtergeladen werden, dass die Basic-Version von Filebeat enthält. 
-Nach der Extraktion des Archivs, muss ein PowerShell-Skript als Administrator ausgeführt werden. 
+Zu Beginn muss ein Zip-File heruntergeladen werden, das die Basic-Version von Filebeat enthält. 
+Nach der Extraktion des Archivs muss ein PowerShell-Skript als Administrator ausgeführt werden. 
 Das PowerShell-Skript \textit{install-service-filebeat.ps1} führt die komplette Installation durch. \\
 Nachdem die Installation abgeschlossen ist, muss die Verbindung zu Elasticsearch und Kibana hergestellt werden. 
 Dafür muss die Konfigurationsdatei \textit{Filebeat.yml} angepasst werden. 
@@ -196,8 +196,8 @@ Das funktioniert mit folgender Zeile in der Konfigurationsdatei:
 output.elasticsearch:
     hosts: ["http://<server-adresse>:9200"]
 \end{lstlisting}
-Sollte es mehrere Elasticsearch-Services geben, können diese in das Interval der Hosts mit eingetragen werden. 
-So kann bei hoher Last zu mehreren Services gesendet wendet. \\
+Sollte es mehrere Elasticsearch-Services geben, können diese in das Intervall der Hosts mit eingetragen werden. 
+So kann bei hoher Last zu mehreren Services gesendet werden. \\
 Damit vordefinierte Index Pattern an Kibana gesendet werden können, muss Kibana auch in der Konfigurationsdatei eingetragen werden.
 Der Befehl ist dabei ein bisschen anders: 
 \begin{lstlisting}
@@ -221,7 +221,7 @@ filebeat.inputs:
 \end{lstlisting}
 Zeile 1 definiert, dass jetzt \textit{inputs} folgen. 
 Zeile 2 bis 8 sind die Konfigurationen von dem ersten \textit{input}.
-Zeile 5 und 6 sind dabei wichtig, denn diese ermöglichen das Einlesen von strukturieren Log-Daten im JSON-Format. 
+Zeile 5 und 6 sind wichtig, denn diese ermöglichen das Einlesen von strukturieren Log-Daten im JSON-Format. 
 Zeile 7 und 8 beschreiben selbst definierte Felder in den gesendeten Logs. 
 Da können Informationen für alle Logs aus diesem Input ergänzt werden. 
 In diesem Fall ist das der Name der Anwendung, der mitgeschickt wird. 
@@ -250,7 +250,7 @@ Die Servernamen sind: \textit{PHA1} und \textit{PHA2}.
 Für die Test-Server werden die Namen \textit{Test1} und \textit{Test2} verwendet.
 Dev hat einen Server mit dem gleichen Namen wie die Stage. \\
 
-Auf jedem der in der Abbildung \ref{fig:stages} zu sehenden Server der drei Stages, sind alle Provider hosted Apps des CFT Portale installiert.
+Auf jedem der in der Abbildung \ref{fig:stages} zu sehenden Server der drei Stages sind alle Provider hosted Apps des CFT Portale installiert.
 Das heißt, dass für einen Server jeweils ein Filebeat-Agent installiert wurde. 
 Dieser Agent kümmert sich um die Logs der Apps auf diesem einen Server. 
 Das bedeutet, dass jede App fünf mal installiert ist und auch genau so viele Logs von unterschiedlichen Servern schreiben wird. 
@@ -263,14 +263,13 @@ Damit die Logs lesbar und strukturiert bleiben, musste eine durchsuchbare Lösun
     \label{fig:stages}
 \end{figure}
 
-Damit die Suche in Kibana effektiv durchgeführt werden kann, werden drei Index Pattern erstellt. 
-Jeweils für eine Stage. 
+Damit die Suche in Kibana effektiv durchgeführt werden kann, werden drei Index Pattern erstellt, jeweils für eine Stage. 
 Also sind die drei Patterns dann: \textit{Prod}, \textit{Test} und \text{Dev}.
 So kann eine erste schnelle Trennung der Zuständigkeiten erreicht werden. 
-Da natürlich pro Stage immer noch eine hohe Anzahl an unterschiedlichen Apps vorhanden ist, wird es schwierig darin die erforderlichen Daten zu finden. 
+Da natürlich pro Stage immer noch eine hohe Anzahl an unterschiedlichen Apps vorhanden ist, wird es schwierig, darin die erforderlichen Daten zu finden. 
 Die Patterns sollen als erste Filterung genutzt werden, um den Anwendungsfall zu finden. 
 Anschließend soll nach den Apps gefiltert werden können. 
-Damit dies geschehen kann, muss in der Filebeat Konfiguration für jedes Input ein extra Feld definiert werden in dem der Appname definiert ist. 
+Damit dies geschehen kann, muss in der Filebeat Konfiguration für jedes Input ein extra Feld definiert werden, in dem der Appname definiert ist. 
 Die extra Zeilen für einen Input sehen so aus: 
 \begin{lstlisting}
 fields:
@@ -278,8 +277,8 @@ fields:
 \end{lstlisting}
 Das Beispiel zeigt die Konfigurationen für die Vierteljahreserklärung.
 Mit diesen zusätzlichen Feldern ist eine effektive Filterung nach Stages und anschließend nach den Apps möglich. 
-Für das Team ist ein häufig auftretender Fall in der produktiven Umgebung, dass es notwendig ist zu wissen auf welchem der beiden produktiven Server (PHA1 und PHA2) die Logs geschrieben wurden. 
-Filebeat sendet dafür automatisch die Informationen über den Hostname mit. 
+Für das Team ist ein häufig auftretender Fall in der produktiven Umgebung, dass es notwendig ist, zu wissen, auf welchem der beiden produktiven Server (PHA1 und PHA2) die Logs geschrieben wurden. 
+Filebeat sendet dafür automatisch die Informationen über den Hostnamen mit. 
 Somit muss das Team zusätzlich zu den zwei Filterungsoptionen noch nach dem \textit{agent.hostname} filtern.
 
 

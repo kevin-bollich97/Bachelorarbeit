@@ -22,19 +22,19 @@ Der Ausschnitt ist in §7 Absatz 1 zu finden:
 \newpage
 
 Mithilfe der Anwendung \textit{Vierteljahreserklärung} können die Angaben, die für die Vierteljahresabrechnung notwendig sind, eingetragen werden. 
-Ein Screenshot der Anwendung ist in Abbildung \ref{fig:vje} abbgebildet. 
-Bevor das PDF generiert werden kann, ist die Eingabe des Quartals und der Betriebstättennummer (BSNR) Vorraussetzung. \\
+Ein Screenshot der Anwendung ist in Abbildung \ref{fig:vje} abgebildet. 
+Bevor das PDF generiert werden kann, ist die Eingabe des Quartals und der Betriebsstättennummer (BSNR) Voraussetzung. \\
 
 Die BSNR ist eine neunstellige Zahl, die eine Zuordnung ärztlicher Leistungen zum Ort der Leistungerbringung ermöglicht. 
 Die ersten beiden Ziffern stellen den KV-Landes- oder Bezirksstellenschlüssel dar. 
-Die Ziffern drei bis neuen werden von der Kassenärztlichen Vereinigung vergeben, in dessen Bereich die Betriebstätte liegt. 
+Die Ziffern drei bis neun werden von der Kassenärztlichen Vereinigung vergeben, in dessen Bereich die Betriebsstätte liegt. 
 Bei Abrechnungen muss die BSNR mit angegeben werden. 
 Dies ist in den Richtlinien der Kassenärztlichen Bundesvereinigung (KBV) festgelegt worden. 
-Eine BSNR bekommt jede Betriebstätte und Nebenbetriebstätte, sowie Einrichtungen die zur Teilnahme der vertragsärztlichen Versorgung ermächtigt wurden. \cite{kassenarztlichebundesvereinigungRichtlinieKassenarztlichenBundesvereinigung2019} \\
+Eine BSNR bekommt jede Betriebsstätte und Nebenbetriebsstätte, sowie Einrichtungen, die zur Teilnahme an der vertragsärztlichen Versorgung ermächtigt wurden. \cite{kassenarztlichebundesvereinigungRichtlinieKassenarztlichenBundesvereinigung2019} \\
 
 Nach Angabe des Quartals erfolgt eine Überprüfung der BSNRs, die in diesem Quartal für den Vertragsarzt gültig sind. 
-Dabei wird geprüft, an welchen Betriebstätten der Vertragsarzt tätig war. 
-Nach Erhalt der BSNRs, kann der Vertragsarzt eine BSNR aussuchen, für die diese Erklärung erstellt werden soll. 
+Dabei wird geprüft, an welchen Betriebsstätten der Vertragsarzt tätig war. 
+Nach Erhalt der BSNRs kann der Vertragsarzt eine BSNR aussuchen, für die diese Erklärung erstellt werden soll. 
 
 
 \begin{figure}[H]
@@ -43,23 +43,24 @@ Nach Erhalt der BSNRs, kann der Vertragsarzt eine BSNR aussuchen, für die diese
     \caption{Vierteljahreserklärung }
     \label{fig:vje}
 \end{figure}
-
 Die App \textit{Vierteljahreserklärung} besteht aus einer C\#-Anwendung und einer Angular-Anwendung. 
 Dabei ist die Angular-Anwendung für die Darstellung der Daten zuständig. 
 Die C\#-Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
 Damit beide Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine REST-Schnittstelle zur Verfügung gestellt.
-Die Schnittstelle bietet zwei GET-Anfragen: \textit{GetBSNRsAsync} und \textit{GetPDFAsync}. \\
-GetBSNRsAsync liefert die gültigen BSNRs für ein bestimmtes Quartal. 
-Das Quartal und das zugehörige Jahr werden als Parameter übergeben. 
+Die Schnittstelle bietet zwei GET-Anfragen: \textit{\glqq /api/bsnrs\grqq{}} und \textit{\glqq /api/pdf\grqq{}}.
+Beim Aufruf der GET-Anfrage \textit{\glqq /api/bsnrs\grqq{}} werden zusätzlich noch zwei Query-Parameter benötigt. 
+Die Parameter sind das Quartal und das zugehörige Jahr, für die die passenden BSNRs geladen werden sollen. \\
+Der Aufruf der GET-Anfrage:\textit{\glqq /api/bsnrs\grqq{}} ruft die C\#-Methode \textit{GetBSNRsAsync} auf.
+GetBSNRsAsync liefert die gültigen BSNRs für ein bestimmtes Quartal.  
 In der Methode wird die \textit{GetBSNR} Methode aus der \textit{ArztregisterService} Klasse aufgerufen.
-Die Methode kümmert sich um das Beschaffen der notwendigen Daten der Arztregister-Schnittstelle. 
+Die Methode beschafft die notwendigen Daten der Arztregister-Schnittstelle. 
 Die Arztregister-Schnittstelle stellt alle notwendigen Daten der Mitglieder zur Verfügung. 
 Die Schnittstelle wird von dem CFT Sicherstellung der KVWL gewartet und weiterentwickelt. 
 Die aus der Arztregister-Schnittstelle erhaltenen Daten sind sehr stark verschachtelt und enthalten viele Informationen, die für die Vierteljahreserklärung irrelevant sind. 
 Daher müssen die Daten in DTOs (Data transfer Objects) geladen werden, um die Menge an HTTP-Anfragen zu reduzieren. 
 Mit den DTOs können dann mehr Daten über einen Aufruf gesendet werden. 
 Das Reduzieren der Daten ist für die Anwendungen im Mitgliederportal wichtig, denn nicht jedes Mitglied der KVWL besitzt eine ausreichend starke Netzanbindung, um große Datenmengen zu erhalten. 
-Daher ist es wichtig, alle Daten die über das Netzwerk gesendet werden, nur relevante Informationen enthalten.
+Daher ist es wichtig, dass alle Daten, die über das Netzwerk gesendet werden, nur relevante Informationen enthalten.
 
 
 \section{Konfiguration von NLog}
@@ -75,10 +76,10 @@ Die Richtlinien sind:
 Damit die Anforderungen aus den Richtlinien bezüglich NLog vollständig erfüllt werden können, muss NLog richtig konfiguriert werden. 
 Die Konfiguration von NLog kann entweder durch eine eigene \textit{Nlog.config} Datei realisiert werden oder durch das Einbinden der Konfigurationen in die \textit{Web.config}.
 Um den Zugriff auf die Konfigurationen von NLog zu vereinfachen, wurden die Konfigurationen in einer eigenen \textit{Nlog.config} Datei ausgelagert. 
-Dies hat den Vorteil, dass die Konfigurationen für NLog schneller erreicht werden und Global von mehreren Anwendungen genutzt werden können. \\
+Dies hat den Vorteil, dass die Konfigurationen für NLog schneller erreicht werden und global von mehreren Anwendungen genutzt werden können. \\
 Damit die gewünschte Log-Struktur und strukturiertes Logging verwendet werden können, muss ein \textit{target} definiert werden. 
-Dieses \textit{target} beschreibt den Ort an den die Logs geschrieben werden sollen und welche Informationen mitgeliefert werden. 
-Die gewünschte Struktur erfordert das Nutzen des \textit{JsonLayout}.
+Dieses \textit{target} beschreibt den Ort, an den die Logs geschrieben werden sollen, und welche Informationen mitgeliefert werden. 
+Die gewünschte Struktur erfordert die Nutzung des \textit{JsonLayout}.
 Ein Layout ist ein vordefiniertes Format, in dem die Logs ausgegeben werden. \cite{julianverdurmenNLogNLog} \\
 Das Layout kann dann mit Attributen erweitert werden, um den Inhalt individuell zu gestalten, denn das Layout bezieht sich nur auf die Form der Daten. In diesem Fall ist es im JSON-Format. 
 Das definierte Layout ist in Quellcode \ref{code:nlogConfig} zu sehen. 
@@ -104,11 +105,10 @@ So ist es dann möglich, für spezielle Fälle die Logs zu erweitern.
 
 Um die gewünschten Daten im Log zu erhalten, werden vordefinierte Variablen genutzt. 
 Jedoch reichen die vordefinierten Variablen nicht aus. 
-Damit die \textit{correlationId} genutzt werden kann, muss die \textit{\$\{activityid\}} bei dem Beginn eines Requests neu gesetzt werden. 
+Damit die \textit{correlationId} genutzt werden kann, muss die \textit{\$\{activityid\}} zu Beginn eines Requests neu gesetzt werden. 
 Das geschieht in der \textit{Global.asax}. 
-Die \textit{Global.asax} ist eine global Anwendungsdatei in ASP.NET-Anwendungen. 
-In der \textit{Global.asax} werden seitenübergreifende Ereignisbehandlungsroutinen definiert. 
-Zum Beispiel der Start einer Sitzung.
+Die \textit{Global.asax} ist eine globale Anwendungsdatei in ASP.NET-Anwendungen. 
+In der \textit{Global.asax} werden seitenübergreifende Ereignisbehandlungsroutinen definiert, wie zum Beispiel der Start einer Sitzung.
 \cite{schwichtenbergGlobaleEreignisseASP} \\
 Der Quellcode dafür ist in Quellcode \ref{code:correlationId} zu finden. 
 Die genutzte Methode wird von der Oberklasse der \textit{Global.asax} vererbt und sorgt dafür, dass die Methode beim Starten eines neuen Requests aufgerufen wird.
@@ -125,7 +125,7 @@ protected void Application_BeginRequest(object sender, EventArgs e)
 
 Das Ziel der Richtlinien ist das Produzieren von Logs, die lesbarer und effizienter zu durchsuchen sind.
 Wichtig beim Lesen und Suchen ist dabei der Aufbau der Logs. 
-In den Richtlinien wurde definiert, dass ein Log folgende Informationen liefern soll: 
+Die Richtlinien definieren, dass ein Log folgende Informationen liefern soll: 
 
 \begin{itemize}
     \item Timestamp
@@ -181,13 +181,13 @@ Die Schnittstelle ist die Arztregister-Schnittstelle.
 Die Arztregister-Schnittstelle wird vom CFT Sicherstellung \& Versorgungsqualität verwaltet. 
 Die Schnittstelle liefert alle relevanten Stammdaten über die Mitglieder der KVWL. \\
 
-Das Loggen dieser Aufrufe ist wichtig, um zu prüfen, ob die Schnittstelle die Daten zurückliefert, die erwartet werden. 
+Das Loggen dieser Aufrufe ist wichtig, um zu prüfen, ob die Schnittstelle die erwarteten Daten zurückliefert. 
 So kann bei fehlerhaftem Aufruf überprüft werden, ob die Daten noch übereinstimmen oder durch Veränderung der Struktur falsche Daten übermittelt werden. 
 Die Aufrufe dieser Schnittstelle werden von einem \textit{ArztregisterClient} durchgeführt, der vom CFT Portale entwickelt wurde. 
 Durch diesen Client ist die Kommunikation mit dem Arztregister vereinfacht worden. 
-Der Client sorgt dafür, dass beim Aufruf der Schnittstelle nur die für das CFT Portale relevanten Daten zurückgeliefert werden. 
-Ohne Client werden von der Schnittstelle viel mehr Daten mitgeliefert, die für das CFT Portale nicht relevant sind. 
-Quellcode \ref{code:aufrufArztregister} zeigt ein Log, dass nach dem Aufruf einer vom ArztregisterClient zur Verfügung gestellten Methode, geschrieben wird. 
+Der Client verhindert, dass die Entwickler manuelle REST-Abfragen schreiben müssen. 
+Dafür stellt der Client C\#-Methoden zur Verfügung, die den Aufruf der REST-Abfragen ermöglichen. 
+Quellcode \ref{code:aufrufArztregister} zeigt ein Log, das nach dem Aufruf einer vom ArztregisterClient zur Verfügung gestellten Methode geschrieben wird. 
 Das Log-Level ist in diesem Fall \textit{Debug}.
 Das Log-Level \textit{Debug} wurde hier gewählt, weil die Informationen nur für die Entwicklung relevant sind. 
 Im produktiven Betrieb ist es nicht relevant, welche Informationen von dem Befehl zurückgeliefert werden. \\
@@ -203,7 +203,7 @@ log.Debug("Erhaltene Leistungserbringerliste: leistungserbringerliste={leistungs
 
 \subsection{Auftreten von Fehlern}
 
-Logs werden oft genutzt, um Fehler anzuzeigen und analysieren zu können. 
+Logs werden oft genutzt, um Fehler anzeigen und analysieren zu können. 
 Daher wurden in der Vierteljahreserklärung Error-Messages geloggt. 
 Dafür wurde das Log-Level \textit{Error} genutzt. 
 Quellcode \ref{code:auftretenFehler} zeigt die Methode \textit{ValidatePflichtangaben}. 
@@ -232,13 +232,13 @@ private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
 
 Eine wichtige Stelle zum Loggen ist der Aufruf von REST-Schnittstellen. 
 Daher werden diese Aufrufe geloggt, um prüfen zu können, welche Mitglieder eine Anfrage gesendet haben. 
-Das ist für das Bugtracking im Team wichtig. 
+Mithilfe dieses Logs ist es möglich, nach dem Erhalt eines Fehlers, das Mitglied zu identifizieren bei dem der Fehler aufgetreten ist. \\
 Die Software im CFT Portale ist in \textit{Server} und \textit{Client} aufgeteilt.
 Der Client ruft die REST-Schnittstellen der Server-Anwendung auf, um Daten zu erhalten. 
 Die Operationen, die für die Anwendungen wichtig sind, werden von der Server-Anwendung durchgeführt. 
 Daher müssen alle Anfragen in den Logs dokumentiert werden. 
 Die hier entstehenden Logs sind für den produktiven Betrieb wichtig, daher werden die Logs im Log-Level \textit{Info} geschrieben. \\
-Quellcode \ref{code:aufrufREST} zeigt die die Methode \textit{GetBSNRsAsync}. 
+Quellcode \ref{code:aufrufREST} zeigt die Methode \textit{GetBSNRsAsync}. 
 Diese Methode wird über HTTP-Requests erreicht und liefert die BSNRs für ein bestimmtes Quartal. 
 Das dazu geschriebene Log befindet sich zu Beginn dieser Operation, um zu definieren, dass der Aufruf der Methode geklappt hat. \\
 Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{Program Operation} und zusätzlich zu der Unterkategorie \textit{next operation}.
