@@ -1,24 +1,24 @@
-\chapter{Ergebnis}
+\chapter{Ergebnisse}
 
 In diesem Kapitel wird das Ergebnis der durchgeführten Installationen und Anpassungen des Quellcodes vorgestellt. 
-Dabei wird zu Beginn das Problem des vorherigen Prozesses näher erläutert, um genauer Festzustellen, was die Veränderungen hinsichtlich Fehlersuche gebracht haben. 
-Damit das Ergebnis besser bewertet werden kann, wird der Ablauf der aktuellen Version anhand von einem Beispiel genauer erläutert und dargestellt. 
+Dabei wird zu Beginn das Problem des vorherigen Prozesses näher erläutert, um genauer festzustellen, was die Veränderungen hinsichtlich Fehlersuche gebracht haben. 
+Dies wird anhand eines Beispiels verdeutlicht.
 
 
 \section{Prozess vor der Bachelorarbeit}
 
-Das CFT Portale muss bei der fehleranalyse auf einen langwierig prozess setzen.
+Das CFT Portale muss bei der Fehleranalyse auf einen langwierigen Prozess setzen.
 Dieser Prozess ist in Abbildung \ref{fig:prozessVorher} anhand eines Aktivitätsdiagramms dargestellt. 
-Der Prozess beginnt mit dem Erhalt eines Tickets oder einer Email, dass einen Fehler in der Vierteljahreserklärung beschreibt. 
+Der Prozess beginnt mit dem Erhalt eines Tickets oder einer E-Mail, der einen Fehler in der Vierteljahreserklärung beschreibt. 
 Nachdem der Entwickler sich das Ticket näher angeschaut hat, muss dieser nach dem dabei entstandenem Log suchen. 
-Dafür muss sich der Entwickler an einem der Beiden PHA-Server anmelden und die Logs Manuell durchsuchen. 
-Dabei wird eine Remotedesktopverbindung auf den ersten PHA1-Server aufgebaut.
+Dafür muss sich der Entwickler an einem der beiden PHA-Server anmelden und die Logs manuell durchsuchen. 
+Dabei wird eine Remotedesktopverbindung auf dem ersten PHA1-Server aufgebaut.
 Anschließend muss die entsprechende Log-Datei für die Vierteljahreserklärung in der Ordnerstruktur des Servers gefunden werden. 
-Nachdem die Log-Datei geöffnet wurde, muss die Textbasierte-Datei manuell nach dem entsprechenden Log durchsucht werden. 
+Nachdem die Log-Datei geöffnet wurde, muss die textbasierte-Datei manuell nach dem entsprechenden Log durchsucht werden. 
 Bei der Suche kann der Fall auftreten, dass der entsprechende Fehler nicht auf diesem PHA-Server entstanden ist. 
-Das bedeutet, dass der Fehler noch auf dem zweiten PHA-Server durchsucht werden muss. 
-Daher müssen die Schritte Suchen der Datei und das Durchsuchen der Logs wiederholt werden. 
-Wenn der Fehler auf dem zweiten PHA-Server entdeckt wurde, kann der Fehler analysiert werden und Anschließend dokumentiert. 
+Das bedeutet, dass der Fehler noch auf dem zweiten PHA-Server gesucht werden muss. 
+Daher müssen die Schritte \textit{Suchen der Datei} und das \textit{Durchsuchen der Logs} wiederholt werden. 
+Wenn der Fehler auf dem zweiten PHA-Server entdeckt wurde, kann der Fehler analysiert und Anschließend dokumentiert werden. 
 Der Prozess ist mit der Dokumentation abgeschlossen. 
 
 
@@ -37,24 +37,23 @@ Der Prozess ist mit der Dokumentation abgeschlossen.
 
 Der aktuelle Prozess, der durch das zentralisierte Logging und die Veränderungen des Logging-Codes ermöglicht wurde, fällt im Vergleich zum vorherigen Prozess deutlich einfacher aus. 
 Denn schon anhand der beiden Abbildungen \ref{fig:prozessVorher} und \ref{fig:prozessDanach} ist erkennbar, dass der aktuelle Prozess mit weniger Aktionen auskommt. 
-Jedoch ist der aktuelle Prozess ebenfalls vom Umfang her deutlich geringer. 
 Die Aktionen im vorherigen Prozess benötigen mehr Aufwand für die Durchführung, als der aktuelle. \\
 
-Beide Prozesse starten mit dem erhalt eines Tickets. 
-Dann beginnt der Unterschied, denn beim vorherigen Prozess musste mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschalten werden, beim aktuellen Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
+Beide Prozesse starten mit dem Erhalt eines Tickets. 
+Da fallen die Unterschiede der beiden Prozesse auf: Beim vorherigen Prozess musste sich mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschalten werden, beim aktuellen Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
 So wird dann Kibana aufgerufen. 
-Der einzige Schritt der jetzt noch durchgeführt werden muss, ist die Filterung nach den Kriterien. 
-Der entsprechende Log taucht dann in der Suche auf. 
+Der einzige Schritt, der jetzt noch durchgeführt werden muss, ist die Filterung nach den Kriterien. 
+Der entsprechende Log-Eintrag taucht dann in der Suche auf. 
 Der Fehler kann nun analysiert und dokumentiert werden.  \\
 
-Der größte Unterschied der beiden Abbildungen, ist das Fehlen der Schleife in der Abbildung \ref{fig:prozessDanach}.
-Das heißt der aktuelle Prozess muss keine Aktionen mehrmals ausführen, um ans Ziel zu gelangen. 
+Der größte Unterschied der beiden Abbildungen ist das Fehlen der Schleife in der Abbildung \ref{fig:prozessDanach}.
+Das heißt, der aktuelle Prozess muss keine Aktionen mehrmals ausführen, um ans Ziel zu gelangen. 
 Im vorherigen Prozess kann dies jedoch geschehen, sollten die gesuchten Logs nicht im \textit{PHA1} vorhanden sein. 
-Wenn dies der Fall ist, dann muss die Anmeldung am Server, das Öffnen der Log-Datei und das durchsuchen der Logs zweimal durchgeführt werden. 
-Das erhöht den Aufwand beim Suchen nach bestimmten Logs. \\
+Wenn dies der Fall ist, dann muss die Anmeldung am Server, das Öffnen der Log-Datei und das Durchsuchen der Logs zweimal durchgeführt werden. 
+Das erhöht den Aufwand beim Suchen nach bestimmten Log-Einträgen. \\
 Nicht nur das mehrfache Ausführen von Aktionen sind Unterschiede der beiden Prozesse, sondern der Aufwand je Aktion ist ebenfalls unterschiedlich. 
-Denn schon das durchsuchen der Logs ist bei dem vorherigen Prozess deutlich Aufwändiger.
-Dies resultiert daraus, dass die Log-Datei aus dem vorherigen Prozess nicht nach bestimmten Attributen gefiltert werden kann und auch kein ausblenden von irrelevanten Informationen. 
+Denn schon das Durchsuchen der Logs ist bei dem vorherigen Prozess deutlich aufwändiger.
+Dies resultiert daraus, dass die Log-Datei aus dem vorherigen Prozess nicht nach bestimmten Attributen gefiltert werden kann und auch kein Ausblenden von irrelevanten Informationen möglich ist. 
 Im Vergleich dazu ist es in Kibana möglich nach bestimmten Kriterien zu Suchen und nur die Informationen anzuzeigen, die relevant sind. 
 
 
@@ -71,7 +70,7 @@ Im Vergleich dazu ist es in Kibana möglich nach bestimmten Kriterien zu Suchen 
 Der Elastic Stack und die Umsetzung der Richtlinien wurden im CFT Portale den einzelnen Entwicklern vorgestellt. 
 Bei der Vorstellung waren die Entwickler begeistert. 
 Die Entwickler freuen sich einerseits darauf, dass sie sich nicht mehr an beiden PHA-Servern anmelden müssen und andererseits, dass die Logs nun genauere Details über die Fehler liefern. 
-Denn bei der fehleranalyse werden öfter Daten wie die \textit{LANR} und die \textit{BSNR} benötigt, um Fehler besser zuordnen zu können. 
-Durch das Strukturierte Logging und den Elastic Stack ist es nun möglich Mithilfe von Filterfunktion effektiv Daten in den Logs zu finden. 
-Das Durchsuchen von Textdateien mithilfe der \textit{STRG+F} Tastenkombination wird nicht mehr benötigt. 
-Der Erste Eindruck ist somit sehr positiv vom CFT Portale. 
+Denn bei der Fehleranalyse werden öfter Daten wie die \textit{LANR} und die \textit{BSNR} benötigt, um Fehler besser zuordnen zu können. 
+Durch das strukturierte Logging und den Elastic Stack ist es nun möglich, mithilfe von Filterfunktion effektiv Daten in den Logs zu finden. 
+Das Durchsuchen von Textdateien mithilfe der Suchfunktion des verwendeten Texteditors wird nicht mehr benötigt. 
+Der erste Eindruck ist somit sehr positiv. 

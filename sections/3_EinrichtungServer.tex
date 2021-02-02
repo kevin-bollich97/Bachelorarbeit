@@ -17,7 +17,7 @@ Dieses Kapitel ist wie folgt aufgebaut:
 \section{RedHat Server}
 
 Damit die einzelnen Komponenten des Elastic Stack installiert werden können, musste ein Server beantragt werden. 
-Dafür wurde ein Auftrag an das CFT Infrastruktur der KVWL gesendet, um so einen Server zu erhalten. 
+Dafür wurde ein Auftrag an das CFT Infrastruktur der KVWL gesendet, um so einen virtuellen Server zu erhalten. 
 Wie schon in Kapitel \ref{kap:bewertungTools} geschrieben wurde, werden im CFT Portale auch Linux-Server verwendet. 
 In der Regel werden RedHat Server genutzt. 
 So ist es auch bei dem Server für das zentralisierte Logging. 
@@ -43,22 +43,22 @@ Im Anschluss an diese Bachelorarbeit sollen die Pakete, sofern das Ergebnis zufr
 Die erste zu installierende Komponente des Elastic Stack ist Elasticsearch.
 Bei der Installation wurde auf die Anleitung vom Hersteller zurückgegriffen. \cite{elasticInstallElasticsearchRPM}
 Bei der Installation war es wichtig zu beachten, die richtigen Packages runterzuladen. 
-Sollte man die Open Source Version runtergeladen, dann ist es nicht möglich ein Upgrade auf die Basic Version zu machen. 
-Damit man anschließend die Basic Version nutzen kann, muss man den Kompletten Stack neu installieren. 
+Sollte die Open-Source-Version runtergeladen und installiert worden sein, dann ist es nicht möglich ein Upgrade auf die Basic-Version zu vollbringen. 
+Damit anschließend die Basic Version genutzt werden kann, muss der komplette Stack neu installiert werden. 
 Daher musste darauf geachtet werden, dass die Basic Version direkt installiert wird. \\
 Aus Sicherheitsgründen hat der Server keinen Zugriff auf das Internet. 
 Daher müssen die Installationspakete manuell vom Entwickler-Rechner runtergeladen werden und anschließend zum Server kopiert werden. 
-Da es sich um einen RedHat Server handelt, werden \textit{rpm} Pakete runtergeladen und installiert.
-Der Befehl der genutzt wurde um das Package runterzuladen ist: 
+Da es sich um einen RedHat Server handelt, werden \textit{rpm-Pakete} runtergeladen und installiert.
+Der Befehl der genutzt wurde, um das Package runterzuladen, ist: 
 \begin{lstlisting}[language=bash]
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.0-x86_64.rpm
 \end{lstlisting}
 Nachdem der Download fertiggestellt wurde, musste das \textit{rpm} package auf den RedHat Server kopiert werden:
 \begin{lstlisting} [language=bash]
-pscp -P 22 elasticsearch-7.10.0-x86_64.rpm <server-adresse>
+pscp -P 22 elasticsearch-7.10.0-x86_64.rpm <user>@<server>:<path>
 \end{lstlisting}
-Anschließend musste das \textit{rpm} Paket installiert werden.
-Nach der Installation musste eingestellt werden, dass der Elasticsearch Service automatisch startet wenn der Server hochfährt.
+Anschließend erfolgte die Installation des \textit{rpm} Pakets.
+Nach der Installation wurde eingestellt, dass der Elasticsearch Service automatisch beim Hochfahren des Servers startet.
 
 \begin{lstlisting} [language=bash]
 sudo rpm --install elasticsearch-7.10.0-x86_64.rpm
@@ -72,8 +72,7 @@ Zum Starten und Stoppen werden folgende Befehle genutzt:
 sudo systemctl start elasticsearch.service
 sudo systemctl stop elasticsearch.service    
 \end{lstlisting}
-
-Mit dem folgenden Befehl kann geprüft werden, ob der Elasticsearch-Service läuft: 
+Um zu überprüfen ob der Elasticsearch-Service erfolgreich gestartet ist, kann der Befehl genutzt werden: 
 \begin{lstlisting}[language=bash]
 curl localhost:9200
 \end{lstlisting}
@@ -100,7 +99,7 @@ Die zu erwartende Ausgabe sieht wie folgt aus:
 Hiermit ist die Installation abgeschlossen. 
 Damit der Elasticsearch-Service von außerhalb erreicht werden kann, muss der Service entsprechend konfiguriert werden. 
 Dafür müssen die IP-Adressen der Server eingetragen werden, die Daten an Elasticsearch senden dürfen. 
-Denn nach Installation ist es nur erlaubt, Daten von localhost zu senden. 
+Nach Installation ist es erstmal nur erlaubt, Daten von localhost zu senden. 
 Die Konfiguration muss in der \textit{elasticsearch.yml} Datei eingetragen werden.
 Diese ist im Pfad \glqq \textit{/etc/elasticsearch/elasticsearch.yml}\grqq{} zu finden.
 Für den Testfall ist es möglich zu definieren, dass von überall Daten an Elasticsearch gesendet werden können. 
@@ -113,27 +112,27 @@ Elasticsearch ist mit diesen Konfigurationen nun bereit, Daten zu erhalten.
 
 Die nächste zu installierende Komponente ist Kibana. 
 Wie bei der Installation von Elasticsearch wird hier auch auf die Anleitung des Herstellers zugegriffen, um die Installation erfolgreich durchzuführen. \cite{elasticInstallKibanaRPM}
-Die Installation des \textit{rpm} Paketes von Kibana erfolgt auf vergleichbare Weise wie die Installation des Packages von Elasticsearch. 
+Die Installation des \textit{rpm-Paketes} von Kibana erfolgt auf vergleichbare Weise wie die Installation des Packages von Elasticsearch. 
 Daher werden die einzelnen Schritte nicht noch einmal vorgeführt. \\
 
 \subsection{Index Pattern}
-Kibana ist im Vergleich zu Elasticsearch eine Webanwendung die von außerhalb erreicht werden kann und von Nutzern in Zukunft genutzt wird. 
-Daher müssen wichtige Bestandteile der Oberfläche von Kibana näher erläutert werden. 
-Zum einen müssen \textit{index pattern} erstellt werden, um die Logs aus dem Elasticsearch visualisieren zu können.
+Kibana ist im Vergleich zu Elasticsearch eine Webanwendung, die mit einem Internet Browser erreicht werden kann und von Nutzern in Zukunft genutzt wird. 
+Daher müssen wichtige Bestandteile der Oberfläche von Kibana näher erläutert werden. \\
+Es müssen \textit{index patterns} erstellt werden, um die Logs aus dem Elasticsearch visualisieren zu können.
 \textit{Index pattern} sind Muster, nach denen in den Logs gesucht wird. 
 Das Suchen erfolgt dabei auf ein bestimmtes Attribut der Logs, dem \textit{index}.
-Ein Beispiel für ein \textit{index pattern} ist: \textit{\glqq prod-*\grqq{}}.
-Jedes Log das ein \textit{index} mit dem Beginn \textit{prod} enthält, wird somit angezeigt. \\
+Ein Beispiel für ein \textit{index pattern} ist \textit{\glqq prod-*\grqq{}}.
+Jedes Log mit dem Präfix \textit{prod} wird angezeigt. \\
 Doch bevor ein \textit{index pattern} erstellt werden kann, müssen Daten im Elasticsearch vorhanden sein. 
-Das hat den Vorteil, dass keine \textit{Index Pattern} erstellt werden können, die niemals genutzt werden können, weil keine Daten zu dem pattern passen.
-Wenn Daten vorhanden sind können im Reiter \textit{Stack Management -> Index Patterns} Index Patterns verwaltet werden.  
+Das hat den Vorteil, dass keine \textit{Index Pattern} erstellt werden können, die niemals genutzt werden können, weil keine Daten zu dem Pattern passen.
+Wenn Daten vorhanden sind, können im Reiter \textit{Stack Management -> Index Patterns} Index Patterns verwaltet werden.  
 Dabei muss ein \textit{Index Pattern} als default definiert werden. 
 Das als default definierte \textit{index pattern} wird beim Aufrufen von Kibana angezeigt. 
 Die Logs, die hinter diesem Pattern stehen, werden in \textit{Discover} angezeigt.  \cite{elasticCreateIndexPattern}
 
 \subsection{Dashboards}
-Die Oberfläche von Kibana ermöglicht es individuell angepasste Dashboards zu erstellen. 
-Dabei können mehrere Diagramme mit unterschiedlichen index pattern angezeigt werden, um die benötigten Metriken zu veranschaulichen. 
+Die Oberfläche von Kibana ermöglicht es, individuell angepasste Dashboards zu erstellen. 
+Dabei können mehrere Diagramme mit unterschiedlichen \textit{index patterns} angezeigt werden, um die benötigten Metriken zu veranschaulichen. 
 So ist es möglich schnell bestimmte Informationen anzuzeigen. 
 Für die Visualisierung können alle bekannten klassischen Diagrammtypen genutzt werden. \cite{elasticKibanaVisualisierenAnalysieren}
 
@@ -152,7 +151,7 @@ properties.LANR:"1234567" AND properties.level:Info
 \end{lstlisting}
 Um beispielhaft eine KQL Abfrage vorzuführen, wurde eine Suche in Kibana durchgeführt. 
 Dabei können zwei unterschiedliche Methoden genutzt werden. 
-Beide Varianten der gleich Abfrage werden hier gezeigt: 
+Beide Varianten der gleich Abfrage werden hier gezeigt: \\
 \begin{lstlisting}
 properties.LANR=1234567; properties.level=Info
 properties.LANR:1234567 or properties.level=Info
@@ -182,11 +181,11 @@ Daher wurde entschieden, dass Logstash in diesem Szenario nicht benötigt wird.
 \end{figure}
 
 \section{Filebeat}
-Filebeat ist die letzte zu installierende Komponente des Elastic Stack. 
-Die Installation von Filebeat muss etwas anders ablaufen. 
-Denn Filebeat wird auf den Windows-Servern der produktiven- und test-Systemen installiert. 
+Filebeat ist die letzte zu installierende Komponente des Elastic Stacks. 
+Die Installation von Filebeat muss etwas anders ablaufen als die anderen Komponenten. 
+Denn Filebeat wird auf den Windows-Servern der Produktiv- und Test-Systeme installiert. 
 Daher muss eine Windows-Installation durchgeführt werden. 
-Zu Beginn muss ein Zip-File runtergeladen werden, dass die Open-Source-Version von Filebeat enthält. 
+Zu Beginn muss ein Zip-File runtergeladen werden, dass die Basic-Version von Filebeat enthält. 
 Nach der Extraktion des Archivs, muss ein PowerShell-Skript als Administrator ausgeführt werden. 
 Das PowerShell-Skript \textit{install-service-filebeat.ps1} führt die komplette Installation durch. \\
 Nachdem die Installation abgeschlossen ist, muss die Verbindung zu Elasticsearch und Kibana hergestellt werden. 
@@ -203,7 +202,7 @@ Damit vordefinierte Index Pattern an Kibana gesendet werden können, muss Kibana
 Der Befehl ist dabei ein bisschen anders: 
 \begin{lstlisting}
 setup.kibana:
-    host: "http://server-adresse>:5601"
+    host: "http://<server-adresse>:5601"
 \end{lstlisting}
 Damit der Filebeat-Service weiß, welche Logs zu Elasticsearch gesendet werden sollen, müssen noch \textit{inputs} definiert werden.
 Dabei können mehrere Inputs definiert werden. 
@@ -237,12 +236,12 @@ Dabei ist das Testsystem identisch zum produktiven System aufgebaut.
 So können Konfigurationsfehler ausgeschlossen werden. 
 Dev spiegelt eine Umgebung wieder, in der das Team neue Features testen kann. 
 Die Dev-Umgebung kann sich von der Test- und der Prod-Umgebung unterscheiden. \\
-Während in der Dev-Umgebung nur ein Server läuft, wird in der Prod- und Test-Umgebung auf zwei Server gesetzt die gespiegelt sind. 
-Die zwei gespiegelten Server sollen dafür sorgen, dass Ausfälle abgefangen werden können. \\
+Während in der Dev-Umgebung nur ein Server läuft, wird in der Prod- und Test-Umgebung auf zwei Server gesetzt, die gespiegelt sind. 
+Die zwei gespiegelten Server sollen dafür sorgen, dass Ausfälle abgefangen werden können und die Last in Spitzenzeiten besser verteilt wird. \\
 
 Die Abbildung \ref{fig:stages} zeigt die Serverstruktur des CFT Portale.
 Dabei kann man alle Server erkennen, auf denen die Provider hosted Apps des CFT Portale installiert sind (PHA-Server) und zusätzlich den zentralisierten Log-Server.
-Der zentralisierte Log-Server hat den Namen: \textit{DOT-RH-ZLOG1}.
+Der zentralisierte Log-Server hat den Namen: \textit{ZLOG1}.
 Die anderen Server sind je nach Stage benannt. 
 Dabei ist die erste Stage Prod. 
 Auf Prod sind zwei Server vorhanden, die gespiegelt sind. 
