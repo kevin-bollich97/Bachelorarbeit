@@ -14,14 +14,14 @@ Dieses Kapitel ist wie folgt aufgebaut:
 \end{itemize}
 
 
-\section{RedHat Server}
+\section{Red Hat Server}
 
 Damit die einzelnen Komponenten des Elastic Stack installiert werden können, musste ein Server beantragt werden. 
 Dafür wurde ein Auftrag an das CFT Infrastruktur der KVWL gesendet, um so einen virtuellen Server zu erhalten. 
 Wie schon in Kapitel \ref{kap:bewertungTools} geschrieben wurde, werden im CFT Portale auch Linux-Server verwendet. 
-Für die produktiven Systeme werden RedHat Server genutzt, 
-daher wird für den zentralisierten Logging-Server ebenfalls ein Redhat Server installiert.
-Es ist ein RedHat Server mit der Version 7.9. \\
+Für die produktiven Systeme werden Red Hat Server genutzt, 
+daher wird für den zentralisierten Logging-Server ebenfalls ein Red Hat Server installiert.
+Es ist ein Red Hat Server mit der Version 7.9. \\
 Damit die Kommunikation zum Server erfolgen kann, müssen einige Ports auf dem Server freigeschaltet werden. 
 Elasticsearch und Kibana nutzen die Ports 9200 und 5601.
 Ohne Freischalten der Ports würde die Kommunikation von anderen Systemen nicht funktionieren. 
@@ -33,6 +33,8 @@ $ sudo firewall-cmd --zone=public --add-port=5601/tcp --permanent
 
 Bevor die Installation der Elastic Stack Komponenten erfolgen konnte, musste festgelegt werden, wie die Installation durchgeführt werden soll. 
 Denn die KVWL nutzt \textit{Satellite}, um die installierten Packages zu verwalten. 
+\textit{Satellite} ist ein Infrastruktur-Management Tool von Red Hat. 
+Es ermöglicht die Verwaltung der Red Hat Hosts und bietet die \textit{rpm Packages} zum herunterladen an. \cite{redhatRedHatSatellite} \\
 Aktuell sind die Komponenten des Elastic Stack nicht im Satellite eingebunden. 
 Daher musste geklärt werden, wie die Komponenten installiert werden dürfen. 
 Um den organisatorischen Aufwand möglichst gering zu halten, wurde in Absprache mit den Administratoren festgelegt, dass eine manuelle Installation derzeit durchgeführt werden soll. 
@@ -48,12 +50,12 @@ Damit anschließend die Basic Version genutzt werden kann, muss der komplette St
 Daher musste darauf geachtet werden, dass die Basic Version direkt installiert wird. \\
 Aus Sicherheitsgründen hat der Server keinen Zugriff auf das Internet. 
 Daher müssen die Installationspakete manuell vom Entwickler-Rechner heruntergeladen und anschließend zum Server kopiert werden. 
-Da es sich um einen RedHat Server handelt, werden \textit{rpm-Pakete} heruntergeladen und installiert.
+Da es sich um einen Red Hat Server handelt, werden \textit{rpm-Pakete} heruntergeladen und installiert.
 Der Befehl, der genutzt wurde, um das Package herunterzuladen, ist: 
 \begin{lstlisting}[language=bash]
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.10.0-x86_64.rpm
 \end{lstlisting}
-Nachdem der Download fertiggestellt wurde, musste das \textit{rpm} package auf den RedHat Server kopiert werden:
+Nachdem der Download fertiggestellt wurde, musste das \textit{rpm} package auf den Red Hat Server kopiert werden:
 \begin{lstlisting} [language=bash]
 pscp -P 22 elasticsearch-7.10.0-x86_64.rpm <user>@<server>:<path>
 \end{lstlisting}
