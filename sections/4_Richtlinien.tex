@@ -5,7 +5,7 @@ Dafür muss der Quellcode, sowie einzelne Konfigurationen der Anwendung angepass
 Um das Verständnis für die Anwendung zu erhalten, wird zu Beginn beschrieben, wofür die \textit{Vierteljahreserklärung} überhaupt genutzt wird und wie die Anwendung entwickelt wurde.
 
 \section{Vierteljahreserklärung}
-
+\label{kap:vje}
 Die Provider hosted App \textit{Vierteljahreserklärung} ermöglicht die PDF-Generierung der \textit{Erklärung zur Vierteljahresabrechnung}. 
 Mit der \textit{Erklärung zu Vierteljahresabrechnung} bestätigt der Vertragsarzt seine abgerechneten Leistungen. 
 Dies ist in den Abrechnungsrichtlinien der KVWL festgelegt. 
@@ -228,18 +228,20 @@ private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
 
 
 
-\subsection{Aufruf der REST-Schnittstellen}
+\subsection{Kommunikation zwischen Server und Client}
 
-Eine wichtige Stelle zum Loggen ist der Aufruf von REST-Schnittstellen. 
-Daher werden diese Aufrufe geloggt, um prüfen zu können, welche Mitglieder eine Anfrage gesendet haben. 
-Mithilfe dieses Logs ist es möglich, nach dem Erhalt eines Fehlers, das Mitglied zu identifizieren bei dem der Fehler aufgetreten ist. \\
-Die Software im CFT Portale ist in \textit{Server} und \textit{Client} aufgeteilt.
-Der Client ruft die REST-Schnittstellen der Server-Anwendung auf, um Daten zu erhalten. 
-Die Operationen, die für die Anwendungen wichtig sind, werden von der Server-Anwendung durchgeführt. 
-Daher müssen alle Anfragen in den Logs dokumentiert werden. 
-Die hier entstehenden Logs sind für den produktiven Betrieb wichtig, daher werden die Logs im Log-Level \textit{Info} geschrieben. \\
+In Kapitel \ref{kap:vje} wurde die Client-Server-Architektur der Vierteljahreserklärung vorgestellt. 
+Die Kommunikation zwischen Server und Client beschränkt sich dabei auf Anfragen, die der Client an den Server sendet.
+Das Senden von Anfragen wird durch Operationen ausgelöst, die von einem Mitglied durchgeführt werden. 
+Im Falle der Vierteljahreserklärung wären die Operationen, das Auswählen eines Quartals oder das betätigen des Buttons \glqq PDF Erstellen\grqq{}.
+Damit nachvollzogen werden kann, welche Operationen ein Mitglied ausgeführt hat, muss die Kommunikation zwischen Server und Client geloggt werden. 
+Die Identifizierung eines Mitglieds, anhand der Logdateien, kann den Fehleranalyseprozess vereinfachen. 
+Beim Erhalt eines Fehlers durch ein Mitglied kann das entsprechende Log problemlos identifiziert werden. 
+Damit diese Identifizierung möglich ist, müssen alle Anfragen, die der Client an den Server sendet, geloggt werden. \\
+Da der Fehleranalyseprozess im produktiven Betrieb durchgeführt wird, müssen die Logs im Log-Level \textit{Info} geschrieben werden. 
 Quellcode \ref{code:aufrufREST} zeigt die Methode \textit{GetBSNRsAsync}. 
-Diese Methode wird über HTTP-Requests erreicht und liefert die BSNRs für ein bestimmtes Quartal. 
+Diese Methode wird aufgerufen, wenn ein Quartal in der Vierteljahreserklärung ausgewählt wurde. 
+Der Client sendet die Anfrage, um die gültigen BSNRs des Mitglieds für den ausgewählten Zeitraum zu erhalten.
 Das dazu geschriebene Log befindet sich zu Beginn dieser Operation, um zu definieren, dass der Aufruf der Methode geklappt hat. \\
 Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{Program Operation} und zusätzlich zu der Unterkategorie \textit{next operation}.
 

@@ -10,15 +10,15 @@ Dies wird anhand eines Beispiels verdeutlicht.
 Das CFT Portale muss bei der Fehleranalyse auf einen langwierigen Prozess setzen.
 Dieser Prozess ist in Abbildung \ref{fig:prozessVorher} anhand eines Aktivitätsdiagramms dargestellt. 
 Der Prozess beginnt mit dem Erhalt eines Tickets oder einer E-Mail, der einen Fehler in der Vierteljahreserklärung beschreibt. 
-Nachdem der Entwickler sich das Ticket näher angeschaut hat, muss dieser nach dem dabei entstandenem Log suchen. 
+Nachdem der Entwickler sich das Ticket näher angeschaut hat, muss dieser nach dem dabei entstandenen Log suchen. 
 Dafür muss sich der Entwickler an einem der beiden PHA-Server anmelden und die Logs manuell durchsuchen. 
 Dabei wird eine Remotedesktopverbindung auf dem ersten PHA1-Server aufgebaut.
 Anschließend muss die entsprechende Log-Datei für die Vierteljahreserklärung in der Ordnerstruktur des Servers gefunden werden. 
 Nachdem die Log-Datei geöffnet wurde, muss die textbasierte-Datei manuell nach dem entsprechenden Log durchsucht werden. 
 Bei der Suche kann der Fall auftreten, dass der entsprechende Fehler nicht auf diesem PHA-Server entstanden ist. 
 Das bedeutet, dass der Fehler noch auf dem zweiten PHA-Server gesucht werden muss. 
-Daher müssen die Schritte \textit{Suchen der Datei} und das \textit{Durchsuchen der Logs} wiederholt werden. 
-Wenn der Fehler auf dem zweiten PHA-Server entdeckt wurde, kann der Fehler analysiert und Anschließend dokumentiert werden. 
+Daher müssen die Schritte \textit{Suchen der Datei} und \textit{Durchsuchen der Logs} wiederholt werden. 
+Wenn der Fehler auf dem zweiten PHA-Server entdeckt wurde, kann er analysiert und anschließend dokumentiert werden. 
 Der Prozess ist mit der Dokumentation abgeschlossen. 
 
 
@@ -37,10 +37,10 @@ Der Prozess ist mit der Dokumentation abgeschlossen.
 
 Der aktuelle Prozess, der durch das zentralisierte Logging und die Veränderungen des Logging-Codes ermöglicht wurde, fällt im Vergleich zum vorherigen Prozess deutlich einfacher aus. 
 Denn schon anhand der beiden Abbildungen \ref{fig:prozessVorher} und \ref{fig:prozessDanach} ist erkennbar, dass der aktuelle Prozess mit weniger Aktionen auskommt. 
-Die Aktionen im vorherigen Prozess benötigen mehr Aufwand für die Durchführung, als der aktuelle. \\
+Die Aktionen im vorherigen Prozess benötigen mehr Aufwand für die Durchführung als der aktuelle. \\
 
 Beide Prozesse starten mit dem Erhalt eines Tickets. 
-Da fallen die Unterschiede der beiden Prozesse auf: Beim vorherigen Prozess musste sich mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschalten werden, beim aktuellen Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
+Da fallen die Unterschiede der beiden Prozesse auf: Beim vorherigen Prozess musste sich mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschaltet werden, beim aktuellen Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
 So wird dann Kibana aufgerufen. 
 Der einzige Schritt, der jetzt noch durchgeführt werden muss, ist die Filterung nach den Kriterien. 
 Der entsprechende Log-Eintrag taucht dann in der Suche auf. 
@@ -54,7 +54,7 @@ Das erhöht den Aufwand beim Suchen nach bestimmten Log-Einträgen. \\
 Nicht nur das mehrfache Ausführen von Aktionen sind Unterschiede der beiden Prozesse, sondern der Aufwand je Aktion ist ebenfalls unterschiedlich. 
 Denn schon das Durchsuchen der Logs ist bei dem vorherigen Prozess deutlich aufwändiger.
 Dies resultiert daraus, dass die Log-Datei aus dem vorherigen Prozess nicht nach bestimmten Attributen gefiltert werden kann und auch kein Ausblenden von irrelevanten Informationen möglich ist. 
-Im Vergleich dazu ist es in Kibana möglich nach bestimmten Kriterien zu Suchen und nur die Informationen anzuzeigen, die relevant sind. 
+Im Vergleich dazu ist es in Kibana möglich, nach bestimmten Kriterien zu suchen und nur die Informationen anzuzeigen, die relevant sind. 
 
 
 \begin{figure}[H]
