@@ -89,8 +89,8 @@ Daher ist es ratsam, die ebenfalls kostenlose Basic Version mit mehr Features zu
 Zusätzlich zu den kostenlosen Versionen ist es möglich, ein kostenpflichtiges Abonnement abzuschließen, um zusätzliche Features zu erhalten. 
 Die wichtigsten Features, die durch das kostenpflichtige Abonnement zugänglich werden, sind Machine Learning und der Support. \\
 Elastic Stack bietet zu der selbstverwalteten Lösung zusätzlich eine Cloud-Lösung, die ohne Installation genutzt werden kann. 
-Der Vorteil der Cloud-Lösung liegt im Wartungsaufwand, denn bei der Cloud-Lösung ist kein Installieren und Upgraden notwendig. 
-Da die Anforderungen des Teams eine Cloud-Lösung ausschließen, wird die Cloud-Lösung nicht weiter beachtet. \cite{elasticOffiziellePreisinformationenElasticsearch} 
+Der Vorteil liegt im Wartungsaufwand, denn bei der Cloud-Lösung ist kein Installieren und Upgraden notwendig. 
+Da die Anforderungen des Teams eine Cloud-Lösung ausschließen, wird diese nicht weiter beachtet. \cite{elasticOffiziellePreisinformationenElasticsearch} 
 
 \newpage
 \subsection{Graylog}
@@ -304,7 +304,7 @@ Sollte der Test nicht zufriedenstellend ausgehen, sollte in Anschluss der Graylo
 
 
 \subsection{Sematext vs. Elastic Stack}
-Im Gegensatz zum Elastic Stack ist Sematext kein Open-Source-Tool.
+Im Gegensatz zum Elastic Stack ist Sematext nicht kostenlos nutzbar.
 Damit Sematext auf der eigenen Infrastruktur betrieben werden kann, muss Sematext Enterprise erworben werden. 
 Durch den Erwerb der Sematext Enterprise Version, erhält man eine Kopie des Sematext Cloud Services, der auf der eigenen Infrastruktur installiert werden kann. 
 Mit Sematext ist es anschließend möglich, \textit{Infrastructure Monitoring}, \textit{Application Performance Monitoring}, \textit{Log Management} und \textit{Real User Monitoring} durchzuführen. 
@@ -324,10 +324,8 @@ Mit Logstash ist dies ebenfalls möglich.
 Jedoch kann Logstash zusätzlich die Daten transformieren.
 Zum Beispiel können IP-Adressen in geographische Daten transformiert werden und personenbezogene Daten können komplett anonymisiert werden. \\
 Logstash und Fluentd bieten beide eine hervorragende Möglichkeit an, Logdaten zu strukturieren und an die erforderlichen Ziele weiterzuleiten. 
-Jedoch ist es für das CFT Portale nicht notwendig, die Daten zu strukturieren. 
-Durch die erstellten Logging-Richtlinien werden die gespeicherten Logs im JSON-Format gespeichert und müssen daher nur noch an die richtige Stelle gesendet werden. 
-Da die Logs nur von selbsterstellten Anwendungen verwaltet werden sollen und nicht von zusätzlichen Systemen, reicht ein einfacher Log-Shipper aus. 
-Dafür wird die Komponente Filebeat des Elastic Stacks genutzt. 
+Da kein ausschlusskriterium für eines der Tools vorliegt und die Tools annähernd identische Funktionen anbieten, wird im Rahmen dieser Bachelorarbeit Logstash verwendet. 
+Denn Logstash gehört zu dem bereits gewählten Elastic Stack und wird daher genutzt werden. 
 
 
 \section{Zusammenfassung}

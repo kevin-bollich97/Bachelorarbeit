@@ -19,8 +19,8 @@ Dieses Kapitel ist wie folgt aufgebaut:
 Damit die einzelnen Komponenten des Elastic Stack installiert werden können, musste ein Server beantragt werden. 
 Dafür wurde ein Auftrag an das CFT Infrastruktur der KVWL gesendet, um so einen virtuellen Server zu erhalten. 
 Wie schon in Kapitel \ref{kap:bewertungTools} geschrieben wurde, werden im CFT Portale auch Linux-Server verwendet. 
-In der Regel werden RedHat Server genutzt. 
-So ist es auch bei dem Server für das zentralisierte Logging. 
+Für die produktiven Systeme werden RedHat Server genutzt, 
+daher wird für den zentralisierten Logging-Server ebenfalls ein Redhat Server installiert.
 Es ist ein RedHat Server mit der Version 7.9. \\
 Damit die Kommunikation zum Server erfolgen kann, müssen einige Ports auf dem Server freigeschaltet werden. 
 Elasticsearch und Kibana nutzen die Ports 9200 und 5601.
@@ -144,8 +144,8 @@ Beim Eintippen in der Suchleiste werden Vorschläge gegeben, um schnelles Filter
 Jedoch wird dafür mindestens eine \textit{Basic License} benötigt.
 Sollte KQL nicht gewünscht sein, kann man diese ausschalten und \textit{Lucene} nutzen.
 Lucene ist eine Java-Bibliothek, die Such-Features anbietet. 
-Dazu gehören das Überprüfen der Syntax, Markieren der Ergebnisse und weitere Funktionen. \cite{apacheApacheLuceneWelcome}
-Die Syntax von Lucene sieht so aus: \cite{apacheApacheLuceneQuery}
+Dazu gehören das Überprüfen der Syntax, Markieren der Ergebnisse und weitere Funktionen. \cite{apacheApacheLuceneWelcome}\\
+Die Syntax von Lucene sieht so aus: \cite{apacheApacheLuceneQuery} 
 \begin{lstlisting}
 properties.LANR:"1234567" AND properties.level:Info
 \end{lstlisting}
@@ -161,24 +161,18 @@ properties.LANR:1234567 or properties.level=Info
 \section{Logstash}
 
 Logstash ist eines der mächtigsten Tools aus dem Elastic Stack.
-Mit Logstash können die Logs gesammelt, geparsed und transformiert werden. 
-Jedoch ist ein großes Problem von Logstash, dass es sehr viel Leistung benötigt, um betrieben zu werden und sehr viel Wissen, um es richtig zu konfigurieren. 
-In Abbildung \ref{fig:auslastung} ist ein Auschnitt aus der CPU-Auslastung des Servers, auf dem Logstash installiert wurde. 
-Obwohl noch keine Logs gesendet wurden, gab es eine 100\% Auslastung der CPU. 
-Das zeigt deutlich, dass Logstash sehr viel Rechenleistung benötigt. 
-Nach der Deinstallation ist die CPU-Auslastung wieder auf den normal Bereich gesunken. \\
-Außerdem ist während der Konfiguration aufgefallen, dass durch die neu geschaffenen Richtlinien die Transformation und das Parsen der Logs nicht benötigt werden. 
-Das Senden der Logs an Elasticsearch wird von Filebeat übernommen. 
-Da die Logs durch NLog im JSON-Format gespeichert werden, gibt es keinen Nutzen mehr für Logstash.
-Daher wurde entschieden, dass Logstash in diesem Szenario nicht benötigt wird. 
+Mit Logstash können Logs gesammelt, geparsed und transformiert werden. 
+Nachdem Logstash erfolgreich installiert wurde, fiel bei der Konfiguration auf, dass der Nutzen von Logstash durch die neu geschaffenen Logging-Richtlinien nicht mehr vorhanden ist. 
+Denn der Vorteil von Logstash gegenüber Filebeat ist die Möglichkeit der Transformation der Logs. 
+Mit Logstash können die Logdateien, die unstrukturiert sind, anhand von Pipelines in eine strukturierte neue Form gebracht werden. 
+So können unstrukturierten Daten in strukturierte Daten umgewandelt werden. 
+Durch die Logging-Richtlinien, an die sich das CFT Portale halten muss, besteht kein Nutzen für das transformieren von Logdateien. 
+Die Logdateien werden immer im strukturierten Format abgespeichert. 
+Da die Formatierung der Logs angemessen ist, müssen die Daten nur an den Elasticsearch-Service gesendet werden.
+Für diese Aufgabe wird der leichtgewichtige Log-Agent Filebeat genutzt. 
+In dem Szenario der Bachelorarbeit ist es nicht sinnvoll, Logstash zu installieren und zu konfigurieren, daher wurde auf die Einrichtung von Logstash verzichtet. \cite{elasticLogstashSammelnParsen}
 
 
-\begin{figure}[H]
-    \center 
-    \includegraphics[width=1\textwidth]{pictures/auslastungSchnitt.jpg} 
-    \caption{CPU-Auslastung }
-    \label{fig:auslastung}
-\end{figure}
 
 \section{Filebeat}
 Filebeat ist die letzte zu installierende Komponente des Elastic Stacks. 
@@ -262,7 +256,7 @@ Damit die Logs lesbar und strukturiert bleiben, musste eine durchsuchbare Lösun
     \caption{Stages mit Logs }
     \label{fig:stages}
 \end{figure}
-
+\newpage
 Damit die Suche in Kibana effektiv durchgeführt werden kann, werden drei Index Pattern erstellt, jeweils für eine Stage. 
 Also sind die drei Patterns dann: \textit{Prod}, \textit{Test} und \text{Dev}.
 So kann eine erste schnelle Trennung der Zuständigkeiten erreicht werden. 

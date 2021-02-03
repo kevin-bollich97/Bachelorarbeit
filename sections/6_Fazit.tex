@@ -10,16 +10,18 @@ Die enthaltenen Informationen helfen nur wenig bei der Suche nach einem Fehler. 
 Zu Beginn wurde eine Evaluation durchgeführt, um ein passendes Tool für das zentralisierte Logging zu finden. 
 Das Ergebnis der Evaluation lieferte den Elastic Stack als beste Alternative für die Anforderungen des CFT Portale. 
 Nach der Evaluation erfolgte die Installation des Elastic Stacks.
-Beim Installieren der Komponenten des Elastic Stacks ist aufgefallen, dass Logstash hohe CPU-Anforderungen mitbringt und im Falle des CFT Portale nicht gebraucht wird. 
+Beim Installieren der Komponenten des Elastic Stacks ist aufgefallen, dass Logstash in dem Szenario nicht benötigt wird. 
+Das senden der Logs an den Elasticsearch Service wird von Filebeat durchgeführt. 
 Mit Abschluss der Installationen wurden die Logging-Richtlinien an einer Anwendung umgesetzt. 
 Die Anwendung, an der die Richtlinien umgesetzt worden sind, war die Vierteljahreserklärung. 
-Damit die Richtlinien überhaupt umgesetzt werden konnen, musste die Anwendung verstanden werden. 
-Dafür wurden die rechtlich relevanten Dinge und anschließend die Architektur erläutert, um zu verstehen, an welchen Stellen die wichtigen Anhaltspunkte für das Logging sind. 
+Damit die Richtlinien umgesetzt werden konnten, musste die Architektur und die fachlichen Aspekte der Vierteljahreserklärung näher erläutert werden. 
+So konnten anschließend die relevanten Abschnitte des Quellcodes identifiziert werden.
 Bevor die Log-Nachrichten an den richtigen Stellen platziert werden konnten, musste das NLog Framework konfiguriert werden. 
 Mit der Konfiguration wurde der Aufbau der Logs fest definiert. 
 Mit Abschluss der Konfiguration konnten die Logging-Aufrufe an den richtigen Stellen in den Quellcode eingetragen werden. 
-Zum Abschluss wurden beide Prozesse der Fehleranalyse miteinander verglichen.
-Dabei fiel auf, dass der neu entstandene Prozess deutlich weniger Aufwand erfordert, als der ursprüngliche. \\
+Zum Abschluss wurden beide Prozesse der Fehleranalyse miteinander verglichen. 
+Der verbesserte Fehleranalyseprozess liefert ein zufriedenstellendes Ergebnis.
+Wie erwartet ist der Aufwand der Fehleranalyse gesunken.  \\
 
 % Wichtige Ergebnisse 
 Das Ergebnis der Bachelorarbeit war somit die erfolgreiche Einrichtung eines zentralisierten Logging-Servers, der den Arbeitsprozess der Fehlersuche des CFT Portale vereinfacht hat. 
@@ -33,7 +35,7 @@ Das Ergebnis der Evaluation von Log-Management-Tools bestätigte die ursprüngli
 In der zweiten Forschungsfrage wurde die Frage behandelt, wie ein zentralisierter Logging-Server eingerichtet werden kann. 
 Das konnte mittels der Installation des Elastic Stacks beantwortet werden. 
 Die genauen Schritten wurden in dem dazugehörigen Kapitel vollständig erklärt. 
-In der abschließenden Forschungsfrage drehte es sich um die Logging-Richtlinien, die in dieser Arbeit praktisch umgesetzt werden sollten. 
+Die letzte Forschungsfrage beschäftigte sich mit Logging-Richtlinien, die in dieser Arbeit praktisch umgesetzt werden sollten. 
 Die Frage bezog sich dabei darauf, ob die Richtlinien umgesetzt werden können.
 Ja, die Logging-Richtlinien konnten an einem Projekt vollständig umgesetzt werden. \\
 

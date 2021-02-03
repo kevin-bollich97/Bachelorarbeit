@@ -5,7 +5,7 @@ Dabei wird zu Beginn das Problem des vorherigen Prozesses näher erläutert, um 
 Dies wird anhand eines Beispiels verdeutlicht.
 
 
-\section{Prozess vor der Bachelorarbeit}
+\section{Fehleranalyse im Ausgangszustand}
 
 Das CFT Portale muss bei der Fehleranalyse auf einen langwierigen Prozess setzen.
 Dieser Prozess ist in Abbildung \ref{fig:prozessVorher} anhand eines Aktivitätsdiagramms dargestellt. 
@@ -29,25 +29,25 @@ Der Prozess ist mit der Dokumentation abgeschlossen.
 \begin{figure}[H]
     \center 
     \includegraphics[width=1\textwidth]{pictures/ProzessVorher.png} 
-    \caption{Prozess vor der Bachelorarbeit }
+    \caption{Ausgangszustand der Fehleranalyse}
     \label{fig:prozessVorher}
 \end{figure}
 
-\section{Aktueller Prozess}
+\section{Verbesserter Fehleranalyseprozess}
 
-Der aktuelle Prozess, der durch das zentralisierte Logging und die Veränderungen des Logging-Codes ermöglicht wurde, fällt im Vergleich zum vorherigen Prozess deutlich einfacher aus. 
-Denn schon anhand der beiden Abbildungen \ref{fig:prozessVorher} und \ref{fig:prozessDanach} ist erkennbar, dass der aktuelle Prozess mit weniger Aktionen auskommt. 
-Die Aktionen im vorherigen Prozess benötigen mehr Aufwand für die Durchführung als der aktuelle. \\
+Der verbesserte Fehleranalyseprozess, der durch das zentralisierte Logging und die Veränderungen des Logging-Codes ermöglicht wurde, fällt im Vergleich zum vorherigen Prozess deutlich einfacher aus. 
+Denn schon anhand der beiden Abbildungen \ref{fig:prozessVorher} und \ref{fig:prozessDanach} ist erkennbar, dass der verbesserte Fehleranalyseprozess mit weniger Aktionen auskommt. 
+Die Aktionen im vorherigen Prozess benötigen mehr Aufwand für die Durchführung als der verbesserte. \\
 
 Beide Prozesse starten mit dem Erhalt eines Tickets. 
-Da fallen die Unterschiede der beiden Prozesse auf: Beim vorherigen Prozess musste sich mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschaltet werden, beim aktuellen Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
+Da fallen die Unterschiede der beiden Prozesse auf: Beim vorherigen Prozess musste sich mit einer Remotedesktopverbindung auf den entsprechenden Server zugeschaltet werden, beim verbesserten Prozess muss nur noch eine URL mit dem Browser aufgerufen werden. 
 So wird dann Kibana aufgerufen. 
 Der einzige Schritt, der jetzt noch durchgeführt werden muss, ist die Filterung nach den Kriterien. 
 Der entsprechende Log-Eintrag taucht dann in der Suche auf. 
 Der Fehler kann nun analysiert und dokumentiert werden.  \\
 
 Der größte Unterschied der beiden Abbildungen ist das Fehlen der Schleife in der Abbildung \ref{fig:prozessDanach}.
-Das heißt, der aktuelle Prozess muss keine Aktionen mehrmals ausführen, um ans Ziel zu gelangen. 
+Das heißt, der verbesserte Prozess muss keine Aktionen mehrmals ausführen, um ans Ziel zu gelangen. 
 Im vorherigen Prozess kann dies jedoch geschehen, sollten die gesuchten Logs nicht im \textit{PHA1} vorhanden sein. 
 Wenn dies der Fall ist, dann muss die Anmeldung am Server, das Öffnen der Log-Datei und das Durchsuchen der Logs zweimal durchgeführt werden. 
 Das erhöht den Aufwand beim Suchen nach bestimmten Log-Einträgen. \\
@@ -60,17 +60,22 @@ Im Vergleich dazu ist es in Kibana möglich, nach bestimmten Kriterien zu suchen
 \begin{figure}[H]
     \center 
     \includegraphics[width=1\textwidth]{pictures/ProzessDanach.png} 
-    \caption{Aktueller Prozess }
+    \caption{Verbesserte Fehleranalyseprozess }
     \label{fig:prozessDanach}
 \end{figure}
 
 
 \section{Erste praktische Erfahrungen}
 
-Der Elastic Stack und die Umsetzung der Richtlinien wurden im CFT Portale den einzelnen Entwicklern vorgestellt. 
-Bei der Vorstellung waren die Entwickler begeistert. 
-Die Entwickler freuen sich einerseits darauf, dass sie sich nicht mehr an beiden PHA-Servern anmelden müssen und andererseits, dass die Logs nun genauere Details über die Fehler liefern. 
-Denn bei der Fehleranalyse werden öfter Daten wie die \textit{LANR} und die \textit{BSNR} benötigt, um Fehler besser zuordnen zu können. 
-Durch das strukturierte Logging und den Elastic Stack ist es nun möglich, mithilfe von Filterfunktion effektiv Daten in den Logs zu finden. 
-Das Durchsuchen von Textdateien mithilfe der Suchfunktion des verwendeten Texteditors wird nicht mehr benötigt. 
-Der erste Eindruck ist somit sehr positiv. 
+Die Ergebnisse der Bachelorarbeit wurden dem CFT Portale vorgestellt und zusammen mit den Entwicklern ebenfalls getestet. 
+Dabei fiel auf, dass die Oberfläche von Kibana nicht intuitiv genutzt werden kann ohne eine Einweisung. 
+Das liegt an der Benennung der Einstiegspunkte für die Logs.
+Denn um auf die Logs zugreifen zu können, muss der Unterpunkt \glqq Discover\grqq{} aufgerufen werden. 
+Dies ist nicht ohne Ausprobieren zu erahnen. 
+Jedoch fiel der erste Eindruck sehr positiv auf, denn nach einer kleinen Einführung in die neuen Produkte wurde deutlich, dass neue Möglichkeiten dadurch entstanden sind. 
+Der neue Fehleranalyseprozess fällt deutlich kleiner aus als der ehemalige. \\
+Ein wichtiger Punkt, der bei den Entwicklern Eindruck hinterlassen hat, ist die neue Konfiguration mittels NLog im Quellcode der Vierteljahreserklärung. 
+Die neue Konfiguration kann ohne Weiteres in andere Anwendungen integriert werden. 
+Dafür muss die neue Konfigurationsdatei von NLog in die Anwendungen integriert werden und das passende NuGet Package für NLog muss installiert werden. 
+
+

@@ -32,9 +32,9 @@ Bei Abrechnungen muss die BSNR mit angegeben werden.
 Dies ist in den Richtlinien der Kassenärztlichen Bundesvereinigung (KBV) festgelegt worden. 
 Eine BSNR bekommt jede Betriebsstätte und Nebenbetriebsstätte, sowie Einrichtungen, die zur Teilnahme an der vertragsärztlichen Versorgung ermächtigt wurden. \cite{kassenarztlichebundesvereinigungRichtlinieKassenarztlichenBundesvereinigung2019} \\
 
-Nach Angabe des Quartals erfolgt eine Überprüfung der BSNRs, die in diesem Quartal für den Vertragsarzt gültig sind. 
+Nachdem ein Quartal ausgewählt wurde, werden die gültigen BSNRs des Vertragsarztes, die für den Zeitraum gültig sind, in die Anwendung geladen.
 Dabei wird geprüft, an welchen Betriebsstätten der Vertragsarzt tätig war. 
-Nach Erhalt der BSNRs kann der Vertragsarzt eine BSNR aussuchen, für die diese Erklärung erstellt werden soll. 
+Anschließend kann eine BSNR gewählt werden, für die eine Erklärung erstellt werden soll. 
 
 
 \begin{figure}[H]
@@ -62,7 +62,7 @@ Mit den DTOs können dann mehr Daten über einen Aufruf gesendet werden.
 Das Reduzieren der Daten ist für die Anwendungen im Mitgliederportal wichtig, denn nicht jedes Mitglied der KVWL besitzt eine ausreichend starke Netzanbindung, um große Datenmengen zu erhalten. 
 Daher ist es wichtig, dass alle Daten, die über das Netzwerk gesendet werden, nur relevante Informationen enthalten.
 
-
+\newpage
 \section{Konfiguration von NLog}
 
 Mithilfe von NLog können drei Richtlinien der Projektarbeit umgesetzt werden. 
@@ -88,7 +88,7 @@ Die Attribute werden dann in allen Logs mitgeliefert.
 Im Layout wird außerdem definiert, dass strukturiertes Logging verwendet werden soll. 
 Durch die Zeile 3, in der \textit{includeAllProperties} auf \textit{true} gesetzt wird, wird das Erweitern der Logs durch eigens erstellte Attribute im Quellcode ermöglicht. 
 So ist es dann möglich, für spezielle Fälle die Logs zu erweitern. 
-
+\newpage
 \begin{lstlisting}[language=xml, caption=Konfiguration NLog, label=code:nlogConfig]
 <layout type="JsonLayout">
   <attribute name="properties" encode="false">
@@ -167,11 +167,32 @@ Filebeat sendet zusätzlich zu den Logs eigene Daten.
 Durch das zusätzliche Attribut \textit{properties} können die anwendungsspezifischen Daten schneller von den Filebeat spezifischen Daten differenziert werden.
 
 
-\section{Was wird geloggt?}
+\section{Implementierung}
 In diesem Kapitel werden Beispiele der durchgeführten Logging-Anweisungen gezeigt. 
 Dabei werden die Logs in drei Kategorien unterteilt. 
 Jede, der in diesem Kapitel vorgestellten Logs sind in der Vierteljahreserklärung durchgeführt worden.
-Die Logs werden zusätzlich in die Kategorien eingeordnet, die in der Projektarbeit vorgestellt wurden. \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
+Die Logs werden zusätzlich in die Kategorien eingeordnet, die in der Projektarbeit vorgestellt wurden. 
+Die Kategorien der Projektarbeit sind: \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
+
+\begin{itemize}
+  \item Program Operation
+    \begin{itemize}
+      \item completed operation
+      \item current operation
+      \item next operation
+    \end{itemize}
+  \item Error Message
+    \begin{itemize}
+      \item exception
+      \item value-check
+    \end{itemize}
+  \item Semantic Description
+    \begin{itemize}
+      \item variable description
+      \item function description
+      \item branch description
+    \end{itemize}
+\end{itemize}
 
 \subsection{Aufruf von externen Schnittstellen}
 
@@ -212,7 +233,7 @@ Wenn die Validierung fehlgeschlagen ist, wird ein error-log geschrieben und eine
 Das Loggen dieser Aufrufe ist wichtig, um zu verstehen, welche Fehler während der Laufzeit aufgetreten sind, damit diese anschließend analysiert werden können. 
 Fehleranalyse ist ein wichtiger Teil des Log-Managements. \\
 Die Art von Logs gehören zu der Kategorie \textit{Error Message}. 
-Die genaue Unterkategorie ist in diesem Fall \textit{value-check}. \\
+Die genaue Unterkategorie ist in diesem Fall \textit{value-check}. 
 
 \begin{lstlisting}[caption=Auftreten von Fehlern, label=code:auftretenFehler]
 private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
