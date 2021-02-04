@@ -9,8 +9,8 @@ Um das Verständnis für die Anwendung zu erhalten, wird zu Beginn beschrieben, 
 Die Provider hosted App \textit{Vierteljahreserklärung} ermöglicht die PDF-Generierung der \textit{Erklärung zur Vierteljahresabrechnung}. 
 Mit der \textit{Erklärung zu Vierteljahresabrechnung} bestätigt der Vertragsarzt seine abgerechneten Leistungen. 
 Dies ist in den Abrechnungsrichtlinien der KVWL festgelegt. 
-Der Ausschnitt der Richtlinien, der die Pflichten des Vertragsarztes bezüglich der \textit{Erklärung der Vierteljahresabrechnung} beschreibt, ist anschließend zitiert. 
-Der Ausschnitt ist in §7 Absatz 1 zu finden:    
+
+§7 Absatz 1 der Abrechnungsrichtlinien beschreibt die Pflichten des Vertragsarztes bezüglich der \textit{Erklärung der Vierteljahresabrechnung} so:  
 
 \begin{quote}
   \glqq Der Vertragsarzt hat gegenüber der KVWL auf dem der Abrechnung beizufügenden Vordruck „Erklärung zur Vierteljahresabrechnung“ (§ 35 Abs. 2 BMV-Ä)
@@ -21,7 +21,7 @@ Der Ausschnitt ist in §7 Absatz 1 zu finden:
 
 \newpage
 
-Mithilfe der Anwendung \textit{Vierteljahreserklärung} können die Angaben, die für die Vierteljahresabrechnung notwendig sind, eingetragen werden. 
+Mithilfe der Anwendung \textit{Vierteljahreserklärung} können die Angaben, die für die Erklärung zur Vierteljahresabrechnung notwendig sind, eingetragen werden. 
 Ein Screenshot der Anwendung ist in Abbildung \ref{fig:vje} abgebildet. 
 Bevor das PDF generiert werden kann, ist die Eingabe des Quartals und der Betriebsstättennummer (BSNR) Voraussetzung. \\
 
@@ -32,8 +32,8 @@ Bei Abrechnungen muss die BSNR mit angegeben werden.
 Dies ist in den Richtlinien der Kassenärztlichen Bundesvereinigung (KBV) festgelegt worden. 
 Eine BSNR bekommt jede Betriebsstätte und Nebenbetriebsstätte, sowie Einrichtungen, die zur Teilnahme an der vertragsärztlichen Versorgung ermächtigt wurden. \cite{kassenarztlichebundesvereinigungRichtlinieKassenarztlichenBundesvereinigung2019} \\
 
-Nachdem ein Quartal ausgewählt wurde, werden die gültigen BSNRs des Vertragsarztes, die für den Zeitraum gültig sind, in die Anwendung geladen.
-Dabei wird geprüft, an welchen Betriebsstätten der Vertragsarzt tätig war. 
+Nachdem ein Quartal ausgewählt wurde, werden die gültigen Betriebsstättennummern des Vertragsarztes, die für den Zeitraum gültig sind, in die Anwendung geladen.
+Dabei wird geprüft, an welchen Betriebsstätten der Vertragsarzt in dem Quartal tätig war. 
 Anschließend kann eine BSNR gewählt werden, für die eine Erklärung erstellt werden soll. 
 
 
@@ -46,21 +46,20 @@ Anschließend kann eine BSNR gewählt werden, für die eine Erklärung erstellt 
 Die App \textit{Vierteljahreserklärung} besteht aus einer C\#-Anwendung und einer Angular-Anwendung. 
 Dabei ist die Angular-Anwendung für die Darstellung der Daten zuständig. 
 Die C\#-Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
-Damit beide Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine REST-Schnittstelle zur Verfügung gestellt.
+Damit beide Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine Schnittstelle zur Verfügung gestellt.
 Die Schnittstelle bietet zwei GET-Anfragen: \textit{\glqq /api/bsnrs\grqq{}} und \textit{\glqq /api/pdf\grqq{}}.
 Beim Aufruf der GET-Anfrage \textit{\glqq /api/bsnrs\grqq{}} werden zusätzlich noch zwei Query-Parameter benötigt. 
-Die Parameter sind das Quartal und das zugehörige Jahr, für die die passenden BSNRs geladen werden sollen. \\
+Die Parameter sind das Quartal und das zugehörige Jahr, für die die passenden Betriebsstättennummern geladen werden sollen. \\
 Der Aufruf der GET-Anfrage:\textit{\glqq /api/bsnrs\grqq{}} ruft die C\#-Methode \textit{GetBSNRsAsync} auf.
-GetBSNRsAsync liefert die gültigen BSNRs für ein bestimmtes Quartal.  
+\textit{GetBSNRsAsync} liefert die gültigen Betriebsstättennummern für ein bestimmtes Quartal.  
 In der Methode wird die \textit{GetBSNR} Methode aus der \textit{ArztregisterService} Klasse aufgerufen.
 Die Methode beschafft die notwendigen Daten der Arztregister-Schnittstelle. 
 Die Arztregister-Schnittstelle stellt alle notwendigen Daten der Mitglieder zur Verfügung. 
 Die Schnittstelle wird von dem CFT Sicherstellung der KVWL gewartet und weiterentwickelt. 
 Die aus der Arztregister-Schnittstelle erhaltenen Daten sind sehr stark verschachtelt und enthalten viele Informationen, die für die Vierteljahreserklärung irrelevant sind. 
-Daher müssen die Daten in DTOs (Data transfer Objects) geladen werden, um die Menge an HTTP-Anfragen zu reduzieren. 
+Daher werden die Daten in DTOs (Data Transfer Objects) geladen werden, um die Menge an HTTP-Anfragen zu reduzieren. 
 Mit den DTOs können dann mehr Daten über einen Aufruf gesendet werden. 
-Das Reduzieren der Daten ist für die Anwendungen im Mitgliederportal wichtig, denn nicht jedes Mitglied der KVWL besitzt eine ausreichend starke Netzanbindung, um große Datenmengen zu erhalten. 
-Daher ist es wichtig, dass alle Daten, die über das Netzwerk gesendet werden, nur relevante Informationen enthalten.
+Die über das Netzwerk gesendeten Daten, werden so gering wie möglich gehalten, um den Mitgliedern mit einer schwachen Netzanbindung, die Nutzung der Anwendung zu ermöglichen. 
 
 \newpage
 \section{Konfiguration von NLog}
@@ -170,9 +169,9 @@ Durch das zusätzliche Attribut \textit{properties} können die anwendungsspezif
 \section{Implementierung}
 In diesem Kapitel werden Beispiele der durchgeführten Logging-Anweisungen gezeigt. 
 Dabei werden die Logs in drei Kategorien unterteilt. 
-Jede, der in diesem Kapitel vorgestellten Logs sind in der Vierteljahreserklärung durchgeführt worden.
+Die vorgestellten Log-Aufrufe wurden alle in der Vierteljahreserklärung umgesetzt. 
 Die Logs werden zusätzlich in die Kategorien eingeordnet, die in der Projektarbeit vorgestellt wurden. 
-Die Kategorien der Projektarbeit sind: \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
+Die in der Projektarbeit erarbeiteten Kategorien sind: \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 
 \begin{itemize}
   \item Program Operation
@@ -199,7 +198,7 @@ Die Kategorien der Projektarbeit sind: \cite{bollichErarbeitungLoggingRichtlinie
 Ein Abschnitt, der in der Vierteljahreserklärung geloggt werden muss, ist der Aufruf von externen Schnittstellen. 
 In der Vierteljahreserklärung wird eine Schnittstelle mehrmals genutzt, um Daten der Mitglieder zu erhalten. 
 Die Schnittstelle ist die Arztregister-Schnittstelle. 
-Die Arztregister-Schnittstelle wird vom CFT Sicherstellung \& Versorgungsqualität verwaltet. 
+Die Arztregister-Schnittstelle wird vom CFT Sicherstellung verwaltet. 
 Die Schnittstelle liefert alle relevanten Stammdaten über die Mitglieder der KVWL. \\
 
 Das Loggen dieser Aufrufe ist wichtig, um zu prüfen, ob die Schnittstelle die erwarteten Daten zurückliefert. 
@@ -212,9 +211,12 @@ Quellcode \ref{code:aufrufArztregister} zeigt ein Log, das nach dem Aufruf einer
 Das Log-Level ist in diesem Fall \textit{Debug}.
 Das Log-Level \textit{Debug} wurde hier gewählt, weil die Informationen nur für die Entwicklung relevant sind. 
 Im produktiven Betrieb ist es nicht relevant, welche Informationen von dem Befehl zurückgeliefert werden. \\
-Dieses Log gehört zu der Kategorie \textit{Semantic Description}, die in der Projektarbeit vorgestellt wurde.
-Um präziser zu sein, gehört dieses Log zu der Unterkategorie \textit{variable description}. 
-Das Log liefert den Inhalt einer Variable, um zu überprüfen, ob die Variable den erwarteten Wert beinhaltet. \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
+
+Dieser Log-Aufruf kann zu der Kategorie \textit{Semantic Description} zugeordnet werden. 
+Wie in der Auflistung zu Beginn des Kapitels zu sehen ist, wird die Kategorie \textit{Semantic Description} in drei weitere Unterkategorien eingeteilt. 
+Der in Quellcode \eqref{code:aufrufArztregister} gezeigte Log-Aufruf kann der Unterkategorie \textit{variable description} zugeordnet werden. 
+Das Log, dass mit diesem Aufruf geschrieben wird, enthält der Inhalt einer Variable. 
+Mit diesem Log wird geprüft ob die Variable den gewünschten Wert beinhaltet.\cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 
 \begin{lstlisting}[caption=Aufruf der Arztregister-Schnittstelle, label=code:aufrufArztregister]
 var leistungserbringerListe = await _arztregisterClient.GetLeistungserbringerClusterAsync(lanr: lANR);
@@ -225,15 +227,16 @@ log.Debug("Erhaltene Leistungserbringerliste: leistungserbringerliste={leistungs
 \subsection{Auftreten von Fehlern}
 
 Logs werden oft genutzt, um Fehler anzeigen und analysieren zu können. 
-Daher wurden in der Vierteljahreserklärung Error-Messages geloggt. 
-Dafür wurde das Log-Level \textit{Error} genutzt. 
+Daher werden in der Vierteljahreserklärung Error-Messages geloggt. 
+Dafür wird das Log-Level \textit{Error} genutzt. 
 Quellcode \ref{code:auftretenFehler} zeigt die Methode \textit{ValidatePflichtangaben}. 
 Diese Methode startet die Validierung von \textit{Pflichtangaben}.
 Wenn die Validierung fehlgeschlagen ist, wird ein error-log geschrieben und eine Exception wird geworfen. \\
 Das Loggen dieser Aufrufe ist wichtig, um zu verstehen, welche Fehler während der Laufzeit aufgetreten sind, damit diese anschließend analysiert werden können. 
 Fehleranalyse ist ein wichtiger Teil des Log-Managements. \\
-Die Art von Logs gehören zu der Kategorie \textit{Error Message}. 
-Die genaue Unterkategorie ist in diesem Fall \textit{value-check}. 
+
+Da in dem Quellcode \ref{code:auftretenFehler} eine Variable geprüft wird und Anschließend eine Fehlermeldung geworfen wird, gehört der dabei entstehende Log-Aufruf zu der Kategorie \textit{Error Message}.
+Wegen dem prüfen einer Variable wird dieser Log-Aufruf der Unterkategorie \textit{value-check} zugeordnet.
 
 \begin{lstlisting}[caption=Auftreten von Fehlern, label=code:auftretenFehler]
 private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
@@ -254,17 +257,20 @@ private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
 In Kapitel \ref{kap:vje} wurde die Client-Server-Architektur der Vierteljahreserklärung vorgestellt. 
 Die Kommunikation zwischen Server und Client beschränkt sich dabei auf Anfragen, die der Client an den Server sendet.
 Das Senden von Anfragen wird durch Operationen ausgelöst, die von einem Mitglied durchgeführt werden. 
-Im Falle der Vierteljahreserklärung wären die Operationen, das Auswählen eines Quartals oder das betätigen des Buttons \glqq PDF Erstellen\grqq{}.
+Im Falle der Vierteljahreserklärung wären die Operationen das Auswählen eines Quartals oder das Betätigen des Buttons \glqq PDF Erstellen\grqq{}.
 Damit nachvollzogen werden kann, welche Operationen ein Mitglied ausgeführt hat, muss die Kommunikation zwischen Server und Client geloggt werden. 
 Die Identifizierung eines Mitglieds, anhand der Logdateien, kann den Fehleranalyseprozess vereinfachen. 
 Beim Erhalt eines Fehlers durch ein Mitglied kann das entsprechende Log problemlos identifiziert werden. 
 Damit diese Identifizierung möglich ist, müssen alle Anfragen, die der Client an den Server sendet, geloggt werden. \\
 Da der Fehleranalyseprozess im produktiven Betrieb durchgeführt wird, müssen die Logs im Log-Level \textit{Info} geschrieben werden. 
-Quellcode \ref{code:aufrufREST} zeigt die Methode \textit{GetBSNRsAsync}. 
+Quellcode \ref{code:aufrufREST} zeigt die Methode \mbox{\textit{GetBSNRsAsync}}. 
 Diese Methode wird aufgerufen, wenn ein Quartal in der Vierteljahreserklärung ausgewählt wurde. 
-Der Client sendet die Anfrage, um die gültigen BSNRs des Mitglieds für den ausgewählten Zeitraum zu erhalten.
-Das dazu geschriebene Log befindet sich zu Beginn dieser Operation, um zu definieren, dass der Aufruf der Methode geklappt hat. \\
-Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{Program Operation} und zusätzlich zu der Unterkategorie \textit{next operation}.
+Der Client sendet die Anfrage, um die gültigen Betriebsstättennummern des Mitglieds für den ausgewählten Zeitraum zu erhalten.
+Das dazu geschriebene Log befindet sich zu Beginn dieser Operation, um zu definieren, dass der Aufruf der Methode funktioniert hat. \\
+
+Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{Program Operation}.
+Die Operation die dieser Log-Aufruf beschreibt, wird nach dem Log-Aufruf ausgeführt, somit beschreit der Log-Aufruf eine Funktion die anschließend durchgeführt wird.
+Daher kann dieser Log-Aufruf der Unterkategorie \textit{next operation} zugeteilt werden. 
 
 
 \begin{lstlisting}[caption=Aufruf der REST-Schnittstellen, label=code:aufrufREST]

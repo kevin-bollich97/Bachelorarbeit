@@ -11,12 +11,12 @@ Zu Beginn wurde eine Evaluation durchgeführt, um ein passendes Tool für das ze
 Das Ergebnis der Evaluation lieferte den Elastic Stack als beste Alternative für die Anforderungen des CFT Portale. 
 Nach der Evaluation erfolgte die Installation des Elastic Stacks.
 Beim Installieren der Komponenten des Elastic Stacks ist aufgefallen, dass Logstash in dem Szenario nicht benötigt wird. 
-Das senden der Logs an den Elasticsearch Service wird von Filebeat durchgeführt. 
+Das Senden der Logs an den Elasticsearch Service wird von Filebeat durchgeführt. 
 Mit Abschluss der Installationen wurden die Logging-Richtlinien an einer Anwendung umgesetzt. 
-Die Anwendung, an der die Richtlinien umgesetzt worden sind, war die Vierteljahreserklärung. 
+Die Anwendung, an der die Richtlinien umgesetzt worden sind, ist  die Vierteljahreserklärung. 
 Damit die Richtlinien umgesetzt werden konnten, musste die Architektur und die fachlichen Aspekte der Vierteljahreserklärung näher erläutert werden. 
 So konnten anschließend die relevanten Abschnitte des Quellcodes identifiziert werden.
-Bevor die Log-Nachrichten an den richtigen Stellen platziert werden konnten, musste das NLog Framework konfiguriert werden. 
+Bevor die Log-Nachrichten an den richtigen Stellen platziert wurde, musste das NLog Framework konfiguriert werden. 
 Mit der Konfiguration wurde der Aufbau der Logs fest definiert. 
 Mit Abschluss der Konfiguration konnten die Logging-Aufrufe an den richtigen Stellen in den Quellcode eingetragen werden. 
 Zum Abschluss wurden beide Prozesse der Fehleranalyse miteinander verglichen. 
@@ -24,7 +24,7 @@ Der verbesserte Fehleranalyseprozess liefert ein zufriedenstellendes Ergebnis.
 Wie erwartet ist der Aufwand der Fehleranalyse gesunken.  \\
 
 % Wichtige Ergebnisse 
-Das Ergebnis der Bachelorarbeit war somit die erfolgreiche Einrichtung eines zentralisierten Logging-Servers, der den Arbeitsprozess der Fehlersuche des CFT Portale vereinfacht hat. 
+Das Ergebnis der Bachelorarbeit ist somit die erfolgreiche Einrichtung eines zentralisierten Logging-Servers, der den Arbeitsprozess der Fehlersuche des CFT Portale vereinfacht. 
 Außerdem enthalten die geschriebenen Logs deutlich mehr Informationen als zuvor. 
 Mithilfe des strukturierten Loggings ist es nun möglich, effektiv in den Logs nach bestimmten Attributen zu filtern und zu suchen. \\
 
@@ -34,15 +34,15 @@ Das Beantworten der ersten Forschungsfrage erfolgte mit der zu Beginn durchgefü
 Das Ergebnis der Evaluation von Log-Management-Tools bestätigte die ursprüngliche Entscheidung, den Elastic Stack als zentralisiertes Logging-Tool einzusetzen. 
 In der zweiten Forschungsfrage wurde die Frage behandelt, wie ein zentralisierter Logging-Server eingerichtet werden kann. 
 Das konnte mittels der Installation des Elastic Stacks beantwortet werden. 
-Die genauen Schritten wurden in dem dazugehörigen Kapitel vollständig erklärt. 
+Die genauen Schritten wurden in dem dazugehörigen Kapitel \ref{kap:einrichtung}vollständig erklärt. 
 Die letzte Forschungsfrage beschäftigte sich mit Logging-Richtlinien, die in dieser Arbeit praktisch umgesetzt werden sollten. 
-Die Frage bezog sich dabei darauf, ob die Richtlinien umgesetzt werden können.
-Ja, die Logging-Richtlinien konnten an einem Projekt vollständig umgesetzt werden. \\
+Auch diese Forschungsfrage konnte positiv beantwortet werden. 
+Eine vollständige Umsetzung der Logging-Richtlinien an einem Projekt ist möglich.  \\
 
 % Ausblick auf weitere Forschung
-Im Anschluss an diese Bachelorarbeit sollen die aufgestellten Logging-Richtlinien an allen Applikationen des CFT Portale durchgeführt werden. 
+Im Anschluss an diese Bachelorarbeit sollen die aufgestellten Logging-Richtlinien in allen Applikationen des CFT Portale umgesetzt werden. 
 Der aktuelle Stand bezieht sich nur auf die Vierteljahreserklärung. 
-Dadurch ist bei der Fehlersuche in der Vierteljahreserklärung zwar ein optimaler Ablauf möglich. 
+Dadurch ist bei der Fehlersuche in der Vierteljahreserklärung ein optimaler Ablauf möglich. 
 Jedoch ist das Ziel, dass alle Applikationen des Teams über den Elastic Stack analysierbar sind. 
 Nach erfolgreicher Integration des Elastic Stack wird das Ergebnis weiteren Teams der KVWL vorgestellt. 
 
