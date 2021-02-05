@@ -6,7 +6,7 @@ Um das Verständnis für die Anwendung zu erhalten, wird zu Beginn beschrieben, 
 
 \section{Vierteljahreserklärung}
 \label{kap:vje}
-Die Provider hosted App \textit{Vierteljahreserklärung} ermöglicht die PDF-Generierung der \textit{Erklärung zur Vierteljahresabrechnung}. 
+Die provider hosted app \textit{Vierteljahreserklärung} ermöglicht die PDF-Generierung der \textit{Erklärung zur Vierteljahresabrechnung}. 
 Mit der \textit{Erklärung zu Vierteljahresabrechnung} bestätigt der Vertragsarzt seine abgerechneten Leistungen. 
 Dies ist in den Abrechnungsrichtlinien der KVWL festgelegt. 
 
@@ -43,23 +43,23 @@ Anschließend kann eine BSNR gewählt werden, für die eine Erklärung erstellt 
     \caption{Vierteljahreserklärung }
     \label{fig:vje}
 \end{figure}
-Die App \textit{Vierteljahreserklärung} besteht aus einer C\#-Anwendung und einer Angular-Anwendung. 
+\noindent Die App \textit{Vierteljahreserklärung} besteht aus einer C\#-Anwendung und einer Angular-Anwendung. 
 Dabei ist die Angular-Anwendung für die Darstellung der Daten zuständig. 
 Die C\#-Anwendung sorgt dafür, dass alle Abfragen durchgeführt werden und die notwendigen Daten für die Darstellung zur Verfügung stehen. 
-Damit beide Anwendungen miteinander kommunizieren können, wird in der C\# Anwendung eine Schnittstelle zur Verfügung gestellt.
+Damit beide Anwendungen miteinander kommunizieren können, wird in der C\#-Anwendung eine Schnittstelle zur Verfügung gestellt.
 Die Schnittstelle bietet zwei GET-Anfragen: \textit{\glqq /api/bsnrs\grqq{}} und \textit{\glqq /api/pdf\grqq{}}.
 Beim Aufruf der GET-Anfrage \textit{\glqq /api/bsnrs\grqq{}} werden zusätzlich noch zwei Query-Parameter benötigt. 
 Die Parameter sind das Quartal und das zugehörige Jahr, für die die passenden Betriebsstättennummern geladen werden sollen. \\
 Der Aufruf der GET-Anfrage:\textit{\glqq /api/bsnrs\grqq{}} ruft die C\#-Methode \textit{GetBSNRsAsync} auf.
 \textit{GetBSNRsAsync} liefert die gültigen Betriebsstättennummern für ein bestimmtes Quartal.  
-In der Methode wird die \textit{GetBSNR} Methode aus der \textit{ArztregisterService} Klasse aufgerufen.
+In der Methode wird die \textit{GetBSNR}-Methode aus der \textit{ArztregisterService}-Klasse aufgerufen.
 Die Methode beschafft die notwendigen Daten der Arztregister-Schnittstelle. 
 Die Arztregister-Schnittstelle stellt alle notwendigen Daten der Mitglieder zur Verfügung. 
 Die Schnittstelle wird von dem CFT Sicherstellung der KVWL gewartet und weiterentwickelt. 
-Die aus der Arztregister-Schnittstelle erhaltenen Daten sind sehr stark verschachtelt und enthalten viele Informationen, die für die Vierteljahreserklärung irrelevant sind. 
-Daher werden die Daten in DTOs (Data Transfer Objects) geladen werden, um die Menge an HTTP-Anfragen zu reduzieren. 
+Die aus der Arztregister-Schnittstelle erhaltenen Daten sind stark verschachtelt und enthalten viele Informationen, die für die Vierteljahreserklärung irrelevant sind. 
+Daher werden die Daten in DTOs (Data Transfer Objects) geladen, um die Menge an HTTP-Anfragen zu reduzieren. 
 Mit den DTOs können dann mehr Daten über einen Aufruf gesendet werden. 
-Die über das Netzwerk gesendeten Daten, werden so gering wie möglich gehalten, um den Mitgliedern mit einer schwachen Netzanbindung, die Nutzung der Anwendung zu ermöglichen. 
+Die über das Netzwerk gesendeten Daten werden so gering wie möglich gehalten, um den Mitgliedern mit einer schwachen Netzanbindung, die Nutzung der Anwendung zu ermöglichen. 
 
 \newpage
 \section{Konfiguration von NLog}
@@ -174,18 +174,18 @@ Die Logs werden zusätzlich in die Kategorien eingeordnet, die in der Projektarb
 Die in der Projektarbeit erarbeiteten Kategorien sind: \cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 
 \begin{itemize}
-  \item Program Operation
+  \item Program operation
     \begin{itemize}
       \item completed operation
       \item current operation
       \item next operation
     \end{itemize}
-  \item Error Message
+  \item Error message
     \begin{itemize}
       \item exception
       \item value-check
     \end{itemize}
-  \item Semantic Description
+  \item Semantic description
     \begin{itemize}
       \item variable description
       \item function description
@@ -213,10 +213,10 @@ Das Log-Level \textit{Debug} wurde hier gewählt, weil die Informationen nur fü
 Im produktiven Betrieb ist es nicht relevant, welche Informationen von dem Befehl zurückgeliefert werden. \\
 
 Dieser Log-Aufruf kann zu der Kategorie \textit{Semantic Description} zugeordnet werden. 
-Wie in der Auflistung zu Beginn des Kapitels zu sehen ist, wird die Kategorie \textit{Semantic Description} in drei weitere Unterkategorien eingeteilt. 
+Wie in der Auflistung zu Beginn des Kapitels zu sehen ist, wird die Kategorie \textit{semantic description} in drei weitere Unterkategorien eingeteilt. 
 Der in Quellcode \eqref{code:aufrufArztregister} gezeigte Log-Aufruf kann der Unterkategorie \textit{variable description} zugeordnet werden. 
-Das Log, dass mit diesem Aufruf geschrieben wird, enthält der Inhalt einer Variable. 
-Mit diesem Log wird geprüft ob die Variable den gewünschten Wert beinhaltet.\cite{bollichErarbeitungLoggingRichtlinienFuer2020}
+Das Log, das mit diesem Aufruf geschrieben wird, enthält der Inhalt einer Variable. 
+Mit diesem Log wird geprüft, ob die Variable den gewünschten Wert beinhaltet.\cite{bollichErarbeitungLoggingRichtlinienFuer2020}
 
 \begin{lstlisting}[caption=Aufruf der Arztregister-Schnittstelle, label=code:aufrufArztregister]
 var leistungserbringerListe = await _arztregisterClient.GetLeistungserbringerClusterAsync(lanr: lANR);
@@ -235,8 +235,8 @@ Wenn die Validierung fehlgeschlagen ist, wird ein error-log geschrieben und eine
 Das Loggen dieser Aufrufe ist wichtig, um zu verstehen, welche Fehler während der Laufzeit aufgetreten sind, damit diese anschließend analysiert werden können. 
 Fehleranalyse ist ein wichtiger Teil des Log-Managements. \\
 
-Da in dem Quellcode \ref{code:auftretenFehler} eine Variable geprüft wird und Anschließend eine Fehlermeldung geworfen wird, gehört der dabei entstehende Log-Aufruf zu der Kategorie \textit{Error Message}.
-Wegen dem prüfen einer Variable wird dieser Log-Aufruf der Unterkategorie \textit{value-check} zugeordnet.
+Da in dem Quellcode \ref{code:auftretenFehler} eine Variable geprüft wird und anschließend eine Fehlermeldung geworfen wird, gehört der dabei entstehende Log-Aufruf zu der Kategorie \textit{Error Message}.
+Wegen dem Prüfen einer Variable wird dieser Log-Aufruf der Unterkategorie \textit{value-check} zugeordnet.
 
 \begin{lstlisting}[caption=Auftreten von Fehlern, label=code:auftretenFehler]
 private void ValidatePflichtangaben(Pflichtangaben pflichtangaben)
@@ -259,7 +259,7 @@ Die Kommunikation zwischen Server und Client beschränkt sich dabei auf Anfragen
 Das Senden von Anfragen wird durch Operationen ausgelöst, die von einem Mitglied durchgeführt werden. 
 Im Falle der Vierteljahreserklärung wären die Operationen das Auswählen eines Quartals oder das Betätigen des Buttons \glqq PDF Erstellen\grqq{}.
 Damit nachvollzogen werden kann, welche Operationen ein Mitglied ausgeführt hat, muss die Kommunikation zwischen Server und Client geloggt werden. 
-Die Identifizierung eines Mitglieds, anhand der Logdateien, kann den Fehleranalyseprozess vereinfachen. 
+Die Identifizierung eines Mitglieds anhand der Logdateien kann den Fehleranalyseprozess vereinfachen. 
 Beim Erhalt eines Fehlers durch ein Mitglied kann das entsprechende Log problemlos identifiziert werden. 
 Damit diese Identifizierung möglich ist, müssen alle Anfragen, die der Client an den Server sendet, geloggt werden. \\
 Da der Fehleranalyseprozess im produktiven Betrieb durchgeführt wird, müssen die Logs im Log-Level \textit{Info} geschrieben werden. 
@@ -268,7 +268,7 @@ Diese Methode wird aufgerufen, wenn ein Quartal in der Vierteljahreserklärung a
 Der Client sendet die Anfrage, um die gültigen Betriebsstättennummern des Mitglieds für den ausgewählten Zeitraum zu erhalten.
 Das dazu geschriebene Log befindet sich zu Beginn dieser Operation, um zu definieren, dass der Aufruf der Methode funktioniert hat. \\
 
-Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{Program Operation}.
+Da das Log zu Beginn der Operation platziert wurde, gehört dieses Log zu der Kategorie \textit{program operation}.
 Die Operation die dieser Log-Aufruf beschreibt, wird nach dem Log-Aufruf ausgeführt, somit beschreit der Log-Aufruf eine Funktion die anschließend durchgeführt wird.
 Daher kann dieser Log-Aufruf der Unterkategorie \textit{next operation} zugeteilt werden. 
 

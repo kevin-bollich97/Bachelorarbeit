@@ -318,13 +318,12 @@ Daher kommt die Nutzung von Sematext nicht infrage.
 \subsection{Fluentd vs. Logstash}
 
 Da Fluentd kein Tool ist, um zentralisiertes Logging zu ermöglichen, sondern nur eine Middleware, die beim Senden der Logs behilflich sein kann, wird das Tool mit Logstash alleine verglichen. \\
-Fluentd ermöglicht die Vereinheitlichung von Daten aus unterschiedlichen Quellen in ein JSON-Format.
+Fluentd ermöglicht die Vereinheitlichung von Daten aus unterschiedlichen Quellen in das JSON-Format.
 Durch die Strukturierung können die Daten besser analysiert werden. 
 Mit Logstash ist dies ebenfalls möglich. 
 Jedoch kann Logstash zusätzlich die Daten transformieren.
 Zum Beispiel können IP-Adressen in geographische Daten transformiert werden und personenbezogene Daten können komplett anonymisiert werden. \\
 Logstash und Fluentd bieten beide eine hervorragende Möglichkeit an, Logdaten zu strukturieren und an die erforderlichen Ziele weiterzuleiten. 
-Da kein ausschlusskriterium für eines der Tools vorliegt und die Tools annähernd identische Funktionen anbieten, wird im Rahmen dieser Bachelorarbeit Logstash verwendet. 
 Da Logstash Teil des bereits gewählten Elastic Stack ist und somit kein weiteres Tool installiert werden muss, wird Logstash verwendet. 
 
 
